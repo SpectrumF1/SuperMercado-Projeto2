@@ -1,0 +1,17 @@
+16
+cerveja ; 1.5
+vinho   ; 9.0
+sumo    ; 2.6
+agua    ; 0.6
+bolachas ; 1.6
+pao      ; 0.1
+batata frita ; 1.7
+amendoins    ; 2.3
+fiambre    ; 3.3
+presunto   ; 4.5
+peixe     ; 7.8
+carne     ; 9.1
+batatas   ; 04
+acucar    ; 1.2
+cha      ; 0.6
+cafe     ; 1.3
