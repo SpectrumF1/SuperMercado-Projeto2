@@ -37,7 +37,12 @@ void Cliente::save(ofstream & out) const{
 }
 
 ostream& operator<<(ostream& out, const Cliente & cli){
-  // A IMPLEMENTAR
+	out << cli.id << endl
+		<< cli.nome << endl
+		<< cli.dataAdesao << endl
+		<< cli.volCompras << endl;
+	return out;
+
 }
 
 

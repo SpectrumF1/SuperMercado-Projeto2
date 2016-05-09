@@ -33,6 +33,13 @@ void Transacao::save(ofstream & out) const{ // transacao guardada como na forma 
 
 
 ostream& operator<<(ostream& out, const Transacao & trans){
+	out << trans.idCliente << " ; " << trans.data << " , "	;
+	for (unsigned int i = 0; i < trans.produtos.size(); i++)
+	{
+		if (i = 0) out << trans.produtos.at(i);
+		else out << "," <<  trans.produtos.at(i);
+	}
+	out << endl;
+	return out;
 
-  // A IMPLEMENTAR
 }
