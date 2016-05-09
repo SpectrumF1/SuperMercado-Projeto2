@@ -10,19 +10,6 @@ VendeMaisMais::VendeMaisMais(string loja, string fichClients, string fichProduto
   
 }
 
-
-void lerProdutosTxt(string filename, vector<Produto> &productsVector) {
-	string numberOfLinesString;
-	ifstream inStream;
-	inStream.open(filename);
-	getline(inStream, numberOfLinesString);
-	for (unsigned int i = 0; i < stoi(numberOfLinesString); i++){
-		Produto newProduct(inStream);
-		productsVector.push_back(newProduct);
-	}
-	return;
-}
-
 /*********************************
 * Ler Ficheiros
 ********************************/
@@ -44,6 +31,20 @@ void lerClientesTxt(string filename, vector <Cliente> &clienteVector) {
 		file.close();
 	}
 }
+
+void lerProdutosTxt(string filename, vector<Produto> &productsVector) {
+	string numberOfLinesString;
+	ifstream inStream;
+	inStream.open(filename);
+	getline(inStream, numberOfLinesString);
+	for (unsigned int i = 0; i < stoi(numberOfLinesString); i++)
+	{
+		Produto newProduct(inStream);
+		productsVector.push_back(newProduct);
+	}
+	return;
+}
+
 
 /*********************************
  * Gestao de Clientes
