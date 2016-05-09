@@ -16,8 +16,8 @@ VendeMaisMais::VendeMaisMais(string loja, string fichClients, string fichProduto
 
 // Le ficheiros e guarda nos vetores
 
-void lerClientesTxt(string filename, vector <Cliente> &clienteVector) {
-	ifstream file(filename);
+void lerClientesTxt(VendeMaisMais &loja) {
+	ifstream file(loja.fichClientes);
 	string line;
 
 	if (file.is_open())
@@ -26,26 +26,45 @@ void lerClientesTxt(string filename, vector <Cliente> &clienteVector) {
 		for (unsigned int i = 4*stoi(line, nullptr, 10); i > 0; i-=4)
 		{
 			Cliente newclient(file);
-			clienteVector.push_back(newclient);
+			loja.clientesVector.push_back(newclient);
 		}
 		file.close();
 	}
 }
 
-void lerProdutosTxt(string filename, vector<Produto> &productsVector) {
+void lerProdutosTxt(VendeMaisMais &loja) {
 	string numberOfLinesString;
 	ifstream inStream;
-	inStream.open(filename);
+	inStream.open(loja.fichProdutos);
 	if (!inStream.fail()) {
 		getline(inStream, numberOfLinesString);
 		for (unsigned int i = 0; i < stoi(numberOfLinesString); i++)
 		{
 			Produto newProduct(inStream);
-			productsVector.push_back(newProduct);
+			loja.produtosVector.push_back(newProduct);
 		}
+		inStream.close();
 	}
-	inStream.close();
+	
 	return;
+}
+
+void lerTransacoesTxt(VendeMaisMais &loja) {
+		string numberOfLinesString;
+		ifstream inStream;
+		inStream.open(loja.fichTransacoes);
+		if (!inStream.fail()) {
+			getline(inStream, numberOfLinesString);
+			for (unsigned int i = 0; i < stoi(numberOfLinesString); i++)
+			{
+				Transacao newTransaction(inStream);
+				loja.transacoesVector.push_back(newTransaction);
+			}
+			inStream.close();
+		}
+		
+		return;
+
 }
 
 
@@ -55,18 +74,18 @@ void lerProdutosTxt(string filename, vector<Produto> &productsVector) {
 
 // lista os clientes por ordem alfabetica crescente
 void VendeMaisMais::listarClientesOrdemAlfa() const{
-	sort(clientes.begin(), clientes.end(), less<Cliente>());
+	sort(clientesVector.begin(), clientesVector.end(), less<Cliente>());
 	return;
 
 }
 
 
 void VendeMaisMais::removeClient(unsigned int idCliente) {
-	for (unsigned int i = 0; i < clientes.size(); i++)
+	for (unsigned int i = 0; i < clientesVector.size(); i++)
 	{
-		if (clientes.at(i).getId == idCliente)
+		if (clientesVector.at(i).getId == idCliente)
 		{
-			clientes.erase(clientes.begin() + i);
+			clientesVector.erase(clientesVector.begin() + i);
 		}
 	}
 	return;
@@ -81,9 +100,9 @@ void VendeMaisMais::mostraInformacaoCliente(string nome){
 
 
 int VendeMaisMais::getIndexById(unsigned int idOfClient) {
-	for (unsigned int i = 0; i < clientes.size(); i++)
+	for (unsigned int i = 0; i < clientesVector.size(); i++)
 	{
-		if (clientes.at(i).getId() == idOfClient)
+		if (clientesVector.at(i).getId() == idOfClient)
 		{
 			return i;
 		}
@@ -92,9 +111,9 @@ int VendeMaisMais::getIndexById(unsigned int idOfClient) {
 }
 
 int VendeMaisMais::getIndexByName(string nameOfClient) {
-	for (unsigned int i = 0; i < clientes.size(); i++)
+	for (unsigned int i = 0; i < clientesVector.size(); i++)
 	{
-		if (clientes.at(i).getNome() == nameOfClient)
+		if (clientesVector.at(i).getNome() == nameOfClient)
 		{
 			return i;
 		}
@@ -108,7 +127,7 @@ int VendeMaisMais::getIndexByName(string nameOfClient) {
 
 // listar os produto por ordem alfabetica crescente
 void VendeMaisMais::listarProdutos() const{
-	sort(produtos.begin(), produtos.end(), less<Produto>());
+	sort(produtosVector.begin(), produtosVector.end(), less<Produto>());
 	return;
 
 }
@@ -119,7 +138,7 @@ void VendeMaisMais::listarProdutos() const{
 
 // listar as transacoes por ordem alfabetica crescente de data
 void VendeMaisMais::listarTransacoesData() const {
-	sort(transacoes.begin(), transacoes.end(), less<Transacao>());
+	sort(transacoesVector.begin(), transacoesVector.end(), less<Transacao>());
 	return;
 }
 
@@ -150,9 +169,9 @@ void VendeMaisMais::saveChanges() const{
 		if (decision == 'Y' || decision == 'y')
 		{
 			fileOut.open(fichClientes);
-			for (unsigned int i = 0; i < clientes.size(); i++)
+			for (unsigned int i = 0; i < clientesVector.size(); i++)
 			{
-				clientes.at(i).save(fileOut);
+				clientesVector.at(i).save(fileOut);
 			}
 			fileOut.close();
 		}
@@ -177,9 +196,9 @@ void VendeMaisMais::saveChanges() const{
 		if (decision == 'Y' || decision == 'y')
 		{
 			fileOut.open(fichTransacoes);
-			for (unsigned int i = 0; i < transacoes.size(); i++)
+			for (unsigned int i = 0; i < transacoesVector.size(); i++)
 			{
-				transacoes.at(i).save(fileOut);
+				transacoesVector.at(i).save(fileOut);
 			}
 			fileOut.close;
 		}
@@ -197,6 +216,11 @@ void VendeMaisMais::saveChanges() const{
 // mostra o conteudo de uma loja
 ostream& operator<<(ostream& out, const VendeMaisMais & supermercado){
 
-  // A IMPLEMENTAR 
-
+	out << "A loja tem " << supermercado.clientesVector.size() << " clientes."
+		<< endl
+		<< "Foram efetuadas no total " << supermercado.transacoesVector.size() << " transacoes."
+		<< endl
+		<< "Estao disponiveis neste momento" << supermercado.produtosVector.size() << "tipos diferentes de produtos."
+		<< endl;
+	return out;
 }
