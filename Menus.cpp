@@ -2,9 +2,53 @@
 
 
 
-bool infoInicial(string & loja, string & fichClientes, string & fichProdutos, string & fichTransacoes){
+bool infoInicial(string &loja, string &fichClientes, string &fichProdutos, string &fichTransacoes){
+	ifstream fileTeste;
+	cout << "Indique o Nome da Loja." << endl;
+	cin >> loja;
+	cout << "Indique o Nome do Ficheiro com os Dados dos Clientes, Incluindo a Extencao." << endl;
+	cin >> fichClientes;
+	while (fichClientes.find(".txt") != fichClientes.length() - 4)
+	{
+		cout << "Volte a indicar o Nome." << endl;
+		cin >> fichClientes;
+	}
+	fileTeste.open(fichClientes);
+	if (fileTeste.fail())
+	{
+		return false;
+	}
+	fileTeste.close();
 
-  // A IMPLEMENTAR
+	cout << "Indique o Nome do Ficheiro com os Dados dos Produtos, Incluindo a Extencao." << endl;
+	cin >> fichProdutos;
+	while (fichProdutos.find(".txt") != fichProdutos.length() - 4)
+	{
+		cout << "Volte a Indicar o Nome." << endl;
+		cin >> fichProdutos;
+	}
+	fileTeste.open(fichProdutos);
+	if (fileTeste.fail())
+	{
+		return false;
+	}
+	fileTeste.close();
+
+	cout << "Indique o Nome do Ficheiro com os Dados das Transacoes, Incluindo a Extencao." << endl;
+	cin >> fichTransacoes;
+	while (fichTransacoes.find(".txt") != fichTransacoes.length() - 4)
+	{
+		cout << "Volte a Indicar o Nome." << endl;
+		cin >> fichTransacoes;
+	}
+	fileTeste.open(fichTransacoes);
+	if (fileTeste.fail())
+	{
+		return false;
+	}
+	fileTeste.close();
+  
+	return true;
 }
 
 /******************************************
