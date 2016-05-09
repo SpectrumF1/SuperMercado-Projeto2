@@ -121,9 +121,10 @@ void Data::setAno(int ano){
 }
 
 void Data::save(ofstream & out) const{
-  // A IMPLEMENTAR
+	out << dia << "/" << mes << "/" << ano;
 }
 
 ostream& operator<<(ostream& out, const Data & data){
-  // A IMPLEMENTAR
+	out << data.dia << "/" << data.mes << "/" << data.ano;
+	return out;
 }
