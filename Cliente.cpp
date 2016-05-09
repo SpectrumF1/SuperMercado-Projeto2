@@ -2,7 +2,28 @@
 
 
 Cliente::Cliente(ifstream & in){
-  // kldsn
+	string line;
+	in.open("clientes.txt");
+	if (in.fail())
+	{
+		cerr << "Erro a abrir ficheiro";
+		exit(1);
+	}
+	else
+	{
+		getline(cin, line);
+		if (line.empty())
+		{
+			cout << "Formarto Nao Valido";
+		}
+		else
+		{
+			for (int i = 4 * stoi(line, nullptr, 10); i < 0; i -= 4)
+			{
+				getline(cin, line);
+			}
+		}
+	}
 }
 
 
