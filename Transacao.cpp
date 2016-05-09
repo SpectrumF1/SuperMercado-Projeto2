@@ -78,7 +78,3 @@ ostream& operator<<(ostream& out, const Transacao & trans){
 bool operator<(const Transacao &trans1, const Transacao &trans2) {
 	return trans1.getDataInt < trans2.getDataInt;
 }
-
-void Transacao::sortTransacaoByData(vector <Transacao> &transacaoVector) {
-	sort(transacaoVector.begin(), transacaoVector.end(), less<Transacao>());
-}
