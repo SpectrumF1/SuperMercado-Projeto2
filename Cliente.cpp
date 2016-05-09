@@ -31,15 +31,18 @@ float Cliente::getVolCompras() const{
 }
 
 void Cliente::save(ofstream & out) const{
-
+	out << id << endl
+		<< nome << endl
+		<< dataAdesao << endl
+		<< volCompras << endl;
   
 
 }
 
 ostream& operator<<(ostream& out, const Cliente & cli){
-	out << cli.id << endl
-		<< cli.nome << endl
-		<< cli.dataAdesao << endl
+	out << cli.id << " - "
+		<< cli.nome << " - "
+		<< cli.dataAdesao << " - "
 		<< cli.volCompras << endl;
 	return out;
 

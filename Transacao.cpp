@@ -28,7 +28,13 @@ Transacao::Transacao(ifstream & in){ // le uma transacao na forma de  idcliente 
 }
 
 void Transacao::save(ofstream & out) const{ // transacao guardada como na forma de  idcliente ; data ; lista produtos
-  // A IMPLEMENTAR
+	out << idCliente << " ; " << data << " , ";
+	for (unsigned int i = 0; i < produtos.size(); i++)
+	{
+		if (i = 0) out << produtos.at(i);
+		else out << "," << produtos.at(i);
+	}
+	out << endl;
 }
 
 
@@ -37,7 +43,7 @@ ostream& operator<<(ostream& out, const Transacao & trans){
 	for (unsigned int i = 0; i < trans.produtos.size(); i++)
 	{
 		if (i = 0) out << trans.produtos.at(i);
-		else out << "," <<  trans.produtos.at(i);
+		else out << ", " <<  trans.produtos.at(i);
 	}
 	out << endl;
 	return out;
