@@ -2,8 +2,11 @@
 
 
 VendeMaisMais::VendeMaisMais(string loja, string fichClients, string fichProdutos, string fichTransacoes){
-
-  // A IMPLEMENTAR 
+	this->loja = loja;
+	this->fichClientes = fichClients;
+	this->fichProdutos = fichProdutos;
+	this->fichTransacoes = fichProdutos;
+  
 }
 
 /*********************************
@@ -88,23 +91,12 @@ void VendeMaisMais::listarTransacoesData() const {
 
 // guarda apenas a informacao de clientes e/ou de transacoes que foi alterada
 void VendeMaisMais::saveChanges() const{
-	vector <Cliente> clientesTemp;
-	vector <Transacao> transacoesTemp;
 	string line;
-	ifstream fileIn;
 	ofstream fileOut;
 	char decision;
 
 	//guardar clientes
-	fileIn.open(fichClientes);
-	getline(cin, line);
-	for (unsigned int i = 4 * stoi(line, nullptr, 10); i > 0; i -= 4)
-	{
-		Cliente newClient(fileIn);
-		clientesTemp.push_back(newClient);
-	}
-	fileIn.close();
-	if (clientes != clientesTemp)
+	if (clientesAlterados)
 	{
 		cout << "Deseja Guarda as Alteracoes Feitas aos Clientes? (y/n)";
 		cin >> decision;
@@ -131,15 +123,8 @@ void VendeMaisMais::saveChanges() const{
 	}
 
 	//guarda transacoes
-	fileIn.open(fichTransacoes);
-	getline(cin, line);
-	for (unsigned int i = 4 * stoi(line, nullptr, 10); i > 0; i--)
-	{
-		Transacao newTransaction(fileIn);
-		transacoesTemp.push_back(newTransaction);
-	}
-	fileIn.close();
-	if (transacoes != transacoesTemp){
+
+	if (transacoesAlteradas){
 		cout << "Deseja Guarda as Alteracoes Feitas as Transacoes? (y/n)";
 		cin >> decision;
 		while (!(decision == 'Y' || decision == 'y' || decision == 'N' || decision == 'n'))
