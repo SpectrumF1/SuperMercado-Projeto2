@@ -1,5 +1,6 @@
 #include "Cliente.h"
-
+#include <algorithm>
+using namespace std;
 
 Cliente::Cliente(ifstream & in){
 	string line;
@@ -13,7 +14,12 @@ Cliente::Cliente(ifstream & in){
 	volCompras = stof(line);
 
 }
-
+Cliente::Cliente(unsigned int newId, string newNome, Data newData, float newVolCompras){
+	id = newId;
+	nome = newNome;
+	dataAdesao = newData;
+	volCompras = newVolCompras;
+}
 
 string Cliente::getNome() const{
   return nome;
@@ -48,9 +54,8 @@ ostream& operator<<(ostream& out, const Cliente & cli){
 
 }
 
-
 bool operator<(const Cliente &cli1, const Cliente &cli2){
-  // A IMPLEMENTAR
+	return cli1.nome < cli2.nome;
 }
 void Cliente::setNome(string newName){
 	nome = newName;
@@ -63,4 +68,10 @@ void Cliente::setDataAdesao(Data newDate){
 void Cliente::setVolCompras(float newVolCompras){
 	volCompras = newVolCompras;
 	cout << "Vol. de Compras de cliente com id: " << id << ", editado com sucesso para: " << volCompras << endl;
+}
+void Cliente::sortClientsByName(vector<Cliente> &clientsVector){
+	sort(clientsVector.begin(), clientsVector.end(), less<Cliente>());
+}
+void Cliente::removeClient(vector<Cliente> &clientsVec, unsigned int idCliente){
+	//NEEDS IMPLEMENTATIONS
 }

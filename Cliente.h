@@ -3,6 +3,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <vector>
 
 #include "Data.h"
 
@@ -18,6 +19,7 @@ class Cliente {
 
  public:
   Cliente(ifstream & in);
+  Cliente(unsigned int newId, string newNome, Data newData, float newVolCompras);
   string getNome() const;
   unsigned int getId() const;
   Data getDataAdesao() const;
@@ -28,5 +30,7 @@ class Cliente {
   void setNome(string newName);
   void setDataAdesao(Data newDate);
   void setVolCompras(float newVolCompras);
+  void removeClient(vector<Cliente> &clientsVec, unsigned int idCliente);
+  void sortClientsByName(vector<Cliente> &clientsVector);
 };
 
