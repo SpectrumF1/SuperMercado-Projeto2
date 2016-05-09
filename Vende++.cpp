@@ -73,7 +73,7 @@ void lerTransacoesTxt(VendeMaisMais &loja) {
  ********************************/  
 
 // lista os clientes por ordem alfabetica crescente
-void VendeMaisMais::listarClientesOrdemAlfa() const{
+void VendeMaisMais::listarClientesOrdemAlfa(){
 	sort(clientesVector.begin(), clientesVector.end(), less<Cliente>());
 	return;
 
@@ -126,7 +126,7 @@ int VendeMaisMais::getIndexByName(string nameOfClient) {
  ********************************/  
 
 // listar os produto por ordem alfabetica crescente
-void VendeMaisMais::listarProdutos() const{
+void VendeMaisMais::listarProdutos(){
 	sort(produtosVector.begin(), produtosVector.end(), less<Produto>());
 	return;
 
@@ -137,7 +137,7 @@ void VendeMaisMais::listarProdutos() const{
 ********************************/
 
 // listar as transacoes por ordem alfabetica crescente de data
-void VendeMaisMais::listarTransacoesData() const {
+void VendeMaisMais::listarTransacoesData() {
 	sort(transacoesVector.begin(), transacoesVector.end(), less<Transacao>());
 	return;
 }
