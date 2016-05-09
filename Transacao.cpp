@@ -1,4 +1,5 @@
 #include "Transacao.h"
+#include <algorithm>
 
 
 
@@ -6,6 +7,14 @@ unsigned int Transacao::getIdCliente() const{
   return idCliente;
 }
 
+unsigned int Transacao::getDataInt() const {
+	string dataString;
+	dataString = data.getAno;
+	dataString.append(data.getMes);
+	dataString.append(data.getDia);
+	return stoi(dataString, nullptr, 10);
+
+}
 
 
 Transacao::Transacao(ifstream & in){ // le uma transacao na forma de  idcliente ; data ; lista produtos
@@ -48,4 +57,13 @@ ostream& operator<<(ostream& out, const Transacao & trans){
 	out << endl;
 	return out;
 
+}
+
+
+bool operator<(const Transacao &trans1, const Transacao &trans2) {
+	return trans1.getDataInt < trans2.getDataInt;
+}
+
+void Transacao::sortTransacaoByData(vector <Transacao> &transacaoVector) {
+	sort(transacaoVector.begin(), transacaoVector.end(), less<Transacao>());
 }
