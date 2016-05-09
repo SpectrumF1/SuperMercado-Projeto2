@@ -11,7 +11,7 @@ Transacao::Transacao() {
 	getline(cin, transactionDateString);
 	cout << endl;
 	Data data(transactionDateString);
-	cout << "Insira o nome dos produtos (inserir '0' para parar) : ";
+	cout << "Insira o id do produto (inserir '0' para parar) : ";
 	cout << endl;
 	while (keepAddingProducts) {
 		getline(cin, newProduct);
