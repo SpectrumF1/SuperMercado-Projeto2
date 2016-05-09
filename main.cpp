@@ -11,7 +11,7 @@ int main(){
   string loja, fichClients, fichProdutos, fichTransacoes;
 
   // pede a informacoo sobre o nome da loja e os 3 ficheiros com
-  // informacoo de clientes, produtos e transacoes
+  // informacao de clientes, produtos e transacoes
   if(! infoInicial(loja, fichClients, fichProdutos, fichTransacoes))
     return(-1);
 

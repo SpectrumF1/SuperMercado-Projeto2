@@ -28,8 +28,6 @@ string Cliente::getNome() const{
 unsigned int Cliente::getId() const{
   return id;
 }
-
-
 Data Cliente::getDataAdesao() const{
 	return dataAdesao;
 }
@@ -73,33 +71,4 @@ void Cliente::setVolCompras(float newVolCompras){
 	volCompras = newVolCompras;
 	cout << "Vol. de Compras de cliente com id: " << id << ", editado com sucesso para: " << volCompras << endl;
 	return;
-}
-void Cliente::sortClientsByName(vector<Cliente> &clientsVector){
-	sort(clientsVector.begin(), clientsVector.end(), less<Cliente>());
-	return;
-}
-void Cliente::removeClient(vector<Cliente> &clientsVec, unsigned int idCliente){
-	for (unsigned int i = 0; i < clientsVec.size(); i++) {
-		if (clientsVec.at(i).getId == idCliente) {
-			clientsVec.erase(clientsVec.begin() + i);
-		}
-	}
-	return;
-}
-
-int getIndexById(unsigned int idOfClient, vector<Cliente> &clientsVector) {
-	for (unsigned int i = 0; i < clientsVector.size(); i++) {
-		if (clientsVector.at(i).getId() == idOfClient) {
-			return i;
-		}
-	}
-	return -1;
-}
-int getIndexByName(string nameOfClient, vector<Cliente> &clientsVector) {
-	for (unsigned int i = 0; i < clientsVector.size(); i++) {
-		if (clientsVector.at(i).getNome() == nameOfClient) {
-			return i;
-		}
-	}
-	return -1;
 }

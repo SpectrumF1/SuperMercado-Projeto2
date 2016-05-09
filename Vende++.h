@@ -37,7 +37,11 @@ class VendeMaisMais{
   VendeMaisMais(string loja, string fichClients, string fichProdutos, string fichTransacoes);
   void listarClientesOrdemAlfa() const;
   void listarProdutos() const;
+  void listarTransacoesData() const;
+  void removeClient(unsigned int idCliente);
   void mostraInformacaoCliente(string nome);
+  int getIndexById(unsigned int idOfClient);
+  int getIndexByName(string nameOfClient);
   void saveChanges() const;
 
   friend ostream& operator<<(ostream& out, const VendeMaisMais & supermercado);

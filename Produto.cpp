@@ -25,5 +25,5 @@ ostream& operator<<(ostream& out, const Produto & prod){
 
 
 bool operator<(const Produto &prod1, const Produto &prod2){
-  // A IMPLEMENTAR
+	return prod1.nome < prod2.nome;
 }

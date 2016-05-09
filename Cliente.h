@@ -4,7 +4,6 @@
 #include <fstream>
 #include <string>
 #include <vector>
-
 #include "Data.h"
 
 using namespace std;
@@ -31,6 +30,4 @@ class Cliente {
   void setDataAdesao(Data newDate);
   void setVolCompras(float newVolCompras);
 };
-int getIndexById(unsigned int idOfClient, vector<Cliente> &clientsVector);
-int getIndexByName(string nameOfClient, vector<Cliente> &clientsVector);
 
