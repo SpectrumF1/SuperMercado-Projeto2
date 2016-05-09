@@ -24,6 +24,9 @@ class Data {
   int getDia() const;
   int getMes() const;
   int getAno() const;
+  string getDay() const;
+  string getMonth() const;
+  string getYear() const;
   void setDia(int dia);
   void setMes(int mes);
   void setAno(int ano);

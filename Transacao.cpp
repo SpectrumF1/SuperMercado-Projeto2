@@ -9,9 +9,9 @@ unsigned int Transacao::getIdCliente() const{
 
 unsigned int Transacao::getDataInt() const {
 	string dataString;
-	dataString = data.getAno;
-	dataString.append(data.getMes);
-	dataString.append(data.getDia);
+	dataString = data.getYear;
+	dataString.append(data.getMonth);
+	dataString.append(data.getDay);
 	return stoi(dataString, nullptr, 10);
 
 }
