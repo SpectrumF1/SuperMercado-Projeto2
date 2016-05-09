@@ -1,12 +1,26 @@
 #include "Vende++.h"
 
 
+
 VendeMaisMais::VendeMaisMais(string loja, string fichClients, string fichProdutos, string fichTransacoes){
 	this->loja = loja;
 	this->fichClientes = fichClients;
 	this->fichProdutos = fichProdutos;
 	this->fichTransacoes = fichProdutos;
   
+}
+
+
+void lerProdutosTxt(string filename, vector<Produto> &productsVector) {
+	string numberOfLinesString;
+	ifstream inStream;
+	inStream.open(filename);
+	getline(inStream, numberOfLinesString);
+	for (unsigned int i = 0; i < stoi(numberOfLinesString); i++){
+		Produto newProduct(inStream);
+		productsVector.push_back(newProduct);
+	}
+	return;
 }
 
 /*********************************
