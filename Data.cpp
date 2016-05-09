@@ -108,6 +108,18 @@ int Data::getAno() const{
   return ano;
 }
 
+string Data::getDay() const {
+	return day;
+}
+
+string Data::getMonth() const {
+	return month;
+}
+
+string Data::getYear() const {
+	return year;
+}
+
 void Data::setDia(int dia){
 	this->dia = dia;
 }

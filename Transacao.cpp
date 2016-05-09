@@ -1,6 +1,20 @@
 #include "Transacao.h"
-
 #include <algorithm>
+#include "Data.h"
+
+unsigned int Transacao::getIdCliente() const{
+  return idCliente;
+}
+
+unsigned int Transacao::getDataInt() const {
+	string dataString;
+	dataString = data.getYear();
+	dataString.append(data.getMonth());
+	dataString.append(data.getDay());
+	return stoi(dataString, nullptr, 10);
+}
+
+
 
 
 Transacao::Transacao(ifstream & in, vector<Cliente> &clientsVector) { // le uma transacao na forma de  idcliente ; data ; lista produtos
