@@ -3,32 +3,15 @@
 
 Cliente::Cliente(ifstream & in){
 	string line;
-	in.open("clientes.txt");
-	if (in.fail())
-	{
-		cerr << "Erro a abrir ficheiro";
-		exit(1);
-	}
-	else
-	{
-		getline(cin, line);
-		if (line.empty())
-		{
-			cout << "Formarto Nao Valido";
-		}
-		else
-		{
-			getline(cin, line);
-			id = stoi(line, nullptr, 10);
-			getline(cin, line);
-			nome = line;
-			getline(cin, line);
-			dataAdesao = line;
-			getline(cin, line);
-			volCompras = stof(line);
+	getline(cin, line);
+	id = stoi(line, nullptr, 10);
+	getline(cin, line);
+	nome = line;
+	getline(cin, line);
+	dataAdesao = line;
+	getline(cin, line);
+	volCompras = stof(line);
 
-		}
-	}
 }
 
 
@@ -49,7 +32,7 @@ float Cliente::getVolCompras() const{
 
 void Cliente::save(ofstream & out) const{
 
-  // A IMPLEMENTAR
+  
 
 }
 
