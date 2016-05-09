@@ -78,7 +78,6 @@ unsigned short int menuGestaoClientes(){
 void opcoesGestaoClientes(VendeMaisMais & supermercado){
   unsigned int opcao;
   string nome;
-
   while((opcao = menuGestaoClientes()))
     switch (opcao){
     case 1: supermercado.listarClientesOrdemAlfa();
@@ -185,8 +184,6 @@ unsigned short int menuInicial(){
 
 void opcoesIniciais(VendeMaisMais & supermercado){
   unsigned int opcao;
-
-
   while((opcao = menuInicial()))
     switch (opcao){
     case 1: opcoesGestaoClientes(supermercado);

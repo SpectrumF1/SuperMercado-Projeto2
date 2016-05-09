@@ -17,18 +17,18 @@ VendeMaisMais::VendeMaisMais(string loja, string fichClients, string fichProduto
 // Le ficheiros e guarda nos vetores
 
 void lerClientesTxt(VendeMaisMais &loja) {
-	ifstream file(loja.fichClientes);
+	ifstream inStream(loja.fichClientes);
 	string line;
 
-	if (file.is_open())
+	if (inStream.is_open())
 	{
-		getline(cin, line);
+		getline(inStream, line);
 		for (unsigned int i = 4*stoi(line, nullptr, 10); i > 0; i-=4)
 		{
-			Cliente newclient(file);
+			Cliente newclient(inStream);
 			loja.clientesVector.push_back(newclient);
 		}
-		file.close();
+		inStream.close();
 	}
 }
 
@@ -75,6 +75,7 @@ void lerTransacoesTxt(VendeMaisMais &loja) {
 // lista os clientes por ordem alfabetica crescente
 void VendeMaisMais::listarClientesOrdemAlfa(){
 	sort(clientesVector.begin(), clientesVector.end(), less<Cliente>());
+	cout << "Clientes ordenados com sucesso por ordem alfabetica" << endl;
 	return;
 
 }
@@ -93,8 +94,12 @@ void VendeMaisMais::removeClient(unsigned int idCliente) {
 
 // mostra a informacao individual de um cliente
 void VendeMaisMais::mostraInformacaoCliente(string nome){
-
-
+	for (unsigned int i = 0; i < clientesVector.size(); i++) {
+		if (clientesVector.at(i).getNome() == nome) {
+			cout << clientesVector.at(i);
+			break;
+		}
+	}
 
 }
 
@@ -128,6 +133,7 @@ int VendeMaisMais::getIndexByName(string nameOfClient) {
 // listar os produto por ordem alfabetica crescente
 void VendeMaisMais::listarProdutos(){
 	sort(produtosVector.begin(), produtosVector.end(), less<Produto>());
+	cout << "Produtos ordenados com sucesso por ordem alfabetica" << endl;
 	return;
 
 }
@@ -139,6 +145,7 @@ void VendeMaisMais::listarProdutos(){
 // listar as transacoes por ordem alfabetica crescente de data
 void VendeMaisMais::listarTransacoesData() {
 	sort(transacoesVector.begin(), transacoesVector.end(), less<Transacao>());
+	cout << "Transacoes ordenadas com sucesso por data" << endl;
 	return;
 }
 
