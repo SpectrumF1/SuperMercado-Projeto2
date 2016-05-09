@@ -1,6 +1,10 @@
 #include "Transacao.h"
 
-
+void createCompra(vector<Transacao> &transactionsVector) {
+	unsigned int clientId;
+	cout << "Introduza o id do cliente: ";
+	
+}
 
 unsigned int Transacao::getIdCliente() const{
   return idCliente;
@@ -60,7 +64,6 @@ void Transacao::save(ofstream & out) const{ // transacao guardada como na forma 
 	}
 	out << endl;
 }
-
 
 ostream& operator<<(ostream& out, const Transacao & trans){
 	out << trans.idCliente << " ; " << trans.data << " , "	;

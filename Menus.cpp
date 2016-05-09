@@ -97,7 +97,7 @@ void opcoesGestaoClientes(VendeMaisMais & supermercado){
 /******************************************
  * Gestao de Transacoes
  ******************************************/
-unsigned short int menuGestaoTransacoes(){
+unsigned short int menuGestaoTransacoes() {
 	unsigned short int opcao;
 
 	clearScreen();
@@ -114,7 +114,7 @@ unsigned short int menuGestaoTransacoes(){
 		return 0;
 	}
 	return opcao;
-
+}
 
 void opcoesGestaoTransacoes(VendeMaisMais & supermercado){
   unsigned int opcao;
