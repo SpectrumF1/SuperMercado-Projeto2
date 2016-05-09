@@ -2,7 +2,10 @@
 
 
 Produto::Produto(ifstream & in){ // nome ; custo
-  // A IMPLEMENTAR
+	string line;
+	getline(cin, line);
+	nome = line.substr(0, line.find(";") - 1);
+	custo = stof(line.substr(line.find(";") + 2, line.size() - line.find(";")));
 }
 
 string Produto::getNome() const {
