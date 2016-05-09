@@ -70,6 +70,17 @@ void VendeMaisMais::listarProdutos() const{
 
 }
 
+/*********************************
+* Gestao de Transacoes
+********************************/
+
+// listar as transacoes por ordem alfabetica crescente de data
+void VendeMaisMais::listarTransacoesData() const {
+	sort(transacoes.begin(), transacoes.end(), less<Transacao>());
+	return;
+}
+
+
 
 /*********************************
  * Preservar Informacao
