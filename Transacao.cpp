@@ -1,6 +1,6 @@
 #include "Transacao.h"
-#include <algorithm>
-#include "Data.h"
+
+
 
 unsigned int Transacao::getIdCliente() const{
   return idCliente;
@@ -13,7 +13,9 @@ unsigned int Transacao::getDataInt() const {
 	dataString.append(data.getDay());
 	return stoi(dataString, nullptr, 10);
 }
-
+vector<string> Transacao::getProdutosVector() const {
+	return produtosVector;
+}
 
 
 
@@ -33,13 +35,6 @@ Transacao::Transacao(ifstream & in, vector<Cliente> &clientsVector) { // le uma 
 		produtosVector.push_back(products.substr(0, products.find_first_of(",")));
 		products.erase(0, products.find_first_of(",") + 2);
 	}
-	unsigned int indexOfClient = getIndexById(idCliente, clientsVector);
-	float oldMontante = clientsVector.at(indexOfClient).getVolCompras();
-	float newMontante = oldMontante;
-	for (unsigned int i = 0; i < produtosVector.size(); i++) {
-		newMontante;
-	}
-
 }
 
 
