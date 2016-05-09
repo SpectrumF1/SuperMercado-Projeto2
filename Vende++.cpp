@@ -27,6 +27,7 @@ void lerProdutosTxt(string filename, vector <Cliente> &clienteVector) {
 			Cliente newclient(file);
 			clienteVector.push_back(newclient);
 		}
+		file.close();
 	}
 }
 
