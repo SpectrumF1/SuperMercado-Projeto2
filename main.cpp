@@ -23,7 +23,7 @@ int main(){
 
   opcoesIniciais(supermercado); // menu inicial com as grandes opcoes
 				// que implementam as funcioanlidades
-				// disonibilizadas
+				// disponibilizadas
 
   return 0;
 }
