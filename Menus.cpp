@@ -140,6 +140,7 @@ void opcoesGestaoTransacoes(VendeMaisMais & supermercado){
  ******************************************/
 unsigned short int menuRecomendacao(){
 
+	return 0;
 }
 
 void opcoesRecomendacao(VendeMaisMais & supermercado){

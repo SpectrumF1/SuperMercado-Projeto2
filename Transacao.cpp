@@ -59,19 +59,6 @@ vector<string> Transacao::getProdutosVector() const {
 }
 
 
-unsigned int Transacao::getIdCliente() const{
-  return idCliente;
-}
-
-unsigned int Transacao::getDataInt() const {
-	string dataString;
-	dataString = data.getAno;
-	dataString.append(data.getMes);
-	dataString.append(data.getDia);
-	return stoi(dataString, nullptr, 10);
-}
-
-
 void Transacao::save(ofstream & out) const{ // transacao guardada como na forma de  idcliente ; data ; lista produtos
 	out << idCliente << " ; " << data << " , ";
 	for (unsigned int i = 0; i < produtosVector.size(); i++)
@@ -96,5 +83,5 @@ ostream& operator<<(ostream& out, const Transacao & trans){
 
 
 bool operator<(const Transacao &trans1, const Transacao &trans2) {
-	return trans1.getDataInt < trans2.getDataInt;
+	return trans1.getDataInt() < trans2.getDataInt();
 }

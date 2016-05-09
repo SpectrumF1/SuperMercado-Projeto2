@@ -73,7 +73,7 @@ void lerTransacoesTxt(VendeMaisMais &loja) {
  ********************************/  
 
 // lista os clientes por ordem alfabetica crescente
-void VendeMaisMais::listarClientesOrdemAlfa() const{
+void VendeMaisMais::listarClientesOrdemAlfa(){
 	sort(clientesVector.begin(), clientesVector.end(), less<Cliente>());
 	return;
 
@@ -83,7 +83,7 @@ void VendeMaisMais::listarClientesOrdemAlfa() const{
 void VendeMaisMais::removeClient(unsigned int idCliente) {
 	for (unsigned int i = 0; i < clientesVector.size(); i++)
 	{
-		if (clientesVector.at(i).getId == idCliente)
+		if (clientesVector.at(i).getId() == idCliente)
 		{
 			clientesVector.erase(clientesVector.begin() + i);
 		}
@@ -126,7 +126,7 @@ int VendeMaisMais::getIndexByName(string nameOfClient) {
  ********************************/  
 
 // listar os produto por ordem alfabetica crescente
-void VendeMaisMais::listarProdutos() const{
+void VendeMaisMais::listarProdutos(){
 	sort(produtosVector.begin(), produtosVector.end(), less<Produto>());
 	return;
 
@@ -137,7 +137,7 @@ void VendeMaisMais::listarProdutos() const{
 ********************************/
 
 // listar as transacoes por ordem alfabetica crescente de data
-void VendeMaisMais::listarTransacoesData() const {
+void VendeMaisMais::listarTransacoesData() {
 	sort(transacoesVector.begin(), transacoesVector.end(), less<Transacao>());
 	return;
 }
@@ -200,7 +200,7 @@ void VendeMaisMais::saveChanges() const{
 			{
 				transacoesVector.at(i).save(fileOut);
 			}
-			fileOut.close;
+			fileOut.close();
 		}
 		else
 		{
