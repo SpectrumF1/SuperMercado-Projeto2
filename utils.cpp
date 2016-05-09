@@ -10,22 +10,23 @@ void clearScreen(){
 
 unsigned short int leUnsignedShortInt(unsigned short int minValue, unsigned short int  maxValue){
 	unsigned int short newInt;
-	cin >> newInt;
-	while (newInt < minValue || newInt > maxValue || cin.fail()){
+	while (!cin >> newInt) {
+		cout << endl;
 		cin.clear();
 		cin.ignore();
-		cout << "Introduza o novo short int: ";
-		cin >> newInt;
-		cout << endl;
+		cout << "Valor invalido. Introduza um novo unsigned short int: ";
 	}
-	cin.ignore();
- //Implementado
 
 }
 
 
 int leInteiro(int min, int max){
-
-  // A IMPLEMENTAR
-
+	int newInt;
+	while(!cin >> newInt) {
+		cout << endl;
+		cin.clear();
+		cin.ignore();
+		cout << "Valor invalido. Introduza um novo int: ";
+	}
+	return newInt;
 }
