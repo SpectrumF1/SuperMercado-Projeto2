@@ -22,6 +22,7 @@ class Transacao {
 
  public:
   Transacao(ifstream & in, vector<Cliente> &clientsVector); // transacao na forma de  idCliente ; data ; lista de produtos
+  Transacao(ifstream & in); // transacao na forma de  idCliente ; data ; lista de produtos
   unsigned int getIdCliente() const;
   unsigned int getDataInt() const;
   vector<string> getProdutosVector() const;
