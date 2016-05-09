@@ -89,24 +89,47 @@ void VendeMaisMais::listarTransacoesData() const {
 // guarda apenas a informacao de clientes e/ou de transacoes que foi alterada
 void VendeMaisMais::saveChanges() const{
 	vector <Cliente> clientesTemp;
+	vector <Transacao> transacoesTemp;
 	string line;
 	ifstream fileIn;
+	ofstream fileOut;
+
+	//guardar clientes
 	fileIn.open(fichClientes);
 	getline(cin, line);
 	for (unsigned int i = 4 * stoi(line, nullptr, 10); i > 0; i -= 4)
 	{
-		Cliente newClient (fileIn);
+		Cliente newClient(fileIn);
 		clientesTemp.push_back(newClient);
 	}
 	fileIn.close();
-	ofstream fileOut (fichClientes);
 	if (clientes != clientesTemp)
 	{
+		fileOut.open(fichClientes);
 		for (unsigned int i = 0; i < clientes.size(); i++)
 		{
 			clientes.at(i).save(fileOut);
 		}
 	}
+	fileOut.close();
+
+	//guarda transacoes
+	fileIn.open(fichTransacoes);
+	getline(cin, line);
+	for (unsigned int i = 4 * stoi(line, nullptr, 10); i > 0; i--)
+	{
+		Transacao newTransaction(fileIn);
+		transacoesTemp.push_back(newTransaction);
+	}
+	fileIn.close();
+	if (transacoes != transacoesTemp){
+		fileOut.open(fichTransacoes);
+		for (unsigned int i = 0; i < transacoes.size(); i++)
+		{
+			transacoes.at(i).save(fileOut);
+		}
+	}
+	fileOut.close;
 
 }
 
