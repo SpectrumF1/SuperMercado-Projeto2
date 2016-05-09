@@ -18,10 +18,15 @@ Cliente::Cliente(ifstream & in){
 		}
 		else
 		{
-			for (int i = 4 * stoi(line, nullptr, 10); i < 0; i -= 4)
-			{
-				getline(cin, line);
-			}
+			getline(cin, line);
+			id = stoi(line, nullptr, 10);
+			getline(cin, line);
+			nome = line;
+			getline(cin, line);
+			dataAdesao = line;
+			getline(cin, line);
+			volCompras = stof(line);
+
 		}
 	}
 }
