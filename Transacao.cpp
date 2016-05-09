@@ -30,7 +30,7 @@ Transacao::Transacao(ifstream & in){ // le uma transacao na forma de  idcliente 
 	//passa os produtos da string para um vetor de produtos
 	while (!(products.empty()))
 	{
-		produtos.push_back(products.substr(0, products.find_first_of(",")));
+		produtosVector.push_back(products.substr(0, products.find_first_of(",")));
 		products.erase(0, products.find_first_of(",") + 2);
 	}
 
@@ -38,10 +38,10 @@ Transacao::Transacao(ifstream & in){ // le uma transacao na forma de  idcliente 
 
 void Transacao::save(ofstream & out) const{ // transacao guardada como na forma de  idcliente ; data ; lista produtos
 	out << idCliente << " ; " << data << " , ";
-	for (unsigned int i = 0; i < produtos.size(); i++)
+	for (unsigned int i = 0; i < produtosVector.size(); i++)
 	{
-		if (i = 0) out << produtos.at(i);
-		else out << "," << produtos.at(i);
+		if (i = 0) out << produtosVector.at(i);
+		else out << "," << produtosVector.at(i);
 	}
 	out << endl;
 }
@@ -49,10 +49,10 @@ void Transacao::save(ofstream & out) const{ // transacao guardada como na forma 
 
 ostream& operator<<(ostream& out, const Transacao & trans){
 	out << trans.idCliente << " ; " << trans.data << " , "	;
-	for (unsigned int i = 0; i < trans.produtos.size(); i++)
+	for (unsigned int i = 0; i < trans.produtosVector.size(); i++)
 	{
-		if (i = 0) out << trans.produtos.at(i);
-		else out << ", " <<  trans.produtos.at(i);
+		if (i = 0) out << trans.produtosVector.at(i);
+		else out << ", " <<  trans.produtosVector.at(i);
 	}
 	out << endl;
 	return out;

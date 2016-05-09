@@ -41,7 +41,7 @@ void Cliente::save(ofstream & out) const{
 		<< nome << endl
 		<< dataAdesao << endl
 		<< volCompras << endl;
-  
+	return;
 
 }
 
@@ -60,18 +60,27 @@ bool operator<(const Cliente &cli1, const Cliente &cli2){
 void Cliente::setNome(string newName){
 	nome = newName;
 	cout << "Nome de cliente com id: " << id << ", editado com sucesso para: " << nome << endl;
+	return;
 }
 void Cliente::setDataAdesao(Data newDate){
 	dataAdesao = newDate;
 	cout << "Data de adesao de cliente com id: " << id << ", editado com sucesso para: " << dataAdesao << endl;
+	return;
 }
 void Cliente::setVolCompras(float newVolCompras){
 	volCompras = newVolCompras;
 	cout << "Vol. de Compras de cliente com id: " << id << ", editado com sucesso para: " << volCompras << endl;
+	return;
 }
 void Cliente::sortClientsByName(vector<Cliente> &clientsVector){
 	sort(clientsVector.begin(), clientsVector.end(), less<Cliente>());
+	return;
 }
 void Cliente::removeClient(vector<Cliente> &clientsVec, unsigned int idCliente){
-	//NEEDS IMPLEMENTATIONS
+	for (unsigned int i = 0; i < clientsVec.size(); i++) {
+		if (clientsVec.at(i).getId == idCliente) {
+			clientsVec.erase(clientsVec.begin() + i);
+		}
+	}
+	return;
 }
