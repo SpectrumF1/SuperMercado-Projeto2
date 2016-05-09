@@ -93,7 +93,7 @@ void VendeMaisMais::saveChanges() const{
 	ifstream fileIn;
 	fileIn.open(fichClientes);
 	getline(cin, line);
-	for (int i = 4 * stoi(line, nullptr, 10); i > 0; i -= 4)
+	for (unsigned int i = 4 * stoi(line, nullptr, 10); i > 0; i -= 4)
 	{
 		Cliente newClient (fileIn);
 		clientesTemp.push_back(newClient);
@@ -102,7 +102,7 @@ void VendeMaisMais::saveChanges() const{
 	ofstream fileOut (fichClientes);
 	if (clientes != clientesTemp)
 	{
-		for (int i = 0; i < clientes.size(); i++)
+		for (unsigned int i = 0; i < clientes.size(); i++)
 		{
 			clientes.at(i).save(fileOut);
 		}
