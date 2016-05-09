@@ -63,10 +63,10 @@ int VendeMaisMais::getIndexByName(string nameOfClient) {
  * Gestao de Produtos
  ********************************/  
 
-// lisat os produto por ordem alfabetica crescente
+// listar os produto por ordem alfabetica crescente
 void VendeMaisMais::listarProdutos() const{
-
-  // A IMPLEMENTAR 
+	sort(produtos.begin(), produtos.end(), less<Produto>());
+	return;
 
 }
 
