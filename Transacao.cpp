@@ -4,14 +4,13 @@ Transacao::Transacao() {
 	unsigned int clientId;
 	string transactionDateString;
 	string newProduct;
-	vector<string> produtosVec;
 	bool keepAddingProducts = true;
 	cout << "Introduza o id do cliente: ";
-	clientId = leUnsignedInt();
+	idCliente = leUnsignedInt();
 	cout << "Insira a data da transacao: ";
 	getline(cin, transactionDateString);
 	cout << endl;
-	Data transactionDate(transactionDateString);
+	Data data(transactionDateString);
 	cout << "Insira o nome dos produtos (inserir '0' para parar) : ";
 	cout << endl;
 	while (keepAddingProducts) {
@@ -20,12 +19,9 @@ Transacao::Transacao() {
 			keepAddingProducts = false;
 		}
 		else {
-			produtosVec.push_back(newProduct);
+			produtosVector.push_back(newProduct);
 		}
 	}
-	idCliente = clientId;
-	data = transactionDate;
-	produtosVector = produtosVec;
 	
 }
 
