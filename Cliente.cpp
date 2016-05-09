@@ -28,6 +28,8 @@ string Cliente::getNome() const{
 unsigned int Cliente::getId() const{
   return id;
 }
+
+
 Data Cliente::getDataAdesao() const{
 	return dataAdesao;
 }
@@ -83,4 +85,21 @@ void Cliente::removeClient(vector<Cliente> &clientsVec, unsigned int idCliente){
 		}
 	}
 	return;
+}
+
+int getIndexById(unsigned int idOfClient, vector<Cliente> &clientsVector) {
+	for (unsigned int i = 0; i < clientsVector.size(); i++) {
+		if (clientsVector.at(i).getId() == idOfClient) {
+			return i;
+		}
+	}
+	return -1;
+}
+int getIndexByName(string nameOfClient, vector<Cliente> &clientsVector) {
+	for (unsigned int i = 0; i < clientsVector.size(); i++) {
+		if (clientsVector.at(i).getNome() == nameOfClient) {
+			return i;
+		}
+	}
+	return -1;
 }

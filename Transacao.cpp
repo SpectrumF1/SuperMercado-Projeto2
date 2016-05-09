@@ -1,6 +1,32 @@
 #include "Transacao.h"
+
 #include <algorithm>
 
+
+Transacao::Transacao(ifstream & in, vector<Cliente> &clientsVector) { // le uma transacao na forma de  idcliente ; data ; lista produtos
+	string line, products;
+	getline(cin, line);
+	idCliente = stoi(line.substr(0, line.find_first_of(";")), nullptr, 10);
+	data = line.substr(line.find_first_of(";") + 1, 10);
+
+	//define uma string de todos os produtos a serem tratados
+	products = line.substr(line.find_last_of(";") + 2, line.length() - line.find_last_of(";") - 2);
+	products.append(", ");
+
+	//passa os produtos da string para um vetor de produtos
+	while (!(products.empty()))
+	{
+		produtosVector.push_back(products.substr(0, products.find_first_of(",")));
+		products.erase(0, products.find_first_of(",") + 2);
+	}
+	unsigned int indexOfClient = getIndexById(idCliente, clientsVector);
+	float oldMontante = clientsVector.at(indexOfClient).getVolCompras();
+	float newMontante = oldMontante;
+	for (unsigned int i = 0; i < produtosVector.size(); i++) {
+		newMontante;
+	}
+
+}
 
 
 unsigned int Transacao::getIdCliente() const{
@@ -13,28 +39,8 @@ unsigned int Transacao::getDataInt() const {
 	dataString.append(data.getMes);
 	dataString.append(data.getDia);
 	return stoi(dataString, nullptr, 10);
-
 }
 
-
-Transacao::Transacao(ifstream & in){ // le uma transacao na forma de  idcliente ; data ; lista produtos
-	string line, products;
-	getline(cin, line);
-	idCliente = stoi(line.substr(0, line.find_first_of(";")), nullptr, 10);
-	data = line.substr(line.find_first_of(";")+1, 10);
-
-	//define uma string de todos os produtos a serem tratados
-	products = line.substr(line.find_last_of(";") + 2, line.length() - line.find_last_of(";") - 2);
-	products.append(", ");
-
-	//passa os produtos da string para um vetor de produtos
-	while (!(products.empty()))
-	{
-		produtosVector.push_back(products.substr(0, products.find_first_of(",")));
-		products.erase(0, products.find_first_of(",") + 2);
-	}
-
-}
 
 void Transacao::save(ofstream & out) const{ // transacao guardada como na forma de  idcliente ; data ; lista produtos
 	out << idCliente << " ; " << data << " , ";
