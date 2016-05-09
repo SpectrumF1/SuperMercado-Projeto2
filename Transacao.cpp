@@ -19,7 +19,7 @@ vector<string> Transacao::getProdutosVector() const {
 
 
 
-Transacao::Transacao(ifstream & in, vector<Cliente> &clientsVector) { // le uma transacao na forma de  idcliente ; data ; lista produtos
+Transacao::Transacao(ifstream & in) { // le uma transacao na forma de  idcliente ; data ; lista produtos
 	string line, products;
 	getline(cin, line);
 	idCliente = stoi(line.substr(0, line.find_first_of(";")), nullptr, 10);
