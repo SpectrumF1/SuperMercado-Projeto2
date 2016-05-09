@@ -10,6 +10,27 @@ VendeMaisMais::VendeMaisMais(string loja, string fichClients, string fichProduto
 }
 
 /*********************************
+* Ler Ficheiros
+********************************/
+
+// Lê ficheiros e guarda nos vetores
+
+void lerProdutosTxt(string filename, vector <Cliente> &clienteVector) {
+	ifstream file(filename);
+	string line;
+
+	if (file.is_open())
+	{
+		getline(cin, line);
+		for (unsigned int i = 4*stoi(line, nullptr, 10); i > 0; i-=4)
+		{
+			Cliente newclient(file);
+			clienteVector.push_back(newclient);
+		}
+	}
+}
+
+/*********************************
  * Gestao de Clientes
  ********************************/  
 
