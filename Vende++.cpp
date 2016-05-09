@@ -83,7 +83,7 @@ void VendeMaisMais::listarClientesOrdemAlfa() const{
 void VendeMaisMais::removeClient(unsigned int idCliente) {
 	for (unsigned int i = 0; i < clientesVector.size(); i++)
 	{
-		if (clientesVector.at(i).getId == idCliente)
+		if (clientesVector.at(i).getId() == idCliente)
 		{
 			clientesVector.erase(clientesVector.begin() + i);
 		}
@@ -200,7 +200,7 @@ void VendeMaisMais::saveChanges() const{
 			{
 				transacoesVector.at(i).save(fileOut);
 			}
-			fileOut.close;
+			fileOut.close();
 		}
 		else
 		{
