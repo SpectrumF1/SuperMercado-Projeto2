@@ -4,7 +4,6 @@
 #include <fstream>
 #include <string>
 #include <vector>
-
 #include "Data.h"
 
 using namespace std;

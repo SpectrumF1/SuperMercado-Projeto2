@@ -36,6 +36,29 @@ void VendeMaisMais::mostraInformacaoCliente(string nome){
 
 }
 
+
+int VendeMaisMais::getIndexById(unsigned int idOfClient) {
+	for (unsigned int i = 0; i < clientes.size(); i++)
+	{
+		if (clientes.at(i).getId() == idOfClient)
+		{
+			return i;
+		}
+	}
+	return -1;
+}
+
+int VendeMaisMais::getIndexByName(string nameOfClient) {
+	for (unsigned int i = 0; i < clientes.size(); i++)
+	{
+		if (clientes.at(i).getNome() == nameOfClient)
+		{
+			return i;
+		}
+	}
+	return -1;
+}
+
 /*********************************
  * Gestao de Produtos
  ********************************/  
