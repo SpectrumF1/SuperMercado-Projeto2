@@ -93,6 +93,7 @@ void VendeMaisMais::saveChanges() const{
 	string line;
 	ifstream fileIn;
 	ofstream fileOut;
+	char decision;
 
 	//guardar clientes
 	fileIn.open(fichClientes);
@@ -105,13 +106,29 @@ void VendeMaisMais::saveChanges() const{
 	fileIn.close();
 	if (clientes != clientesTemp)
 	{
-		fileOut.open(fichClientes);
-		for (unsigned int i = 0; i < clientes.size(); i++)
+		cout << "Deseja Guarda as Alteracoes Feitas aos Clientes? (y/n)";
+		cin >> decision;
+		while (!(decision == 'Y' || decision == 'y' || decision == 'N' || decision == 'n'))
 		{
-			clientes.at(i).save(fileOut);
+			cout << endl << "Se Sim digite 'Y', caso contrario digite 'N': ";
+			cin >> decision;
+		}
+
+		//alteracao
+		if (decision == 'Y' || decision == 'y')
+		{
+			fileOut.open(fichClientes);
+			for (unsigned int i = 0; i < clientes.size(); i++)
+			{
+				clientes.at(i).save(fileOut);
+			}
+			fileOut.close();
+		}
+		else 
+		{
+			cout << "Nenhuma Alteracao Guardada!";
 		}
 	}
-	fileOut.close();
 
 	//guarda transacoes
 	fileIn.open(fichTransacoes);
@@ -123,14 +140,29 @@ void VendeMaisMais::saveChanges() const{
 	}
 	fileIn.close();
 	if (transacoes != transacoesTemp){
-		fileOut.open(fichTransacoes);
-		for (unsigned int i = 0; i < transacoes.size(); i++)
+		cout << "Deseja Guarda as Alteracoes Feitas as Transacoes? (y/n)";
+		cin >> decision;
+		while (!(decision == 'Y' || decision == 'y' || decision == 'N' || decision == 'n'))
 		{
-			transacoes.at(i).save(fileOut);
+			cout << endl << "Se Sim digite 'Y', caso contrario digite 'N': ";
+			cin >> decision;
+		}
+
+		//alteracao
+		if (decision == 'Y' || decision == 'y')
+		{
+			fileOut.open(fichTransacoes);
+			for (unsigned int i = 0; i < transacoes.size(); i++)
+			{
+				transacoes.at(i).save(fileOut);
+			}
+			fileOut.close;
+		}
+		else
+		{
+			cout << "Nenhuma Alteracao Guardada!";
 		}
 	}
-	fileOut.close;
-
 }
 
 /*********************************
