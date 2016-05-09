@@ -27,9 +27,9 @@ void lerProdutosTxt(string filename, vector<Produto> &productsVector) {
 * Ler Ficheiros
 ********************************/
 
-// Lê ficheiros e guarda nos vetores
+// Le ficheiros e guarda nos vetores
 
-void lerProdutosTxt(string filename, vector <Cliente> &clienteVector) {
+void lerClientesTxt(string filename, vector <Cliente> &clienteVector) {
 	ifstream file(filename);
 	string line;
 
