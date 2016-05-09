@@ -1,6 +1,6 @@
 Falta fazer:
 ---------------------------------
-Estatisticas da loja (Vende++)
+Estatisticas da loja (Vende++)->ja começado
 mostraInformacaoCliente (Vende++)
 
 
