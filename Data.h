@@ -14,6 +14,9 @@ class Data {
   int dia;
   int mes;
   int ano;
+  string day;
+  string month;
+  string year;
 
  public:
   Data(){};
