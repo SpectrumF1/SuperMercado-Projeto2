@@ -1,10 +1,53 @@
 #include "Vende++.h"
 
 
-VendeMaisMais::VendeMaisMais(string loja, string fichClients, string fichProdutos, string fichTransacoes){
 
-  // A IMPLEMENTAR 
+VendeMaisMais::VendeMaisMais(string loja, string fichClients, string fichProdutos, string fichTransacoes){
+	this->loja = loja;
+	this->fichClientes = fichClients;
+	this->fichProdutos = fichProdutos;
+	this->fichTransacoes = fichProdutos;
+  
 }
+
+/*********************************
+* Ler Ficheiros
+********************************/
+
+// Le ficheiros e guarda nos vetores
+
+void lerClientesTxt(string filename, vector <Cliente> &clienteVector) {
+	ifstream file(filename);
+	string line;
+
+	if (file.is_open())
+	{
+		getline(cin, line);
+		for (unsigned int i = 4*stoi(line, nullptr, 10); i > 0; i-=4)
+		{
+			Cliente newclient(file);
+			clienteVector.push_back(newclient);
+		}
+		file.close();
+	}
+}
+
+void lerProdutosTxt(string filename, vector<Produto> &productsVector) {
+	string numberOfLinesString;
+	ifstream inStream;
+	inStream.open(filename);
+	if (!inStream.fail()) {
+		getline(inStream, numberOfLinesString);
+		for (unsigned int i = 0; i < stoi(numberOfLinesString); i++)
+		{
+			Produto newProduct(inStream);
+			productsVector.push_back(newProduct);
+		}
+	}
+	inStream.close();
+	return;
+}
+
 
 /*********************************
  * Gestao de Clientes
@@ -88,49 +131,63 @@ void VendeMaisMais::listarTransacoesData() const {
 
 // guarda apenas a informacao de clientes e/ou de transacoes que foi alterada
 void VendeMaisMais::saveChanges() const{
-	vector <Cliente> clientesTemp;
-	vector <Transacao> transacoesTemp;
 	string line;
-	ifstream fileIn;
 	ofstream fileOut;
+	char decision;
 
 	//guardar clientes
-	fileIn.open(fichClientes);
-	getline(cin, line);
-	for (unsigned int i = 4 * stoi(line, nullptr, 10); i > 0; i -= 4)
+	if (clientesAlterados)
 	{
-		Cliente newClient(fileIn);
-		clientesTemp.push_back(newClient);
-	}
-	fileIn.close();
-	if (clientes != clientesTemp)
-	{
-		fileOut.open(fichClientes);
-		for (unsigned int i = 0; i < clientes.size(); i++)
+		cout << "Deseja Guarda as Alteracoes Feitas aos Clientes? (y/n)";
+		cin >> decision;
+		while (!(decision == 'Y' || decision == 'y' || decision == 'N' || decision == 'n'))
 		{
-			clientes.at(i).save(fileOut);
+			cout << endl << "Se Sim digite 'Y', caso contrario digite 'N': ";
+			cin >> decision;
+		}
+
+		//alteracao
+		if (decision == 'Y' || decision == 'y')
+		{
+			fileOut.open(fichClientes);
+			for (unsigned int i = 0; i < clientes.size(); i++)
+			{
+				clientes.at(i).save(fileOut);
+			}
+			fileOut.close();
+		}
+		else 
+		{
+			cout << "Nenhuma Alteracao Guardada!";
 		}
 	}
-	fileOut.close();
 
 	//guarda transacoes
-	fileIn.open(fichTransacoes);
-	getline(cin, line);
-	for (unsigned int i = 4 * stoi(line, nullptr, 10); i > 0; i--)
-	{
-		Transacao newTransaction(fileIn);
-		transacoesTemp.push_back(newTransaction);
-	}
-	fileIn.close();
-	if (transacoes != transacoesTemp){
-		fileOut.open(fichTransacoes);
-		for (unsigned int i = 0; i < transacoes.size(); i++)
+
+	if (transacoesAlteradas){
+		cout << "Deseja Guarda as Alteracoes Feitas as Transacoes? (y/n)";
+		cin >> decision;
+		while (!(decision == 'Y' || decision == 'y' || decision == 'N' || decision == 'n'))
 		{
-			transacoes.at(i).save(fileOut);
+			cout << endl << "Se Sim digite 'Y', caso contrario digite 'N': ";
+			cin >> decision;
+		}
+
+		//alteracao
+		if (decision == 'Y' || decision == 'y')
+		{
+			fileOut.open(fichTransacoes);
+			for (unsigned int i = 0; i < transacoes.size(); i++)
+			{
+				transacoes.at(i).save(fileOut);
+			}
+			fileOut.close;
+		}
+		else
+		{
+			cout << "Nenhuma Alteracao Guardada!";
 		}
 	}
-	fileOut.close;
-
 }
 
 /*********************************

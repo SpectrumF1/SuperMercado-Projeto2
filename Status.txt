@@ -1,0 +1,12 @@
+Falta fazer:
+---------------------------------
+Estatisticas da loja (Vende++)
+mostraInformacaoCliente (Vende++)
+
+
+
+---------------------------------
+Possiveis Alteracoes
+---------------------------------
+Colocar varios utilizadores
+Verificar a validade dos ficheiros
