@@ -17,6 +17,7 @@ unsigned short int leUnsignedShortInt(unsigned short int minValue, unsigned shor
 		cin.ignore();
 		cout << "Valor invalido. Introduza um novo unsigned short int: ";
 	}
+	cout << endl;
 
 }
 
@@ -30,6 +31,7 @@ int leInteiro(int min, int max){
 		cin.ignore();
 		cout << "Valor invalido. Introduza um novo int: ";
 	}
+	cout << endl;
 	return newInt;
 }
 
@@ -40,8 +42,10 @@ unsigned int leUnsignedInt() {
 		cout << endl;
 		cin.clear();
 		cin.ignore();
+
 		cout << "Valor invalido, insira um novo valor unsigned int: ";
 	}
+	cout << endl;
 	return newUnsignedInt;
 }
 int leInt() {
@@ -53,5 +57,6 @@ int leInt() {
 		cin.ignore();
 		cout << "Valor invalido, insira um novo valor unsigned int: ";
 	}
+	cout << endl;
 	return newInt;
 }

@@ -1,8 +1,31 @@
 #include "Transacao.h"
 
-void createCompra(vector<Transacao> &transactionsVector) {
+Transacao::Transacao() {
 	unsigned int clientId;
+	string transactionDateString;
+	string newProduct;
+	vector<string> produtosVec;
+	bool keepAddingProducts = true;
 	cout << "Introduza o id do cliente: ";
+	clientId = leUnsignedInt();
+	cout << "Insira a data da transacao: ";
+	getline(cin, transactionDateString);
+	cout << endl;
+	Data transactionDate(transactionDateString);
+	cout << "Insira o nome dos produtos (inserir '0' para parar) : ";
+	cout << endl;
+	while (keepAddingProducts) {
+		getline(cin, newProduct);
+		if (stoi(newProduct) == 0) {
+			keepAddingProducts = false;
+		}
+		else {
+			produtosVec.push_back(newProduct);
+		}
+	}
+	idCliente = clientId;
+	data = transactionDate;
+	produtosVector = produtosVec;
 	
 }
 
