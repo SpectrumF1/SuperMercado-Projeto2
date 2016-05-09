@@ -13,3 +13,6 @@ void clearScreen();
 
 unsigned short int leUnsignedShortInt(unsigned short int min, unsigned short int max);
 int leInteiro(int min, int max);
+
+unsigned int leUnsignedInt();
+int leInt();

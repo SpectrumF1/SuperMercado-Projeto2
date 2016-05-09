@@ -97,8 +97,23 @@ void opcoesGestaoClientes(VendeMaisMais & supermercado){
 /******************************************
  * Gestao de Transacoes
  ******************************************/
-unsigned short int menuGestaoTransacoes(){
+unsigned short int menuGestaoTransacoes() {
+	unsigned short int opcao;
 
+	clearScreen();
+	cout << TAB_BIG << "Menu Gestao Transacoes" << endl;
+	cout << endl;
+	cout << TAB << "1 - Efetuar Compra" << endl;
+	cout << TAB << "2 - Visualizar Transacoes de um cliente" << endl;
+	cout << TAB << "3 - Visualizar Transacoes de um dia" << endl;
+	cout << TAB << "4 - Visualizar Transacoes entre duas datas" << endl;
+	cout << TAB << "5 - Visualizar Transacoes (todas)" << endl;
+	cout << TAB << "6 - Regressar ao Menu Inicial" << endl;
+	opcao = leUnsignedShortInt(1, 6);
+	if (opcao == 6) {
+		return 0;
+	}
+	return opcao;
 }
 
 void opcoesGestaoTransacoes(VendeMaisMais & supermercado){
@@ -114,7 +129,10 @@ void opcoesGestaoTransacoes(VendeMaisMais & supermercado){
       break;
     case 4:
       break;
+	case 5:
+		break;
     }
+  return;
 }
 
 /******************************************

@@ -1,6 +1,29 @@
 #include "Transacao.h"
 
-
+Transacao::Transacao() {
+	unsigned int clientId;
+	string transactionDateString;
+	string newProduct;
+	bool keepAddingProducts = true;
+	cout << "Introduza o id do cliente: ";
+	idCliente = leUnsignedInt();
+	cout << "Insira a data da transacao: ";
+	getline(cin, transactionDateString);
+	cout << endl;
+	Data data(transactionDateString);
+	cout << "Insira o nome dos produtos (inserir '0' para parar) : ";
+	cout << endl;
+	while (keepAddingProducts) {
+		getline(cin, newProduct);
+		if (stoi(newProduct) == 0) {
+			keepAddingProducts = false;
+		}
+		else {
+			produtosVector.push_back(newProduct);
+		}
+	}
+	
+}
 
 unsigned int Transacao::getIdCliente() const{
   return idCliente;
@@ -60,7 +83,6 @@ void Transacao::save(ofstream & out) const{ // transacao guardada como na forma 
 	}
 	out << endl;
 }
-
 
 ostream& operator<<(ostream& out, const Transacao & trans){
 	out << trans.idCliente << " ; " << trans.data << " , "	;
