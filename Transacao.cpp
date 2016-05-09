@@ -25,23 +25,6 @@ Transacao::Transacao() {
 	
 }
 
-unsigned int Transacao::getIdCliente() const{
-  return idCliente;
-}
-
-unsigned int Transacao::getDataInt() const {
-	string dataString;
-	dataString = data.getYear();
-	dataString.append(data.getMonth());
-	dataString.append(data.getDay());
-	return stoi(dataString, nullptr, 10);
-}
-vector<string> Transacao::getProdutosVector() const {
-	return produtosVector;
-}
-
-
-
 Transacao::Transacao(ifstream & in) { // le uma transacao na forma de  idcliente ; data ; lista produtos
 	string line, products;
 	getline(cin, line);
@@ -58,6 +41,21 @@ Transacao::Transacao(ifstream & in) { // le uma transacao na forma de  idcliente
 		produtosVector.push_back(products.substr(0, products.find_first_of(",")));
 		products.erase(0, products.find_first_of(",") + 2);
 	}
+}
+
+unsigned int Transacao::getIdCliente() const{
+  return idCliente;
+}
+
+unsigned int Transacao::getDataInt() const {
+	string dataString;
+	dataString = data.getYear();
+	dataString.append(data.getMonth());
+	dataString.append(data.getDay());
+	return stoi(dataString, nullptr, 10);
+}
+vector<string> Transacao::getProdutosVector() const {
+	return produtosVector;
 }
 
 
