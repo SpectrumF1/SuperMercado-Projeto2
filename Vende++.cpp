@@ -10,11 +10,23 @@ VendeMaisMais::VendeMaisMais(string loja, string fichClients, string fichProduto
  * Gestao de Clientes
  ********************************/  
 
-// lista os cleinets por ordem alfabetica crescente
+// lista os clientes por ordem alfabetica crescente
 void VendeMaisMais::listarClientesOrdemAlfa() const{
+	sort(clientes.begin(), clientes.end(), less<Cliente>());
+	return;
 
-  // A IMPLEMENTAR 
+}
 
+
+void VendeMaisMais::removeClient(unsigned int idCliente) {
+	for (unsigned int i = 0; i < clientes.size(); i++)
+	{
+		if (clientes.at(i).getId == idCliente)
+		{
+			clientes.erase(clientes.begin() + i);
+		}
+	}
+	return;
 }
 
 // mostra a informacao individual de um cliente

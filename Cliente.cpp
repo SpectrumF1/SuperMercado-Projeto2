@@ -72,15 +72,4 @@ void Cliente::setVolCompras(float newVolCompras){
 	cout << "Vol. de Compras de cliente com id: " << id << ", editado com sucesso para: " << volCompras << endl;
 	return;
 }
-void Cliente::sortClientsByName(vector<Cliente> &clientsVector){
-	sort(clientsVector.begin(), clientsVector.end(), less<Cliente>());
-	return;
-}
-void Cliente::removeClient(vector<Cliente> &clientsVec, unsigned int idCliente){
-	for (unsigned int i = 0; i < clientsVec.size(); i++) {
-		if (clientsVec.at(i).getId == idCliente) {
-			clientsVec.erase(clientsVec.begin() + i);
-		}
-	}
-	return;
-}
+

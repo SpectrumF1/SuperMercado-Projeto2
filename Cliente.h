@@ -30,7 +30,5 @@ class Cliente {
   void setNome(string newName);
   void setDataAdesao(Data newDate);
   void setVolCompras(float newVolCompras);
-  void removeClient(vector<Cliente> &clientsVec, unsigned int idCliente);
-  void sortClientsByName(vector<Cliente> &clientsVector);
 };
 

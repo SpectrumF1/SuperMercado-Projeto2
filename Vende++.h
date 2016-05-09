@@ -41,6 +41,7 @@ class VendeMaisMais{
   VendeMaisMais(string loja, string fichClients, string fichProdutos, string fichTransacoes);
   void listarClientesOrdemAlfa() const;
   void listarProdutos() const;
+  void removeClient(unsigned int idCliente);
   void mostraInformacaoCliente(string nome);
   void saveChanges() const;
 
