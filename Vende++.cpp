@@ -36,12 +36,15 @@ void lerProdutosTxt(string filename, vector<Produto> &productsVector) {
 	string numberOfLinesString;
 	ifstream inStream;
 	inStream.open(filename);
-	getline(inStream, numberOfLinesString);
-	for (unsigned int i = 0; i < stoi(numberOfLinesString); i++)
-	{
-		Produto newProduct(inStream);
-		productsVector.push_back(newProduct);
+	if (!inStream.fail()) {
+		getline(inStream, numberOfLinesString);
+		for (unsigned int i = 0; i < stoi(numberOfLinesString); i++)
+		{
+			Produto newProduct(inStream);
+			productsVector.push_back(newProduct);
+		}
 	}
+	inStream.close();
 	return;
 }
 
