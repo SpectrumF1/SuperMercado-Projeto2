@@ -46,4 +46,8 @@ class VendeMaisMais{
   friend void lerProdutosTxt(VendeMaisMais &loja);
   friend void lerTransacoesTxt(VendeMaisMais &loja);
 
+  vector<Cliente> getClientesVector();
+  vector<Produto> getProdutosVector();
+  vector<Transacao> getTransacoesVector();
+
 };

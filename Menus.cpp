@@ -1,4 +1,5 @@
 #include "Menus.h"
+#include "Vende++.h"
 
 
 
@@ -116,11 +117,31 @@ unsigned short int menuGestaoTransacoes() {
 }
 
 void opcoesGestaoTransacoes(VendeMaisMais & supermercado){
-  unsigned int opcao;
+	unsigned int opcao, idCliente, produtoIndex;
+	string data;
+	vector <Produto> prodVector;
 
   while((opcao = menuGestaoTransacoes()))
     switch (opcao){
-    case 1:
+	case 1:
+		cout << "Id do Cliente?" << endl;
+		idCliente = leUnsignedInt();
+		cout << "Introduza a data da transacao:";
+		getline(cin, data);
+
+		for (unsigned int i = 0; i < supermercado.getProdutosVector().size(); i++)
+		{
+			cout << i << "). " << supermercado.getProdutosVector().at(i);
+		}
+		cout << "Que produto deseja?";
+		produtoIndex = leUnsignedInt();
+		while (produtoIndex < 0 && produtoIndex >= supermercado.getProdutosVector().size()){
+			cout << "Valor Mal Introduzido" << endl << endl;
+			cout << endl << "Intruduz um Produto :";
+			produtoIndex = leUnsignedInt();
+		}
+		prodVector.push_back(supermercado.getProdutosVector().at(produtoIndex));
+
       break;
     case 2:
       break;
@@ -169,7 +190,7 @@ unsigned short int menuInicial(){
   cout << TAB_BIG << "Menu Inicial" << endl;
   cout << endl;
   cout << TAB << "1 - Gestao de clientes" << endl;
-  cout << TAB << "2 - Lista produto disponiveis" << endl;
+  cout << TAB << "2 - Listar produtos disponiveis" << endl;
   cout << TAB << "3 - Gestao de transacoes" << endl;
   cout << TAB << "4 - Recomendacoes" << endl;
   cout << TAB << "5 - Sair do programa" << endl << endl;

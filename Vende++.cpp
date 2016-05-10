@@ -231,3 +231,22 @@ ostream& operator<<(ostream& out, const VendeMaisMais & supermercado){
 		<< endl;
 	return out;
 }
+
+
+/*********************************
+* Retorna os vectores
+********************************/
+
+// mostra o conteudo de uma loja
+vector<Cliente> VendeMaisMais::getClientesVector() {
+	return clientesVector;
+
+}
+vector<Produto> VendeMaisMais::getProdutosVector() {
+	return produtosVector;
+
+}
+vector<Transacao> VendeMaisMais::getTransacoesVector() {
+	return transacoesVector;
+
+}
