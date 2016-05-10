@@ -4,13 +4,13 @@ using namespace std;
 
 Cliente::Cliente(ifstream & in){
 	string line;
-	getline(cin, line);
+	getline(in, line);
 	id = stoi(line, nullptr, 10);
-	getline(cin, line);
+	getline(in, line);
 	nome = line;
-	getline(cin, line);
+	getline(in, line);
 	dataAdesao = line;
-	getline(cin, line);
+	getline(in, line);
 	volCompras = stof(line);
 
 }

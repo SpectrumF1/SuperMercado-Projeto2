@@ -17,13 +17,19 @@ int main(){
 
   // cria uma loja
   VendeMaisMais supermercado(loja, fichClients, fichProdutos, fichTransacoes);
+  
+  // atualiza vetores
+  lerClientesTxt(supermercado);
+  lerProdutosTxt(supermercado);
+  lerTransacoesTxt(supermercado);
+
 
   cout << "Informacao da loja '" << loja << " do supermercado Vende++:" << endl;
   cout << supermercado << endl;  // mostra estatisticas da loja
 
   opcoesIniciais(supermercado); // menu inicial com as grandes opcoes
 				// que implementam as funcioanlidades
-				// disonibilizadas
+				// disponibilizadas
 
   return 0;
 }

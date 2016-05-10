@@ -11,7 +11,7 @@ Transacao::Transacao() {
 	getline(cin, transactionDateString);
 	cout << endl;
 	Data data(transactionDateString);
-	cout << "Insira o nome dos produtos (inserir '0' para parar) : ";
+	cout << "Insira o id do produto (inserir '0' para parar) : ";
 	cout << endl;
 	while (keepAddingProducts) {
 		getline(cin, newProduct);
@@ -25,26 +25,9 @@ Transacao::Transacao() {
 	
 }
 
-unsigned int Transacao::getIdCliente() const{
-  return idCliente;
-}
-
-unsigned int Transacao::getDataInt() const {
-	string dataString;
-	dataString = data.getYear();
-	dataString.append(data.getMonth());
-	dataString.append(data.getDay());
-	return stoi(dataString, nullptr, 10);
-}
-vector<string> Transacao::getProdutosVector() const {
-	return produtosVector;
-}
-
-
-
 Transacao::Transacao(ifstream & in) { // le uma transacao na forma de  idcliente ; data ; lista produtos
 	string line, products;
-	getline(cin, line);
+	getline(in, line);
 	idCliente = stoi(line.substr(0, line.find_first_of(";")), nullptr, 10);
 	data = line.substr(line.find_first_of(";") + 1, 10);
 
@@ -60,17 +43,19 @@ Transacao::Transacao(ifstream & in) { // le uma transacao na forma de  idcliente
 	}
 }
 
-
 unsigned int Transacao::getIdCliente() const{
   return idCliente;
 }
 
 unsigned int Transacao::getDataInt() const {
 	string dataString;
-	dataString = data.getAno;
-	dataString.append(data.getMes);
-	dataString.append(data.getDia);
+	dataString = data.getYear();
+	dataString.append(data.getMonth());
+	dataString.append(data.getDay());
 	return stoi(dataString, nullptr, 10);
+}
+vector<string> Transacao::getProdutosVector() const {
+	return produtosVector;
 }
 
 
@@ -98,5 +83,5 @@ ostream& operator<<(ostream& out, const Transacao & trans){
 
 
 bool operator<(const Transacao &trans1, const Transacao &trans2) {
-	return trans1.getDataInt < trans2.getDataInt;
+	return trans1.getDataInt() < trans2.getDataInt();
 }
