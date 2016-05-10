@@ -17,6 +17,11 @@ int main(){
 
   // cria uma loja
   VendeMaisMais supermercado(loja, fichClients, fichProdutos, fichTransacoes);
+  
+  // atualiza vetores
+  lerClientesTxt(supermercado);
+  lerProdutosTxt(supermercado);
+  lerTransacoesTxt(supermercado);
 
 
   cout << "Informacao da loja '" << loja << " do supermercado Vende++:" << endl;
