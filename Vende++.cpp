@@ -6,7 +6,7 @@ VendeMaisMais::VendeMaisMais(string loja, string fichClients, string fichProduto
 	this->loja = loja;
 	this->fichClientes = fichClients;
 	this->fichProdutos = fichProdutos;
-	this->fichTransacoes = fichProdutos;
+	this->fichTransacoes = fichTransacoes;
   
 }
 
@@ -51,16 +51,16 @@ void lerProdutosTxt(VendeMaisMais &loja) {
 
 void lerTransacoesTxt(VendeMaisMais &loja) {
 		string numberOfLinesString;
-		ifstream inStream;
-		inStream.open(loja.fichTransacoes);
-		if (!inStream.fail()) {
-			getline(inStream, numberOfLinesString);
+		ifstream in_Stream;
+		in_Stream.open(loja.fichTransacoes);
+		if (!in_Stream.fail()) {
+			getline(in_Stream, numberOfLinesString);
 			for (unsigned int i = 0; i < stoi(numberOfLinesString); i++)
 			{
-				Transacao newTransaction(inStream);
+				Transacao newTransaction(in_Stream);
 				loja.transacoesVector.push_back(newTransaction);
 			}
-			inStream.close();
+			in_Stream.close();
 		}
 		
 		return;
