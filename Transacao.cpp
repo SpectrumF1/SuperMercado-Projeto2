@@ -27,7 +27,7 @@ Transacao::Transacao() {
 
 Transacao::Transacao(ifstream & in) { // le uma transacao na forma de  idcliente ; data ; lista produtos
 	string line, products;
-	getline(cin, line);
+	getline(in, line);
 	idCliente = stoi(line.substr(0, line.find_first_of(";")), nullptr, 10);
 	data = line.substr(line.find_first_of(";") + 1, 10);
 
