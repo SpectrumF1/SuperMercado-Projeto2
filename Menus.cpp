@@ -123,11 +123,12 @@ unsigned short int menuGestaoTransacoes() {
 }
 
 void opcoesGestaoTransacoes(VendeMaisMais & supermercado){
-	unsigned int opcao, idCliente, produtoIndex;
+	unsigned int opcao, idCliente, produtoIndex, clienteIndex;
 	string data;
 	vector <string> prodVector;
 	bool continuaCompra = true;
 	char decision;
+	float volCompra;
 
   while((opcao = menuGestaoTransacoes()))
 	  switch (opcao)
@@ -135,60 +136,71 @@ void opcoesGestaoTransacoes(VendeMaisMais & supermercado){
 	  case 1:
 		  cout << "Id do Cliente?" << endl;
 		  idCliente = leUnsignedInt();
-		  cout << "Introduza a data da transacao:";
-		  getline(cin, data);
+		  clienteIndex = supermercado.getIndexById(idCliente);
+		  if (clienteIndex != -1)
+		  {
+			  cout << "Introduza a data da transacao:";
+			  getline(cin, data);
 
-		  clearScreen();
-		  for (unsigned int i = 0; i < supermercado.getProdutosVector().size(); i++)
-		  {
-			  cout << i << "). " << supermercado.getProdutosVector().at(i);
-		  }
-		  cout << "Que produto deseja?" << endl;
-		  produtoIndex = leUnsignedInt();
-		  while (produtoIndex < 0 && produtoIndex >= supermercado.getProdutosVector().size())
-		  {
-			  cout << "Valor Mal Introduzido" << endl << endl;
-			  cout << endl << "Intruduz um Produto :";
+			  clearScreen();
+			  for (unsigned int i = 0; i < supermercado.getProdutosVector().size(); i++)
+			  {
+				  cout << i << "). " << supermercado.getProdutosVector().at(i);
+			  }
+			  cout << "Que produto deseja?" << endl;
 			  produtoIndex = leUnsignedInt();
-		  }
-		  prodVector.push_back(supermercado.getProdutosVector().at(produtoIndex).getNome());
-
-		  //continuar compra
-		  while (continuaCompra)
-		  {
-			  cout << "Deseja adicionar um produto? (y/n)";
-			  cin >> decision;
-			  while (!(decision == 'Y' || decision == 'y' || decision == 'N' || decision == 'n'))
+			  while (produtoIndex < 0 && produtoIndex >= supermercado.getProdutosVector().size())
 			  {
-				  cout << endl << "Se Sim digite 'Y', caso contrario digite 'N': ";
-				  cin >> decision;
-			  }
-
-			  //alteracao
-			  if (decision == 'Y' || decision == 'y')
-			  {
-				  clearScreen();
-				  for (unsigned int i = 0; i < supermercado.getProdutosVector().size(); i++)
-				  {
-					  cout << i << "). " << supermercado.getProdutosVector().at(i);
-				  }
-				  cout << "Que produto deseja?" << endl;
+				  cout << "Valor Mal Introduzido" << endl << endl;
+				  cout << endl << "Intruduz um Produto :";
 				  produtoIndex = leUnsignedInt();
-				  while (produtoIndex < 0 && produtoIndex >= supermercado.getProdutosVector().size())
-				  {
-					  cout << "Valor Mal Introduzido" << endl << endl;
-					  cout << endl << "Intruduz um Produto :";
-					  produtoIndex = leUnsignedInt();
-				  }
-				  prodVector.push_back(supermercado.getProdutosVector().at(produtoIndex).getNome());
 			  }
-			  else
-			  {
-				  continuaCompra = false;
-			  }
-		  }
-		  supermercado.getTransacoesVector().push_back(Transacao::Transacao(idCliente, data, prodVector));
+			  prodVector.push_back(supermercado.getProdutosVector().at(produtoIndex).getNome());
+			  volCompra = supermercado.getProdutosVector().at(produtoIndex).getCusto();
 
+			  //continuar compra
+			  while (continuaCompra)
+			  {
+				  cout << "Deseja adicionar um produto? (y/n)";
+				  cin >> decision;
+				  while (!(decision == 'Y' || decision == 'y' || decision == 'N' || decision == 'n'))
+				  {
+					  cout << endl << "Se Sim digite 'Y', caso contrario digite 'N': ";
+					  cin >> decision;
+				  }
+
+				  //alteracao
+				  if (decision == 'Y' || decision == 'y')
+				  {
+					  clearScreen();
+					  for (unsigned int i = 0; i < supermercado.getProdutosVector().size(); i++)
+					  {
+						  cout << i << "). " << supermercado.getProdutosVector().at(i);
+					  }
+					  cout << "Que produto deseja?" << endl;
+					  produtoIndex = leUnsignedInt();
+					  while (produtoIndex < 0 && produtoIndex >= supermercado.getProdutosVector().size())
+					  {
+						  cout << "Valor Mal Introduzido" << endl << endl;
+						  cout << endl << "Intruduz um Produto :";
+						  produtoIndex = leUnsignedInt();
+					  }
+					  prodVector.push_back(supermercado.getProdutosVector().at(produtoIndex).getNome());
+					  volCompra += supermercado.getProdutosVector().at(produtoIndex).getCusto();
+				  }
+				  else
+				  {
+					  continuaCompra = false;
+				  }
+			  }
+			  supermercado.getTransacoesVector().push_back(Transacao::Transacao(idCliente, data, prodVector));
+			  supermercado.getClientesVector().at(clienteIndex).setVolCompras = volCompra;
+		  }
+		  else
+		  {
+			  cout << "Cliente nao existe." << endl;
+			  system("PAUSE");
+		  }
       break;
     case 2:
       break;
@@ -197,6 +209,8 @@ void opcoesGestaoTransacoes(VendeMaisMais & supermercado){
     case 4:
       break;
 	case 5:
+
+		system("PAUSE");
 		break;
     }
   return;
