@@ -36,12 +36,13 @@ class VendeMaisMais{
   void listarProdutos();
   void listarTransacoesData();
   void addTransacao(Transacao newTransaction, unsigned int clienteIndex, float volCompras);
-  void removeClient(unsigned int idCliente);
+  pair<int, int> getIndexDataByData(Data date);
+  pair<int, int> getIndexDateByDateToDate(Data date1, Data date2);
   void mostraInformacaoCliente(unsigned int clienteIndex);
   int getIndexById(unsigned int idOfClient);
   int getIndexByName(string nameOfClient);
   void saveChanges() const;
-  void removeClient(string);
+  void removeClient(string idOrNameOfCliente);
 
   friend ostream& operator<<(ostream& out, const VendeMaisMais & supermercado);
   friend void lerClientesTxt(VendeMaisMais &loja);

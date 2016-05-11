@@ -217,6 +217,46 @@ void VendeMaisMais::addTransacao(Transacao newTransaction, unsigned int clienteI
 	listarTransacoesData();
 }
 
+pair <int, int> VendeMaisMais::getIndexDataByData(Data date) {
+	pair <unsigned int, unsigned int> indexPair(-1,-1);
+	for (unsigned int dataIndex1 = 0; dataIndex1 < transacoesVector.size(); dataIndex1++)
+	{
+		if (date == transacoesVector.at(dataIndex1).getData())
+		{
+			indexPair.first = dataIndex1;
+			for (unsigned int dataIndex2 = dataIndex1; dataIndex2 < transacoesVector.size(); dataIndex2++)
+			{
+				if (date == transacoesVector.at(dataIndex2).getData())
+				{
+					indexPair.second = dataIndex2;
+				}
+			}
+			return indexPair;
+		}
+	}
+	return indexPair;
+}
+
+pair <int, int> VendeMaisMais::getIndexDateByDateToDate(Data date1, Data date2) {
+	pair <unsigned int, unsigned int> indexPair(-1, -1);
+	for (unsigned int dataIndex1 = 0; dataIndex1 < transacoesVector.size(); dataIndex1++)
+	{
+		if (date1 < transacoesVector.at(dataIndex1).getData() || date1 == transacoesVector.at(dataIndex1).getData())
+		{
+			indexPair.first = dataIndex1;
+			for (unsigned int dataIndex2 = dataIndex1; dataIndex2 < transacoesVector.size(); dataIndex2++)
+			{
+				if (date2 > transacoesVector.at(dataIndex2).getData() || date2 == transacoesVector.at(dataIndex2).getData())
+				{
+					indexPair.second = dataIndex1;
+				}
+			}
+			return indexPair;
+		}
+	}
+	return indexPair;
+}
+
 
 /*********************************
  * Preservar Informacao
