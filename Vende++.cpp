@@ -85,13 +85,20 @@ void VendeMaisMais::listarClientesOrdemAlfa(){
 }
 
 
-void VendeMaisMais::removeClient(unsigned int idCliente) {
-	for (unsigned int i = 0; i < clientesVector.size(); i++)
-	{
-		if (clientesVector.at(i).getId() == idCliente)
-		{
-			clientesVector.erase(clientesVector.begin() + i);
+void VendeMaisMais::removeClient(string idOrNameOfCliente) {
+	unsigned int indexOfClient;
+	string clientName;
+	if (isalpha(idOrNameOfCliente.at(0))) {
+		indexOfClient = getIndexByName(idOrNameOfCliente);
+		clientName = clientesVector.at(indexOfClient).getNome();
+		clientesVector.erase(clientesVector.begin() + indexOfClient);
+		cout << "Cliente " << clientName << " Removido com Sucesso" << endl;
 		}
+	else if (isdigit(idOrNameOfCliente.at(0))) {
+		indexOfClient = getIndexById(stoi(idOrNameOfCliente));
+		clientName = clientesVector.at(indexOfClient).getNome();
+		clientesVector.erase(clientesVector.begin() + indexOfClient);
+		cout << "Cliente " << clientName << " Removido com Sucesso" << endl;
 	}
 	return;
 }

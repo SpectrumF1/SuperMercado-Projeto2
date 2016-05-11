@@ -104,6 +104,10 @@ void opcoesGestaoClientes(VendeMaisMais & supermercado){
 		editClient(clienteNameOrId, supermercado);
       break;
     case 4:
+		cout << "Introduza o Id ou o Nome do cliente a remover: ";
+		getline(cin, clienteNameOrId);
+		supermercado.removeClient(clienteNameOrId);
+		system("pause");
       break;
     }
 }

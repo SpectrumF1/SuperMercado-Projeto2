@@ -40,6 +40,7 @@ class VendeMaisMais{
   int getIndexById(unsigned int idOfClient);
   int getIndexByName(string nameOfClient);
   void saveChanges() const;
+  void removeClient(string);
 
   friend ostream& operator<<(ostream& out, const VendeMaisMais & supermercado);
   friend void lerClientesTxt(VendeMaisMais &loja);
