@@ -292,7 +292,7 @@ ostream& operator<<(ostream& out, const VendeMaisMais & supermercado){
 		<< endl
 		<< "Foram efetuadas no total " << supermercado.transacoesVector.size() << " transacoes."
 		<< endl
-		<< "Estao disponiveis neste momento" << supermercado.produtosVector.size() << "tipos diferentes de produtos."
+		<< "Estao disponiveis neste momento " << supermercado.produtosVector.size() << " tipos diferentes de produtos."
 		<< endl;
 	return out;
 }

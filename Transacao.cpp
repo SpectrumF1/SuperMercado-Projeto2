@@ -36,6 +36,7 @@ unsigned int Transacao::getDataInt() const {
 	dataString.append(data.getDay());
 	return stoi(dataString, nullptr, 10);
 }
+
 vector<string> Transacao::getProdutosVector() const {
 	return produtosVector;
 }
