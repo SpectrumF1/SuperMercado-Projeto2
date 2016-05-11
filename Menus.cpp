@@ -78,15 +78,21 @@ unsigned short int menuGestaoClientes(){
 void opcoesGestaoClientes(VendeMaisMais & supermercado){
   unsigned int opcao;
   string nome;
+  string clienteNameOrId;
   while((opcao = menuGestaoClientes()))
     switch (opcao){
     case 1: supermercado.listarClientesOrdemAlfa();
+		system("pause");
       break;
     case 2: cout << "Qual o nome do cliente: ";
       getline(cin, nome);
       supermercado.mostraInformacaoCliente(nome);
+	  system("pause");
       break;
     case 3:
+		cout << "Introduza o Id ou o Nome do cliente a editar: ";
+		getline(cin, clienteNameOrId);
+		editClient(clienteNameOrId, supermercado);
       break;
     case 4:
       break;

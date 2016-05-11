@@ -49,7 +49,7 @@ ostream& operator<<(ostream& out, const Cliente & cli){
 	out << cli.id << " - "
 		<< cli.nome << " - "
 		<< cli.dataAdesao << " - "
-		<< cli.volCompras << endl;
+		<< fixed << setprecision(2) << cli.volCompras << endl;
 	return out;
 
 }
