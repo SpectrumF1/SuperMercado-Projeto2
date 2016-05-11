@@ -85,26 +85,27 @@ void VendeMaisMais::listarClientesOrdemAlfa(){
 }
 
 
-void VendeMaisMais::removeClient(unsigned int idCliente) {
-	for (unsigned int i = 0; i < clientesVector.size(); i++)
-	{
-		if (clientesVector.at(i).getId() == idCliente)
-		{
-			clientesVector.erase(clientesVector.begin() + i);
+void VendeMaisMais::removeClient(string idOrNameOfCliente) {
+	unsigned int indexOfClient;
+	string clientName;
+	if (isalpha(idOrNameOfCliente.at(0))) {
+		indexOfClient = getIndexByName(idOrNameOfCliente);
+		clientName = clientesVector.at(indexOfClient).getNome();
+		clientesVector.erase(clientesVector.begin() + indexOfClient);
+		cout << "Cliente " << clientName << " Removido com Sucesso" << endl;
 		}
+	else if (isdigit(idOrNameOfCliente.at(0))) {
+		indexOfClient = getIndexById(stoi(idOrNameOfCliente));
+		clientName = clientesVector.at(indexOfClient).getNome();
+		clientesVector.erase(clientesVector.begin() + indexOfClient);
+		cout << "Cliente " << clientName << " Removido com Sucesso" << endl;
 	}
 	return;
 }
 
 // mostra a informacao individual de um cliente
-void VendeMaisMais::mostraInformacaoCliente(string nome){
-	for (unsigned int i = 0; i < clientesVector.size(); i++) {
-		if (clientesVector.at(i).getNome() == nome) {
-			cout << clientesVector.at(i);
-			break;
-		}
-	}
-
+void VendeMaisMais::mostraInformacaoCliente(unsigned int clienteIndex){
+			cout << clientesVector.at(clienteIndex);
 }
 
 //edit client
@@ -141,30 +142,29 @@ void editClientByIndex(unsigned int indexOfCliente, VendeMaisMais &supermercado)
 }
 
 void editClient(string clientIdOrName, VendeMaisMais &supermercado) {
-	bool foundFlag = false;
+	unsigned int clienteIndex;
 	if (isalpha(clientIdOrName.at(0))) //means that client is represented by Name
 	{
-		for (unsigned int i = 0; i < supermercado.clientesVector.size(); i++) {
-			if (supermercado.clientesVector.at(i).getNome() == clientIdOrName) {
-				foundFlag = true;
-				editClientByIndex(i, supermercado);
-				break;
-			}
+		clienteIndex = supermercado.getIndexByName(clientIdOrName);
+		if (clienteIndex != -1){
+				editClientByIndex(clienteIndex, supermercado);
+		}
+		else
+		{
+			cout << "Cliente nao encontrado" << endl;
 		}
 	}
 	else if (isdigit(clientIdOrName.at(0))) //means that client is represented by Id
 	{
-		for (unsigned int i = 0; i < supermercado.clientesVector.size(); i++) {
-			if (supermercado.clientesVector.at(i).getId() == stoi(clientIdOrName)) {
-				foundFlag = true;
-				clientesHeader();
-				editClientByIndex(i, supermercado);
-				break;
-			}
+		clienteIndex = supermercado.getIndexById(stoi(clientIdOrName));
+		if (clienteIndex != -1)
+		{
+				editClientByIndex(clienteIndex, supermercado);
 		}
-	}
-	if (!foundFlag) {
-		cout << "Cliente nao encontrado" << endl;
+		else
+		{
+			cout << "Cliente nao encontrado" << endl;
+		}
 	}
 }
 
@@ -214,6 +214,10 @@ void VendeMaisMais::listarTransacoesData() {
 	return;
 }
 
+void VendeMaisMais::addTransacao(Transacao newTransaction, unsigned int clienteIndex, float volCompras) {
+	transacoesVector.push_back(newTransaction);
+	clientesVector.at(clienteIndex).setVolCompras(volCompras);
+}
 
 
 /*********************************
@@ -292,7 +296,26 @@ ostream& operator<<(ostream& out, const VendeMaisMais & supermercado){
 		<< endl
 		<< "Foram efetuadas no total " << supermercado.transacoesVector.size() << " transacoes."
 		<< endl
-		<< "Estao disponiveis neste momento" << supermercado.produtosVector.size() << "tipos diferentes de produtos."
+		<< "Estao disponiveis neste momento " << supermercado.produtosVector.size() << " tipos diferentes de produtos."
 		<< endl;
 	return out;
+}
+
+
+/*********************************
+* Retorna os vectores
+********************************/
+
+// mostra o conteudo de uma loja
+vector<Cliente> VendeMaisMais::getClientesVector() const{
+	return clientesVector;
+
+}
+vector<Produto> VendeMaisMais::getProdutosVector() const{
+	return produtosVector;
+
+}
+vector<Transacao> VendeMaisMais::getTransacoesVector() const{
+	return transacoesVector;
+
 }

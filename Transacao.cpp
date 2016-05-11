@@ -1,45 +1,28 @@
 #include "Transacao.h"
 
-Transacao::Transacao() {
-	unsigned int clientId;
-	string transactionDateString;
-	string newProduct;
-	bool keepAddingProducts = true;
-	cout << "Introduza o id do cliente: ";
-	idCliente = leUnsignedInt();
-	cout << "Insira a data da transacao: ";
-	getline(cin, transactionDateString);
-	cout << endl;
-	Data data(transactionDateString);
-	cout << "Insira o id do produto (inserir '0' para parar) : ";
-	cout << endl;
-	while (keepAddingProducts) {
-		getline(cin, newProduct);
-		if (stoi(newProduct) == 0) {
-			keepAddingProducts = false;
-		}
-		else {
-			produtosVector.push_back(newProduct);
-		}
-	}
-	
+Transacao::Transacao(unsigned int clientId, string transactionDateString, vector <string> productVEC) {
+	Data date(transactionDateString);
+	idCliente = clientId;
+	data = date;
+	produtosVector = productVEC;
+
 }
 
 Transacao::Transacao(ifstream & in) { // le uma transacao na forma de  idcliente ; data ; lista produtos
 	string line, products;
 	getline(in, line);
-	idCliente = stoi(line.substr(0, line.find_first_of(";")), nullptr, 10);
-	data = line.substr(line.find_first_of(";") + 1, 10);
+	idCliente = stoi(line.substr(0, line.find_first_of(" ")), nullptr, 10);
+	data = line.substr(line.find_first_of(";") + 2, 10);
 
 	//define uma string de todos os produtos a serem tratados
-	products = line.substr(line.find_last_of(";") + 2, line.length() - line.find_last_of(";") - 2);
-	products.append(", ");
+	products = line.substr(line.find_last_of(";") + 2, line.length() - line.find_last_of(";") + 1);
+	products.append(",");
 
 	//passa os produtos da string para um vetor de produtos
 	while (!(products.empty()))
 	{
 		produtosVector.push_back(products.substr(0, products.find_first_of(",")));
-		products.erase(0, products.find_first_of(",") + 2);
+		products.erase(0, products.find_first_of(",") + 1);
 	}
 }
 
@@ -54,6 +37,7 @@ unsigned int Transacao::getDataInt() const {
 	dataString.append(data.getDay());
 	return stoi(dataString, nullptr, 10);
 }
+
 vector<string> Transacao::getProdutosVector() const {
 	return produtosVector;
 }
@@ -73,7 +57,7 @@ ostream& operator<<(ostream& out, const Transacao & trans){
 	out << trans.idCliente << " ; " << trans.data << " , "	;
 	for (unsigned int i = 0; i < trans.produtosVector.size(); i++)
 	{
-		if (i = 0) out << trans.produtosVector.at(i);
+		if (i == 0) out << trans.produtosVector.at(i);
 		else out << ", " <<  trans.produtosVector.at(i);
 	}
 	out << endl;

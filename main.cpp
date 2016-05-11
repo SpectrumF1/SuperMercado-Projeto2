@@ -12,8 +12,16 @@ int main(){
 
   // pede a informacoo sobre o nome da loja e os 3 ficheiros com
   // informacao de clientes, produtos e transacoes
-  if(! infoInicial(loja, fichClients, fichProdutos, fichTransacoes))
-    return(-1);
+
+  //--------------------------------------------apagar comment---------------------------------------------------
+  //if(! infoInicial(loja, fichClients, fichProdutos, fichTransacoes))
+  //  return(-1);
+  //--------------------------------------------apagar comment---------------------------------------------------
+
+  loja = "Spectrum";
+  fichClients = "clientes.txt";
+  fichProdutos = "produtos.txt";
+  fichTransacoes = "transacoes.txt";
 
   // cria uma loja
   VendeMaisMais supermercado(loja, fichClients, fichProdutos, fichTransacoes);
@@ -22,7 +30,7 @@ int main(){
   lerClientesTxt(supermercado);
   lerProdutosTxt(supermercado);
   lerTransacoesTxt(supermercado);
-
+  
 
   cout << "Informacao da loja '" << loja << " do supermercado Vende++:" << endl;
   cout << supermercado << endl;  // mostra estatisticas da loja

@@ -22,8 +22,8 @@ class Transacao {
   vector<string> produtosVector;
 
  public:
+  Transacao(unsigned int clientId, string transactionDateString, vector<string> productVEC); //construtor de nova transacao
   Transacao(ifstream & in); // transacao na forma de  idCliente ; data ; lista de produtos
-  Transacao();
   unsigned int getIdCliente() const;
   unsigned int getDataInt() const;
   vector<string> getProdutosVector() const;
