@@ -82,7 +82,12 @@ void opcoesGestaoClientes(VendeMaisMais & supermercado){
   string clienteNameOrId;
   while((opcao = menuGestaoClientes()))
     switch (opcao){
-    case 1: supermercado.listarClientesOrdemAlfa();
+    case 1: 
+		clientesHeader();
+		for (unsigned int i = 0; i < supermercado.getClientesVector().size(); i++)
+		{
+			supermercado.mostraInformacaoCliente(i);
+		}
 		system("pause");
       break;
     case 2: cout << "Qual o nome do cliente: ";

@@ -30,6 +30,7 @@ void lerClientesTxt(VendeMaisMais &loja) {
 		}
 		inStream.close();
 	}
+	loja.listarClientesOrdemAlfa();
 }
 
 void lerProdutosTxt(VendeMaisMais &loja) {
@@ -45,8 +46,8 @@ void lerProdutosTxt(VendeMaisMais &loja) {
 		}
 		inStream.close();
 	}
-	
-	return;
+	loja.listarProdutos();
+
 }
 
 void lerTransacoesTxt(VendeMaisMais &loja) {
@@ -62,8 +63,7 @@ void lerTransacoesTxt(VendeMaisMais &loja) {
 			}
 			in_Stream.close();
 		}
-		
-		return;
+		loja.listarTransacoesData();
 
 }
 
@@ -76,10 +76,6 @@ void lerTransacoesTxt(VendeMaisMais &loja) {
 void VendeMaisMais::listarClientesOrdemAlfa(){
 	sort(clientesVector.begin(), clientesVector.end(), less<Cliente>());
 	cout << "Clientes ordenados com sucesso por ordem alfabetica" << endl;
-	clientesHeader();
-	for (unsigned int i = 0; i < clientesVector.size(); i++) {
-		cout << clientesVector.at(i);
-	}
 	return;
 
 }
@@ -105,7 +101,7 @@ void VendeMaisMais::removeClient(string idOrNameOfCliente) {
 
 // mostra a informacao individual de um cliente
 void VendeMaisMais::mostraInformacaoCliente(unsigned int clienteIndex){
-			cout << clientesVector.at(clienteIndex);
+	cout << clientesVector.at(clienteIndex);
 }
 
 //edit client
@@ -120,6 +116,7 @@ void editClientByIndex(unsigned int indexOfCliente, VendeMaisMais &supermercado)
 		cout << "Insira um novo nome: ";
 		getline(cin, newName);
 		supermercado.clientesVector.at(indexOfCliente).setNome(newName);
+		supermercado.listarClientesOrdemAlfa();
 	}
 	cout << "Alterar Data de Adesao? (y/n): ";
 	changeDate = leCharYorN();
@@ -217,6 +214,7 @@ void VendeMaisMais::listarTransacoesData() {
 void VendeMaisMais::addTransacao(Transacao newTransaction, unsigned int clienteIndex, float volCompras) {
 	transacoesVector.push_back(newTransaction);
 	clientesVector.at(clienteIndex).setVolCompras(volCompras);
+	listarTransacoesData();
 }
 
 
