@@ -6,7 +6,7 @@ VendeMaisMais::VendeMaisMais(string loja, string fichClients, string fichProduto
 	this->loja = loja;
 	this->fichClientes = fichClients;
 	this->fichProdutos = fichProdutos;
-	this->fichTransacoes = fichProdutos;
+	this->fichTransacoes = fichTransacoes;
   
 }
 
@@ -51,16 +51,16 @@ void lerProdutosTxt(VendeMaisMais &loja) {
 
 void lerTransacoesTxt(VendeMaisMais &loja) {
 		string numberOfLinesString;
-		ifstream inStream;
-		inStream.open(loja.fichTransacoes);
-		if (!inStream.fail()) {
-			getline(inStream, numberOfLinesString);
+		ifstream in_Stream;
+		in_Stream.open(loja.fichTransacoes);
+		if (!in_Stream.fail()) {
+			getline(in_Stream, numberOfLinesString);
 			for (unsigned int i = 0; i < stoi(numberOfLinesString); i++)
 			{
-				Transacao newTransaction(inStream);
+				Transacao newTransaction(in_Stream);
 				loja.transacoesVector.push_back(newTransaction);
 			}
-			inStream.close();
+			in_Stream.close();
 		}
 		
 		return;
@@ -76,6 +76,10 @@ void lerTransacoesTxt(VendeMaisMais &loja) {
 void VendeMaisMais::listarClientesOrdemAlfa(){
 	sort(clientesVector.begin(), clientesVector.end(), less<Cliente>());
 	cout << "Clientes ordenados com sucesso por ordem alfabetica" << endl;
+	clientesHeader();
+	for (unsigned int i = 0; i < clientesVector.size(); i++) {
+		cout << clientesVector.at(i);
+	}
 	return;
 
 }
@@ -101,6 +105,67 @@ void VendeMaisMais::mostraInformacaoCliente(string nome){
 		}
 	}
 
+}
+
+//edit client
+void editClientByIndex(unsigned int indexOfCliente, VendeMaisMais &supermercado) {
+	char changeName, changeDate, changeAmount;
+	clientesHeader();
+	cout << supermercado.clientesVector.at(indexOfCliente);
+	cout << "Alterar Nome ? (y/n): ";
+	changeName = leCharYorN();
+	if (changeName == 'y' || changeName == 'Y') {
+		string newName;
+		cout << "Insira um novo nome: ";
+		getline(cin, newName);
+		supermercado.clientesVector.at(indexOfCliente).setNome(newName);
+	}
+	cout << "Alterar Data de Adesao? (y/n): ";
+	changeDate = leCharYorN();
+	if (changeDate == 'y' || changeDate == 'Y') {
+		string newDate;
+		cout << "Insira a nova data de adesao: ";
+		getline(cin, newDate);
+		Data novaDate(newDate);
+		supermercado.clientesVector.at(indexOfCliente).setDataAdesao(novaDate);
+	}
+	cout << "Alterar montante de compras? (y/n): ";
+	changeAmount = leCharYorN();
+	if (changeAmount == 'y' || changeAmount == 'Y') {
+		float newAmount;
+		cout << "Insira o novo montante: ";
+		newAmount = leFloat();
+		supermercado.clientesVector.at(indexOfCliente).setVolCompras(newAmount);
+	}
+	cout << "Cliente Editado com sucesso";
+}
+
+void editClient(string clientIdOrName, VendeMaisMais &supermercado) {
+	bool foundFlag = false;
+	if (isalpha(clientIdOrName.at(0))) //means that client is represented by Name
+	{
+		for (unsigned int i = 0; i < supermercado.clientesVector.size(); i++) {
+			if (supermercado.clientesVector.at(i).getNome() == clientIdOrName) {
+				foundFlag = true;
+				editClientByIndex(i, supermercado);
+				break;
+			}
+		}
+	}
+	else if (isdigit(clientIdOrName.at(0))) //means that client is represented by Id
+	{
+		for (unsigned int i = 0; i < supermercado.clientesVector.size(); i++) {
+			if (supermercado.clientesVector.at(i).getId() == stoi(clientIdOrName)) {
+				foundFlag = true;
+				clientesHeader();
+				editClientByIndex(i, supermercado);
+				break;
+			}
+		}
+	}
+	if (!foundFlag) {
+		cout << "Cliente nao encontrado" << endl;
+	}
 }
 
 

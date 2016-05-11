@@ -16,3 +16,9 @@ int leInteiro(int min, int max);
 
 unsigned int leUnsignedInt();
 int leInt();
+
+float leFloat();
+
+char leCharYorN();
+
+void clientesHeader();

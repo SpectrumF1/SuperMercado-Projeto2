@@ -64,3 +64,34 @@ int leInt() {
 	cout << endl;
 	return newInt;
 }
+float leFloat() {
+	float newFloat;
+	cout << "Insira um novo valor: ";
+	while (!(cin >> newFloat)) {
+		cout << endl;
+		cin.clear();
+		cin.ignore();
+		cout << "Valor invalido, insira um novo valor: ";
+	}
+	cin.ignore();
+	cout << endl;
+	return newFloat;
+}
+char leCharYorN() {
+	char newChar;
+	cout << "Insira o caracter: ";
+	while (!(cin >> newChar) || (newChar != 'n' && newChar != 'N' && newChar != 'Y' && newChar != 'y')) {
+		cout << endl;
+		cin.clear();
+		cin.ignore();
+		cout << "Caracter invalido, insira um novo caracter: ";
+	}
+	cin.ignore();
+	cout << endl;
+	return newChar;
+}
+
+
+void clientesHeader() {
+	cout << TAB << "Id" << TAB_BIG << "Nome" << TAB_BIG << "Data Adesao" << TAB << "Vol.Compras" << endl;
+}

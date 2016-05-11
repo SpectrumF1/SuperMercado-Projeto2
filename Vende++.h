@@ -45,9 +45,14 @@ class VendeMaisMais{
   friend void lerClientesTxt(VendeMaisMais &loja);
   friend void lerProdutosTxt(VendeMaisMais &loja);
   friend void lerTransacoesTxt(VendeMaisMais &loja);
+<<<<<<< HEAD
 
   vector<Cliente> getClientesVector();
   vector<Produto> getProdutosVector();
   vector<Transacao> getTransacoesVector();
 
+=======
+  friend void editClientByIndex(unsigned int indexOfCliente, VendeMaisMais &supermercado);
+  friend void editClient(string clientIdOrName, VendeMaisMais &supermercado);
+>>>>>>> refs/remotes/origin/master
 };

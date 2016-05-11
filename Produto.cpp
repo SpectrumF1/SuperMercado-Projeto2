@@ -4,7 +4,7 @@
 Produto::Produto(ifstream & in){ // nome ; custo
 	string line;
 	getline(in, line);
-	nome = line.substr(0, line.find(";") - 1);
+	nome = line.substr(0, line.find(" "));
 	custo = stof(line.substr(line.find(";") + 2, line.size() - line.find(";")));
 }
 
