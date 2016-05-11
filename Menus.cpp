@@ -139,7 +139,7 @@ void opcoesGestaoTransacoes(VendeMaisMais & supermercado){
 		{
 			cout << i << "). " << supermercado.getProdutosVector().at(i);
 		}
-		cout << "Que produto deseja?";
+		cout << "Que produto deseja?" << endl;
 		produtoIndex = leUnsignedInt();
 		while (produtoIndex < 0 && produtoIndex >= supermercado.getProdutosVector().size()){
 			cout << "Valor Mal Introduzido" << endl << endl;
