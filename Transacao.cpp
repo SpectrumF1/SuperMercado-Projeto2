@@ -11,17 +11,17 @@ Transacao::Transacao(ifstream & in) { // le uma transacao na forma de  idcliente
 	string line, products;
 	getline(in, line);
 	idCliente = stoi(line.substr(0, line.find_first_of(" ")), nullptr, 10);
-	data = line.substr(line.find_first_of(";") + 1, 10);
+	data = line.substr(line.find_first_of(";") + 2, 10);
 
 	//define uma string de todos os produtos a serem tratados
-	products = line.substr(line.find_last_of(";") + 2, line.length() - line.find_last_of(";") - 2);
-	products.append(", ");
+	products = line.substr(line.find_last_of(";") + 2, line.length() - line.find_last_of(";") + 1);
+	products.append(",");
 
 	//passa os produtos da string para um vetor de produtos
 	while (!(products.empty()))
 	{
 		produtosVector.push_back(products.substr(0, products.find_first_of(",")));
-		products.erase(0, products.find_first_of(",") + 2);
+		products.erase(0, products.find_first_of(",") + 1);
 	}
 }
 
