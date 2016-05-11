@@ -30,12 +30,9 @@ unsigned int Transacao::getIdCliente() const{
   return idCliente;
 }
 
-unsigned int Transacao::getDataInt() const {
-	string dataString;
-	dataString = data.getYear();
-	dataString.append(data.getMonth());
-	dataString.append(data.getDay());
-	return stoi(dataString, nullptr, 10);
+
+Data Transacao::getData() const {
+	return data;
 }
 
 vector<string> Transacao::getProdutosVector() const {
@@ -44,7 +41,7 @@ vector<string> Transacao::getProdutosVector() const {
 
 
 void Transacao::save(ofstream & out) const{ // transacao guardada como na forma de  idcliente ; data ; lista produtos
-	out << idCliente << " ; " << data << " , ";
+	out << idCliente << " ; " << data << " ; ";
 	for (unsigned int i = 0; i < produtosVector.size(); i++)
 	{
 		if (i = 0) out << produtosVector.at(i);
@@ -54,7 +51,7 @@ void Transacao::save(ofstream & out) const{ // transacao guardada como na forma 
 }
 
 ostream& operator<<(ostream& out, const Transacao & trans){
-	out << trans.idCliente << " ; " << trans.data << " , "	;
+	out << trans.idCliente << " ; " << trans.data << " ; ";
 	for (unsigned int i = 0; i < trans.produtosVector.size(); i++)
 	{
 		if (i == 0) out << trans.produtosVector.at(i);
@@ -67,5 +64,5 @@ ostream& operator<<(ostream& out, const Transacao & trans){
 
 
 bool operator<(const Transacao &trans1, const Transacao &trans2) {
-	return trans1.getDataInt() < trans2.getDataInt();
+	return trans1.data < trans2.data;
 }

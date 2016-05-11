@@ -30,8 +30,12 @@ class Data {
   void setDia(int dia);
   void setMes(int mes);
   void setAno(int ano);
+  void setData(string data);
   void save(ofstream & out) const;
   friend ostream& operator<<(ostream& out, const Data & data);
+  friend bool operator==(const Data &data1, const Data &data2);
+  friend bool operator<(const Data &data1, const Data &data2);
+  friend bool operator>(const Data &data1, const Data &data2);
 };
 
 

@@ -132,6 +132,13 @@ void Data::setAno(int ano){
 	this->ano = ano;
 }
 
+void Data::setData(string data) {
+	Data newData(data);
+	this->ano = newData.ano;
+	this->mes = newData.mes;
+	this->dia = newData.dia;
+}
+
 void Data::save(ofstream & out) const{
 	out << dia << "/" << mes << "/" << ano;
 }
@@ -139,4 +146,90 @@ void Data::save(ofstream & out) const{
 ostream& operator<<(ostream& out, const Data & data){
 	out << data.dia << "/" << data.mes << "/" << data.ano;
 	return out;
+}
+
+bool operator==(const Data &data1, const Data &data2) {
+	if (data1.dia == data2.dia && data1.ano == data2.ano && data1.mes == data2.mes)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+bool operator>(const Data & data1, const Data & data2) {
+	if (data1.ano > data2.ano)
+	{
+		return true;
+	}
+	else if (data1.ano < data2.ano)
+	{
+		return false;
+	}
+	else
+	{
+		if (data1.mes > data2.mes)
+		{
+			return true;
+		}
+		else if (data1.mes < data2.mes)
+		{
+			return false;
+		}
+		else
+		{
+			if (data1.dia > data2.dia)
+			{
+				return true;
+			}
+			else if (data1.dia < data2.dia)
+			{
+				return false;
+			}
+			else
+			{
+				return false;
+			}
+		}
+		return false;
+	}
+}
+
+bool operator<(const Data & data1, const Data & data2) {
+	if (data1.ano < data2.ano)
+	{
+		return true;
+	}
+	else if (data1.ano > data2.ano)
+	{
+		return false;
+	}
+	else
+	{
+		if (data1.mes < data2.mes)
+		{
+			return true;
+		}
+		else if (data1.mes > data2.mes)
+		{
+			return false;
+		}
+		else
+		{
+			if (data1.dia < data2.dia)
+			{
+				return true;
+			}
+			else if (data1.dia > data2.dia)
+			{
+				return false;
+			}
+			else
+			{
+				return false;
+			}
+		}
+	}
 }

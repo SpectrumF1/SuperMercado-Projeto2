@@ -82,7 +82,12 @@ void opcoesGestaoClientes(VendeMaisMais & supermercado){
   string clienteNameOrId;
   while((opcao = menuGestaoClientes()))
     switch (opcao){
-    case 1: supermercado.listarClientesOrdemAlfa();
+    case 1: 
+		clientesHeader();
+		for (unsigned int i = 0; i < supermercado.getClientesVector().size(); i++)
+		{
+			supermercado.mostraInformacaoCliente(i);
+		}
 		system("pause");
       break;
     case 2: cout << "Qual o nome do cliente: ";
@@ -136,11 +141,13 @@ unsigned short int menuGestaoTransacoes() {
 
 void opcoesGestaoTransacoes(VendeMaisMais & supermercado){
 	unsigned int opcao, idCliente, produtoIndex, clienteIndex;
-	string data;
+	string dataString;
 	vector <string> prodVector;
 	bool continuaCompra = true;
 	char decision;
 	float volCompra;
+	Data date, date1, date2;
+	pair <int, int> indexDatas;
 
   while((opcao = menuGestaoTransacoes()))
 	  switch (opcao)
@@ -152,7 +159,7 @@ void opcoesGestaoTransacoes(VendeMaisMais & supermercado){
 		  if (clienteIndex != -1)
 		  {
 			  cout << "Introduza a data da transacao:";
-			  getline(cin, data);
+			  getline(cin, dataString);
 
 			  clearScreen();
 			  for (unsigned int i = 0; i < supermercado.getProdutosVector().size(); i++)
@@ -205,7 +212,7 @@ void opcoesGestaoTransacoes(VendeMaisMais & supermercado){
 					  continuaCompra = false;
 				  }
 			  }
-			  supermercado.addTransacao(Transacao::Transacao(idCliente, data, prodVector), clienteIndex, volCompra);
+			  supermercado.addTransacao(Transacao::Transacao(idCliente, dataString, prodVector), clienteIndex, volCompra);
 		  }
 		  else
 		  {
@@ -216,8 +223,46 @@ void opcoesGestaoTransacoes(VendeMaisMais & supermercado){
     case 2:
       break;
     case 3:
+		cout << "Introduz a data que pretende:";
+		getline(cin, dataString);
+		date.setData(dataString);
+		indexDatas = supermercado.getIndexDataByData(date);
+		if (indexDatas.first != -1)
+		{
+			transacoesHeader();
+			for (unsigned int i = indexDatas.first; i <= indexDatas.second; i++)
+			{
+				cout << supermercado.getTransacoesVector().at(i);
+			}
+		}
+		else
+		{
+			cout << "Data nao encontrada" << endl;
+		}
+		system("pause");
       break;
     case 4:
+		cout << "Introduz a primeira data que pretende:";
+		getline(cin, dataString);
+		date1.setData(dataString);
+		cout << "Introduz a segunda data que pretende:";
+		getline(cin, dataString);
+		date2.setData(dataString);
+
+		indexDatas = supermercado.getIndexDateByDateToDate(date1, date2);
+		if (indexDatas.first != -1 && indexDatas.second != -1)
+		{
+			transacoesHeader();
+			for (unsigned int i = indexDatas.first; i <= indexDatas.second; i++)
+			{
+				cout << supermercado.getTransacoesVector().at(i);
+			}
+		}
+		else
+		{
+			cout << "Datas invalidas" << endl;
+		}
+		system("pause");
       break;
 	case 5:
 		transacoesHeader();
