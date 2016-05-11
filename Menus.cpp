@@ -94,7 +94,7 @@ void opcoesGestaoClientes(VendeMaisMais & supermercado){
 	  }
 	  else
 	  {
-		  cout << "Cliente não existe." << endl;
+		  cout << "Cliente nao existe." << endl;
 	  }
 	  system("pause");
       break;
@@ -202,7 +202,7 @@ void opcoesGestaoTransacoes(VendeMaisMais & supermercado){
 				  }
 			  }
 			  supermercado.getTransacoesVector().push_back(Transacao::Transacao(idCliente, data, prodVector));
-			  supermercado.getClientesVector().at(clienteIndex).setVolCompras = volCompra;
+			  supermercado.getClientesVector().at(clienteIndex).setVolCompras(volCompra);
 		  }
 		  else
 		  {
