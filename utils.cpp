@@ -95,3 +95,7 @@ char leCharYorN() {
 void clientesHeader() {
 	cout << TAB << "Id" << TAB_BIG << "Nome" << TAB_BIG << "Data Adesao" << TAB << "Vol.Compras" << endl;
 }
+
+void transacoesHeader() {
+	cout << TAB << "ID" << TAB_BIG << "Data" << TAB_BIG << "Produtos" << endl;
+}

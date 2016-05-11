@@ -77,7 +77,7 @@ unsigned short int menuGestaoClientes(){
 
 
 void opcoesGestaoClientes(VendeMaisMais & supermercado){
-  unsigned int opcao;
+	unsigned int opcao, clienteIndex;
   string nome;
   string clienteNameOrId;
   while((opcao = menuGestaoClientes()))
@@ -87,7 +87,15 @@ void opcoesGestaoClientes(VendeMaisMais & supermercado){
       break;
     case 2: cout << "Qual o nome do cliente: ";
       getline(cin, nome);
-      supermercado.mostraInformacaoCliente(nome);
+	  clienteIndex = supermercado.getIndexByName(nome);
+	  if (clienteIndex != -1)
+	  {
+		  supermercado.mostraInformacaoCliente(clienteIndex);
+	  }
+	  else
+	  {
+		  cout << "Cliente não existe." << endl;
+	  }
 	  system("pause");
       break;
     case 3:
@@ -209,7 +217,11 @@ void opcoesGestaoTransacoes(VendeMaisMais & supermercado){
     case 4:
       break;
 	case 5:
-
+		transacoesHeader();
+		for (unsigned int i = 0; i < supermercado.getTransacoesVector().size(); i++)
+		{
+			cout << supermercado.getTransacoesVector().at(i) << endl;
+		}
 		system("PAUSE");
 		break;
     }
