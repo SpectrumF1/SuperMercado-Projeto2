@@ -214,6 +214,10 @@ void VendeMaisMais::listarTransacoesData() {
 	return;
 }
 
+void VendeMaisMais::addTransacao(Transacao newTransaction, unsigned int clienteIndex, float volCompras) {
+	transacoesVector.push_back(newTransaction);
+	clientesVector.at(clienteIndex).setVolCompras(volCompras);
+}
 
 
 /*********************************
@@ -303,15 +307,15 @@ ostream& operator<<(ostream& out, const VendeMaisMais & supermercado){
 ********************************/
 
 // mostra o conteudo de uma loja
-vector<Cliente> VendeMaisMais::getClientesVector() {
+vector<Cliente> VendeMaisMais::getClientesVector() const{
 	return clientesVector;
 
 }
-vector<Produto> VendeMaisMais::getProdutosVector() {
+vector<Produto> VendeMaisMais::getProdutosVector() const{
 	return produtosVector;
 
 }
-vector<Transacao> VendeMaisMais::getTransacoesVector() {
+vector<Transacao> VendeMaisMais::getTransacoesVector() const{
 	return transacoesVector;
 
 }

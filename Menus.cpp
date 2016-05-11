@@ -205,8 +205,7 @@ void opcoesGestaoTransacoes(VendeMaisMais & supermercado){
 					  continuaCompra = false;
 				  }
 			  }
-			  supermercado.getTransacoesVector().push_back(Transacao::Transacao(idCliente, data, prodVector));
-			  supermercado.getClientesVector().at(clienteIndex).setVolCompras(volCompra);
+			  supermercado.addTransacao(Transacao::Transacao(idCliente, data, prodVector), clienteIndex, volCompra);
 		  }
 		  else
 		  {

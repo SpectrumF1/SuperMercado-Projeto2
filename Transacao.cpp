@@ -1,8 +1,9 @@
 #include "Transacao.h"
 
 Transacao::Transacao(unsigned int clientId, string transactionDateString, vector <string> productVEC) {
+	Data date(transactionDateString);
 	idCliente = clientId;
-	Data data(transactionDateString);
+	data = date;
 	produtosVector = productVEC;
 
 }

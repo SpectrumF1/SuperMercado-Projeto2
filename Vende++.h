@@ -35,6 +35,7 @@ class VendeMaisMais{
   void listarClientesOrdemAlfa();
   void listarProdutos();
   void listarTransacoesData();
+  void addTransacao(Transacao newTransaction, unsigned int clienteIndex, float volCompras);
   void removeClient(unsigned int idCliente);
   void mostraInformacaoCliente(unsigned int clienteIndex);
   int getIndexById(unsigned int idOfClient);
@@ -47,9 +48,9 @@ class VendeMaisMais{
   friend void lerProdutosTxt(VendeMaisMais &loja);
   friend void lerTransacoesTxt(VendeMaisMais &loja);
 
-  vector<Cliente> getClientesVector();
-  vector<Produto> getProdutosVector();
-  vector<Transacao> getTransacoesVector();
+  vector<Cliente> getClientesVector() const;
+  vector<Produto> getProdutosVector() const;
+  vector<Transacao> getTransacoesVector() const;
 
   friend void editClientByIndex(unsigned int indexOfCliente, VendeMaisMais &supermercado);
   friend void editClient(string clientIdOrName, VendeMaisMais &supermercado);
