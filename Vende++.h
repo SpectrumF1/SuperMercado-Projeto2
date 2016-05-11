@@ -36,7 +36,7 @@ class VendeMaisMais{
   void listarProdutos();
   void listarTransacoesData();
   void removeClient(unsigned int idCliente);
-  void mostraInformacaoCliente(string nome);
+  void mostraInformacaoCliente(unsigned int clienteIndex);
   int getIndexById(unsigned int idOfClient);
   int getIndexByName(string nameOfClient);
   void saveChanges() const;
