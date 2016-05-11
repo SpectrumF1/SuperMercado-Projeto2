@@ -220,7 +220,7 @@ void opcoesGestaoTransacoes(VendeMaisMais & supermercado){
 		transacoesHeader();
 		for (unsigned int i = 0; i < supermercado.getTransacoesVector().size(); i++)
 		{
-			cout << supermercado.getTransacoesVector().at(i) << endl;
+			cout << supermercado.getTransacoesVector().at(i);
 		}
 		system("PAUSE");
 		break;

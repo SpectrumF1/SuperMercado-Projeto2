@@ -56,7 +56,7 @@ ostream& operator<<(ostream& out, const Transacao & trans){
 	out << trans.idCliente << " ; " << trans.data << " , "	;
 	for (unsigned int i = 0; i < trans.produtosVector.size(); i++)
 	{
-		if (i = 0) out << trans.produtosVector.at(i);
+		if (i == 0) out << trans.produtosVector.at(i);
 		else out << ", " <<  trans.produtosVector.at(i);
 	}
 	out << endl;
