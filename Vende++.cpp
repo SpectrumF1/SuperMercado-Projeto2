@@ -66,7 +66,6 @@ void lerTransacoesTxt(VendeMaisMais &loja) {
 			in_Stream.close();
 		}
 		loja.listarTransacoesData();
-		loja.updateNomeProdutoToIndexMap();
 		loja.updateMapTransacaoIdToIndex();
 }
 
