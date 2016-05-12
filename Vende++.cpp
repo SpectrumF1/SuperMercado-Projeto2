@@ -90,12 +90,14 @@ void VendeMaisMais::removeClient(string idOrNameOfCliente) {
 		indexOfClient = getClientesIndexByName(idOrNameOfCliente);
 		clientName = clientesVector.at(indexOfClient).getNome();
 		clientesVector.erase(clientesVector.begin() + indexOfClient);
+		clienteNameToId.erase(clientName);
 		cout << "Cliente " << clientName << " Removido com Sucesso" << endl;
 		}
 	else if (isdigit(idOrNameOfCliente.at(0))) {
 		indexOfClient = getClientesIndexById(stoi(idOrNameOfCliente));
 		clientName = clientesVector.at(indexOfClient).getNome();
 		clientesVector.erase(clientesVector.begin() + indexOfClient);
+		clienteNameToId.erase(clientName);
 		cout << "Cliente " << clientName << " Removido com Sucesso" << endl;
 	}
 	return;
@@ -117,8 +119,11 @@ void editClientByIndex(unsigned int indexOfCliente, VendeMaisMais &supermercado)
 		string newName;
 		cout << "Insira um novo nome: ";
 		getline(cin, newName);
+		supermercado.clienteNameToId.erase(supermercado.clientesVector.at(indexOfCliente).getNome());
 		supermercado.clientesVector.at(indexOfCliente).setNome(newName);
+		supermercado.clienteNameToId[newName] = indexOfCliente;
 		supermercado.listarClientesOrdemAlfa();
+		
 	}
 	cout << "Alterar Data de Adesao? (y/n): ";
 	changeDate = leCharYorN();
@@ -220,6 +225,7 @@ void VendeMaisMais::addTransacao(Transacao newTransaction, unsigned int clienteI
 	transacoesVector.push_back(newTransaction);
 	clientesVector.at(clienteIndex).setVolCompras(newVolCompras);
 	listarTransacoesData();
+	updateMapTransacaoIdToIndex();
 }
 
 pair <int, int> VendeMaisMais::getIndexDataByData(Data date) {
