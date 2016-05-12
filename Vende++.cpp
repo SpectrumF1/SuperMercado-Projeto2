@@ -370,21 +370,21 @@ vector<Transacao> VendeMaisMais::getTransacoesVector() const{
 void VendeMaisMais::updateMapClienteNameToId() {
 	for (unsigned int clienteIndex = 0; clienteIndex < clientesVector.size(); clienteIndex++)
 	{
-		clienteNameToId[clientesVector.at(clienteIndex).getId] = clientesVector.at(clienteIndex).getNome;
+		clienteNameToId[clientesVector.at(clienteIndex).getNome()] = clientesVector.at(clienteIndex).getId();
 	}
 }
 
 void VendeMaisMais::updateMapProdutoNameToIndex() {
 	for (unsigned int produtoIndex = 0; produtoIndex < produtosVector.size; produtoIndex++)
 	{
-		produtoNameToIndex[produtosVector.at(produtoIndex).getNome] = produtoIndex;
+		produtoNameToIndex[produtosVector.at(produtoIndex).getNome()] = produtoIndex;
 	}
 }
 
 void VendeMaisMais::updateMapTransacaoIdToIndex() {
 	for (unsigned int  transacaoIndex = 0; transacaoIndex < transacoesVector.size(); transacaoIndex++)
 	{
-		transacaoIdToIndex[transacoesVector.at(transacaoIndex).getIdCliente] = transacaoIndex;
+		transacaoIdToIndex[transacoesVector.at(transacaoIndex).getIdCliente()] = transacaoIndex;
 	}
 }
 
