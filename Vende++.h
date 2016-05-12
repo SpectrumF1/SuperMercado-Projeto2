@@ -59,5 +59,6 @@ class VendeMaisMais{
   friend void editClient(string clientIdOrName, VendeMaisMais &supermercado);
 
   void updateMapClienteNameToId();
-  void updateMapprodutoNameToIndex();
+  void updateMapProdutoNameToIndex();
+  void updateMapTransacaoIdToIndex();
 };
