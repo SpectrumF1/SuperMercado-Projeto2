@@ -49,7 +49,6 @@ void lerProdutosTxt(VendeMaisMais &loja) {
 		inStream.close();
 	}
 	loja.listarProdutos();
-	loja.updateMapProdutoNameToIndex();
 
 }
 
@@ -67,8 +66,8 @@ void lerTransacoesTxt(VendeMaisMais &loja) {
 			in_Stream.close();
 		}
 		loja.listarTransacoesData();
+		loja.updateNomeProdutoToIndexMap();
 		loja.updateMapTransacaoIdToIndex();
-
 }
 
 
@@ -203,6 +202,7 @@ void VendeMaisMais::listarProdutos(){
 	return;
 
 }
+
 
 /*********************************
 * Gestao de Transacoes
