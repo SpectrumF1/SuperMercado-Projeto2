@@ -92,7 +92,7 @@ void opcoesGestaoClientes(VendeMaisMais & supermercado){
       break;
     case 2: cout << "Qual o nome do cliente: ";
       getline(cin, nome);
-	  clienteIndex = supermercado.getIndexByName(nome);
+	  clienteIndex = supermercado.getClientesIndexByName(nome);
 	  if (clienteIndex != -1)
 	  {
 		  supermercado.mostraInformacaoCliente(clienteIndex);
@@ -141,7 +141,7 @@ unsigned short int menuGestaoTransacoes() {
 
 void opcoesGestaoTransacoes(VendeMaisMais & supermercado){
 	unsigned int opcao, idCliente, produtoIndex, clienteIndex;
-	string dataString;
+	string dataString, nameString;
 	vector <string> prodVector;
 	bool continuaCompra = true;
 	char decision;
@@ -155,7 +155,7 @@ void opcoesGestaoTransacoes(VendeMaisMais & supermercado){
 	  case 1:
 		  cout << "Id do Cliente?" << endl;
 		  idCliente = leUnsignedInt();
-		  clienteIndex = supermercado.getIndexById(idCliente);
+		  clienteIndex = supermercado.getClientesIndexById(idCliente);
 		  if (clienteIndex != -1)
 		  {
 			  cout << "Introduza a data da transacao:";
@@ -221,9 +221,12 @@ void opcoesGestaoTransacoes(VendeMaisMais & supermercado){
 		  }
       break;
     case 2:
+		cout << "Introduz o nome do cliente: ";
+		getline(cin, nameString);
+		supermercado.getClientesIndexById();
       break;
     case 3:
-		cout << "Introduz a data que pretende:";
+		cout << "Introduz a data que pretende: ";
 		getline(cin, dataString);
 		date.setData(dataString);
 		indexDatas = supermercado.getIndexDataByData(date);

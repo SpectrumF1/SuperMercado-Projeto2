@@ -26,9 +26,10 @@ class VendeMaisMais{
   vector<Cliente> clientesVector; // vetor que guarda a informacao dos clientes existentes
   vector<Produto> produtosVector; // vetor que guarda a informacao dos produtos disponiveis
   vector<Transacao> transacoesVector; // vetor que guarda a informacao das transacoes efetuadas
-  map<string, int> clienteIdx;  // map para "traduzir" nome do cliente no indice dele no vetor de clientes
-  map<string, int> produtoIdx;  // map para "traduzir" nome do produto no indice dele no vetor de produtos
-  multimap<int, int> transacaoIdx; // multimap para "traduzir" o identificador do cliente nos indices das suas transacoes no vetor de transacoes
+  map<string, unsigned int> clienteNameToId;  // map para "traduzir" nome do cliente no ID dele no vetor de clientes
+  map<string, unsigned int> produtoNameToIndex;  // map para "traduzir" nome do produto no indice dele no vetor de produtos
+  multimap<unsigned int, unsigned int> transacaoIdToIndex; // multimap para "traduzir" o identificador do cliente nos indices das suas transacoes no vetor de transacoes
+
 
  public:
   VendeMaisMais(string loja, string fichClients, string fichProdutos, string fichTransacoes);
@@ -39,8 +40,8 @@ class VendeMaisMais{
   pair<int, int> getIndexDataByData(Data date);
   pair<int, int> getIndexDateByDateToDate(Data date1, Data date2);
   void mostraInformacaoCliente(unsigned int clienteIndex);
-  int getIndexById(unsigned int idOfClient);
-  int getIndexByName(string nameOfClient);
+  int getClientesIndexById(unsigned int idOfClient);
+  int getClientesIndexByName(string nameOfClient);
   void saveChanges() const;
   void removeClient(string idOrNameOfCliente);
 
@@ -53,6 +54,10 @@ class VendeMaisMais{
   vector<Produto> getProdutosVector() const;
   vector<Transacao> getTransacoesVector() const;
 
+
   friend void editClientByIndex(unsigned int indexOfCliente, VendeMaisMais &supermercado);
   friend void editClient(string clientIdOrName, VendeMaisMais &supermercado);
+
+  void updateMapClienteNameToId();
+  void updateMapprodutoNameToIndex();
 };
