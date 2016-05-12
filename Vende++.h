@@ -63,7 +63,7 @@ class VendeMaisMais{
   void updateMapProdutoNameToIndex();
   void updateMapTransacaoIdToIndex();
 
-  unsigned int ClienteNameToId(string clienteName);
-  unsigned int ProdutoNameToIndex(string produtoName);
+  int ClienteNameToId(string clienteName);
+  int ProdutoNameToIndex(string produtoName);
   pair <std::multimap<unsigned int, unsigned int>::iterator, std::multimap<unsigned int, unsigned int>::iterator> TransacaoIdToIndex(unsigned int clienteId);
 };
