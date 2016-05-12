@@ -4,8 +4,6 @@
 #include <string>
 #include <map>
 #include<algorithm>
-
-
 #include "defs.h"
 #include "Data.h"
 #include "Cliente.h"
@@ -26,10 +24,12 @@ class VendeMaisMais{
   vector<Cliente> clientesVector; // vetor que guarda a informacao dos clientes existentes
   vector<Produto> produtosVector; // vetor que guarda a informacao dos produtos disponiveis
   vector<Transacao> transacoesVector; // vetor que guarda a informacao das transacoes efetuadas
+  map<string, int> clienteIdx;  // map para "traduzir" nome do cliente no indice dele no vetor de clientes
+  map<string, int> produtoIdx;  // map para "traduzir" nome do produto no indice dele no vetor de produtos
+  multimap<int, int> transacaoIdx; // multimap para "traduzir" o identificador do cliente nos indices das suas transacoes no vetor de transacoes
   map<string, unsigned int> clienteNameToId;  // map para "traduzir" nome do cliente no ID dele no vetor de clientes
   map<string, unsigned int> produtoNameToIndex;  // map para "traduzir" nome do produto no indice dele no vetor de produtos
   multimap<unsigned int, unsigned int> transacaoIdToIndex; // multimap para "traduzir" o identificador do cliente nos indices das suas transacoes no vetor de transacoes
-
 
  public:
   VendeMaisMais(string loja, string fichClients, string fichProdutos, string fichTransacoes);
@@ -44,6 +44,7 @@ class VendeMaisMais{
   int getClientesIndexByName(string nameOfClient);
   void saveChanges() const;
   void removeClient(string idOrNameOfCliente);
+  friend class Produto;
 
   friend ostream& operator<<(ostream& out, const VendeMaisMais & supermercado);
   friend void lerClientesTxt(VendeMaisMais &loja);
@@ -62,7 +63,7 @@ class VendeMaisMais{
   void updateMapProdutoNameToIndex();
   void updateMapTransacaoIdToIndex();
 
-  unsigned int ClienteNameToId(string clienteName);
-  unsigned int ProdutoNameToIndex(string produtoName);
+  int ClienteNameToId(string clienteName);
+  int ProdutoNameToIndex(string produtoName);
   pair <std::multimap<unsigned int, unsigned int>::iterator, std::multimap<unsigned int, unsigned int>::iterator> TransacaoIdToIndex(unsigned int clienteId);
 };
