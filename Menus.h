@@ -16,9 +16,6 @@ bool infoInicial(string & loja, string & fichClients, string & fichProdutos, str
 void opcoesIniciais(VendeMaisMais & supermercado);
 
 void opcoesGestaoClientes(VendeMaisMais & supermercado);
-void listarClientesOrdemAlfabetica(VendeMaisMais & supermercado);
-
-void listarProdutos(VendeMaisMais & supermercado);
 
 void opcoesGestaoTransacoes(VendeMaisMais & supermercado);
 

@@ -147,6 +147,7 @@ void opcoesGestaoTransacoes(VendeMaisMais & supermercado){
 	char decision;
 	float volCompra;
 	Data date, date1, date2;
+	pair <multimap<unsigned int, unsigned int>::iterator, multimap<unsigned int, unsigned int>::iterator> iterador;
 	pair <int, int> indexDatas;
 
   while((opcao = menuGestaoTransacoes()))
@@ -223,7 +224,13 @@ void opcoesGestaoTransacoes(VendeMaisMais & supermercado){
     case 2:
 		cout << "Introduz o nome do cliente: ";
 		getline(cin, nameString);
-		supermercado.getClientesIndexById();
+		transacoesHeader();
+		iterador = supermercado.TransacaoIdToIndex(supermercado.ClienteNameToId(nameString));
+		for (multimap<unsigned int, unsigned int>::iterator it = iterador.first; it != iterador.second; it++)
+		{
+			cout << supermercado.getTransacoesVector().at(it->second);
+		}
+		system("pause");
       break;
     case 3:
 		cout << "Introduz a data que pretende: ";

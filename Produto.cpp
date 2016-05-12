@@ -16,6 +16,7 @@ float Produto::getCusto() const {
   return custo;
 }
 
+
 ostream& operator<<(ostream& out, const Produto & prod){
 	out << prod.nome << " ; " << prod.custo
 		<< endl;
