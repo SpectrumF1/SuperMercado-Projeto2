@@ -48,6 +48,7 @@ void lerProdutosTxt(VendeMaisMais &loja) {
 	}
 	loja.listarProdutos();
 
+
 }
 
 void lerTransacoesTxt(VendeMaisMais &loja) {
@@ -64,7 +65,7 @@ void lerTransacoesTxt(VendeMaisMais &loja) {
 			in_Stream.close();
 		}
 		loja.listarTransacoesData();
-
+		loja.updateNomeProdutoToIndexMap();
 }
 
 
@@ -199,6 +200,22 @@ void VendeMaisMais::listarProdutos(){
 	return;
 
 }
+void VendeMaisMais::updateNomeProdutoToIndexMap() {
+	for (unsigned int i = 0; i < produtosVector.size(); i++) {
+		nomeProdutoToIndexMap.insert(pair <string, unsigned int>(produtosVector.at(i).getNome(), i));
+	}
+	return;
+}
+int VendeMaisMais::indiceProduto(string nome) {
+	if (nomeProdutoToIndexMap.find(nome) != nomeProdutoToIndexMap.end()) {
+		return nomeProdutoToIndexMap.find(nome)->second;
+	}
+	else {
+		return -1;
+	}
+
+}
+
 
 /*********************************
 * Gestao de Transacoes

@@ -8,6 +8,9 @@ Produto::Produto(ifstream & in){ // nome ; custo
 	custo = stof(line.substr(line.find(";") + 2, line.size() - line.find(";")));
 }
 
+
+
+
 string Produto::getNome() const {
   return nome;
 }

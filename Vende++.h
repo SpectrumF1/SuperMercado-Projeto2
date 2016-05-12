@@ -4,8 +4,6 @@
 #include <string>
 #include <map>
 #include<algorithm>
-
-
 #include "defs.h"
 #include "Data.h"
 #include "Cliente.h"
@@ -29,6 +27,7 @@ class VendeMaisMais{
   map<string, int> clienteIdx;  // map para "traduzir" nome do cliente no indice dele no vetor de clientes
   map<string, int> produtoIdx;  // map para "traduzir" nome do produto no indice dele no vetor de produtos
   multimap<int, int> transacaoIdx; // multimap para "traduzir" o identificador do cliente nos indices das suas transacoes no vetor de transacoes
+  map<string, unsigned int> nomeProdutoToIndexMap;
 
  public:
   VendeMaisMais(string loja, string fichClients, string fichProdutos, string fichTransacoes);
@@ -43,6 +42,9 @@ class VendeMaisMais{
   int getIndexByName(string nameOfClient);
   void saveChanges() const;
   void removeClient(string idOrNameOfCliente);
+  void updateNomeProdutoToIndexMap();
+  int indiceProduto(string nome); // uso do map para "traduzir" o nome em indice no vetor de produtos
+  friend class Produto;
 
   friend ostream& operator<<(ostream& out, const VendeMaisMais & supermercado);
   friend void lerClientesTxt(VendeMaisMais &loja);
