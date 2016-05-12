@@ -248,7 +248,7 @@ pair <int, int> VendeMaisMais::getIndexDateByDateToDate(Data date1, Data date2) 
 			{
 				if (date2 > transacoesVector.at(dataIndex2).getData() || date2 == transacoesVector.at(dataIndex2).getData())
 				{
-					indexPair.second = dataIndex1;
+					indexPair.second = dataIndex2;
 				}
 			}
 			return indexPair;
