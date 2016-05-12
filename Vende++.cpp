@@ -1,4 +1,5 @@
 #include "Vende++.h"
+#include <map>
 
 
 
@@ -31,6 +32,7 @@ void lerClientesTxt(VendeMaisMais &loja) {
 		inStream.close();
 	}
 	loja.listarClientesOrdemAlfa();
+	loja.updateMapClienteNameToId();
 }
 
 void lerProdutosTxt(VendeMaisMais &loja) {
@@ -47,6 +49,7 @@ void lerProdutosTxt(VendeMaisMais &loja) {
 		inStream.close();
 	}
 	loja.listarProdutos();
+	loja.updateMapProdutoNameToIndex();
 
 }
 
@@ -64,6 +67,7 @@ void lerTransacoesTxt(VendeMaisMais &loja) {
 			in_Stream.close();
 		}
 		loja.listarTransacoesData();
+		loja.updateMapTransacaoIdToIndex();
 
 }
 
@@ -85,13 +89,13 @@ void VendeMaisMais::removeClient(string idOrNameOfCliente) {
 	unsigned int indexOfClient;
 	string clientName;
 	if (isalpha(idOrNameOfCliente.at(0))) {
-		indexOfClient = getIndexByName(idOrNameOfCliente);
+		indexOfClient = getClientesIndexByName(idOrNameOfCliente);
 		clientName = clientesVector.at(indexOfClient).getNome();
 		clientesVector.erase(clientesVector.begin() + indexOfClient);
 		cout << "Cliente " << clientName << " Removido com Sucesso" << endl;
 		}
 	else if (isdigit(idOrNameOfCliente.at(0))) {
-		indexOfClient = getIndexById(stoi(idOrNameOfCliente));
+		indexOfClient = getClientesIndexById(stoi(idOrNameOfCliente));
 		clientName = clientesVector.at(indexOfClient).getNome();
 		clientesVector.erase(clientesVector.begin() + indexOfClient);
 		cout << "Cliente " << clientName << " Removido com Sucesso" << endl;
@@ -142,7 +146,7 @@ void editClient(string clientIdOrName, VendeMaisMais &supermercado) {
 	unsigned int clienteIndex;
 	if (isalpha(clientIdOrName.at(0))) //means that client is represented by Name
 	{
-		clienteIndex = supermercado.getIndexByName(clientIdOrName);
+		clienteIndex = supermercado.getClientesIndexByName(clientIdOrName);
 		if (clienteIndex != -1){
 				editClientByIndex(clienteIndex, supermercado);
 		}
@@ -153,7 +157,7 @@ void editClient(string clientIdOrName, VendeMaisMais &supermercado) {
 	}
 	else if (isdigit(clientIdOrName.at(0))) //means that client is represented by Id
 	{
-		clienteIndex = supermercado.getIndexById(stoi(clientIdOrName));
+		clienteIndex = supermercado.getClientesIndexById(stoi(clientIdOrName));
 		if (clienteIndex != -1)
 		{
 				editClientByIndex(clienteIndex, supermercado);
@@ -166,7 +170,7 @@ void editClient(string clientIdOrName, VendeMaisMais &supermercado) {
 }
 
 
-int VendeMaisMais::getIndexById(unsigned int idOfClient) {
+int VendeMaisMais::getClientesIndexById(unsigned int idOfClient) {
 	for (unsigned int i = 0; i < clientesVector.size(); i++)
 	{
 		if (clientesVector.at(i).getId() == idOfClient)
@@ -177,7 +181,7 @@ int VendeMaisMais::getIndexById(unsigned int idOfClient) {
 	return -1;
 }
 
-int VendeMaisMais::getIndexByName(string nameOfClient) {
+int VendeMaisMais::getClientesIndexByName(string nameOfClient) {
 	for (unsigned int i = 0; i < clientesVector.size(); i++)
 	{
 		if (clientesVector.at(i).getNome() == nameOfClient)
@@ -256,6 +260,8 @@ pair <int, int> VendeMaisMais::getIndexDateByDateToDate(Data date1, Data date2) 
 	}
 	return indexPair;
 }
+
+
 
 
 /*********************************
@@ -357,3 +363,42 @@ vector<Transacao> VendeMaisMais::getTransacoesVector() const{
 	return transacoesVector;
 
 }
+
+
+/*********************************
+* Maps
+********************************/
+
+// update do map entre nome e id de cliente
+void VendeMaisMais::updateMapClienteNameToId() {
+	for (unsigned int clienteIndex = 0; clienteIndex < clientesVector.size(); clienteIndex++)
+	{
+		clienteNameToId[clientesVector.at(clienteIndex).getNome()] = clientesVector.at(clienteIndex).getId();
+	}
+}
+
+void VendeMaisMais::updateMapProdutoNameToIndex() {
+	for (unsigned int produtoIndex = 0; produtoIndex < produtosVector.size(); produtoIndex++)
+	{
+		produtoNameToIndex[produtosVector.at(produtoIndex).getNome()] = produtoIndex;
+	}
+}
+
+void VendeMaisMais::updateMapTransacaoIdToIndex() {
+	for (unsigned int  transacaoIndex = 0; transacaoIndex < transacoesVector.size(); transacaoIndex++)
+	{
+		transacaoIdToIndex.insert(pair<unsigned int, unsigned int> (transacoesVector.at(transacaoIndex).getIdCliente(), transacaoIndex));
+
+	}
+}
+
+unsigned int VendeMaisMais::ClienteNameToId(string clienteName) {
+	return clienteNameToId.find(clienteName)->second;
+}
+unsigned int VendeMaisMais::ProdutoNameToIndex(string produtoName) {
+	return produtoNameToIndex.find(produtoName)->second;
+}
+pair <std::multimap<unsigned int, unsigned int>::iterator, std::multimap<unsigned int, unsigned int>::iterator> VendeMaisMais::TransacaoIdToIndex(unsigned int clienteId) {
+	return transacaoIdToIndex.equal_range(clienteId);
+}
+
