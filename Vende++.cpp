@@ -66,7 +66,6 @@ void lerTransacoesTxt(VendeMaisMais &loja) {
 			in_Stream.close();
 		}
 		loja.listarTransacoesData();
-		loja.updateNomeProdutoToIndexMap();
 		loja.updateMapTransacaoIdToIndex();
 }
 
@@ -216,8 +215,10 @@ void VendeMaisMais::listarTransacoesData() {
 }
 
 void VendeMaisMais::addTransacao(Transacao newTransaction, unsigned int clienteIndex, float volCompras) {
+	unsigned int newVolCompras;
+	newVolCompras = clientesVector.at(clienteIndex).getVolCompras() + volCompras;
 	transacoesVector.push_back(newTransaction);
-	clientesVector.at(clienteIndex).setVolCompras(volCompras);
+	clientesVector.at(clienteIndex).setVolCompras(newVolCompras);
 	listarTransacoesData();
 }
 
@@ -392,11 +393,24 @@ void VendeMaisMais::updateMapTransacaoIdToIndex() {
 	}
 }
 
-unsigned int VendeMaisMais::ClienteNameToId(string clienteName) {
-	return clienteNameToId.find(clienteName)->second;
+int VendeMaisMais::ClienteNameToId(string clienteName) {
+	if (clienteNameToId.find(clienteName) != clienteNameToId.end())
+	{
+		return clienteNameToId.find(clienteName)->second;
+	}
+	else {
+		return -1;
+	}
 }
-unsigned int VendeMaisMais::ProdutoNameToIndex(string produtoName) {
-	return produtoNameToIndex.find(produtoName)->second;
+int VendeMaisMais::ProdutoNameToIndex(string produtoName) {
+	if (produtoNameToIndex.find(produtoName) != produtoNameToIndex.end())
+	{
+		return produtoNameToIndex.find(produtoName)->second;
+	}
+	else
+	{
+		return -1;
+	}
 }
 pair <std::multimap<unsigned int, unsigned int>::iterator, std::multimap<unsigned int, unsigned int>::iterator> VendeMaisMais::TransacaoIdToIndex(unsigned int clienteId) {
 	return transacaoIdToIndex.equal_range(clienteId);
