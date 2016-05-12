@@ -270,7 +270,7 @@ void opcoesGestaoTransacoes(VendeMaisMais & supermercado){
 		}
 		else
 		{
-			cout << "Datas invalidas" << endl;
+			cout << "Nenhum transacao encontrada no intervalo especificado!" << endl;
 		}
 		system("pause");
       break;
