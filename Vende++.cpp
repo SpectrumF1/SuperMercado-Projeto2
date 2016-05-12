@@ -218,7 +218,7 @@ void VendeMaisMais::addTransacao(Transacao newTransaction, unsigned int clienteI
 }
 
 pair <int, int> VendeMaisMais::getIndexDataByData(Data date) {
-	pair <unsigned int, unsigned int> indexPair(-1,-1);
+	pair <int, int> indexPair(-1,-1);
 	for (unsigned int dataIndex1 = 0; dataIndex1 < transacoesVector.size(); dataIndex1++)
 	{
 		if (date == transacoesVector.at(dataIndex1).getData())
@@ -238,7 +238,7 @@ pair <int, int> VendeMaisMais::getIndexDataByData(Data date) {
 }
 
 pair <int, int> VendeMaisMais::getIndexDateByDateToDate(Data date1, Data date2) {
-	pair <unsigned int, unsigned int> indexPair(-1, -1);
+	pair <int, int> indexPair(-1, -1);
 	for (unsigned int dataIndex1 = 0; dataIndex1 < transacoesVector.size(); dataIndex1++)
 	{
 		if (date1 < transacoesVector.at(dataIndex1).getData() || date1 == transacoesVector.at(dataIndex1).getData())
@@ -248,7 +248,7 @@ pair <int, int> VendeMaisMais::getIndexDateByDateToDate(Data date1, Data date2) 
 			{
 				if (date2 > transacoesVector.at(dataIndex2).getData() || date2 == transacoesVector.at(dataIndex2).getData())
 				{
-					indexPair.second = dataIndex1;
+					indexPair.second = dataIndex2;
 				}
 			}
 			return indexPair;
