@@ -384,7 +384,8 @@ void VendeMaisMais::updateMapProdutoNameToIndex() {
 void VendeMaisMais::updateMapTransacaoIdToIndex() {
 	for (unsigned int  transacaoIndex = 0; transacaoIndex < transacoesVector.size(); transacaoIndex++)
 	{
-		transacaoIdToIndex[transacoesVector.at(transacaoIndex).getIdCliente()] = transacaoIndex;
+		transacaoIdToIndex.insert(pair<unsigned int, unsigned int> (transacoesVector.at(transacaoIndex).getIdCliente(), transacaoIndex));
+
 	}
 }
 
