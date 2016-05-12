@@ -27,7 +27,6 @@ class VendeMaisMais{
   map<string, int> clienteIdx;  // map para "traduzir" nome do cliente no indice dele no vetor de clientes
   map<string, int> produtoIdx;  // map para "traduzir" nome do produto no indice dele no vetor de produtos
   multimap<int, int> transacaoIdx; // multimap para "traduzir" o identificador do cliente nos indices das suas transacoes no vetor de transacoes
-  map<string, unsigned int> nomeProdutoToIndexMap;
   map<string, unsigned int> clienteNameToId;  // map para "traduzir" nome do cliente no ID dele no vetor de clientes
   map<string, unsigned int> produtoNameToIndex;  // map para "traduzir" nome do produto no indice dele no vetor de produtos
   multimap<unsigned int, unsigned int> transacaoIdToIndex; // multimap para "traduzir" o identificador do cliente nos indices das suas transacoes no vetor de transacoes
@@ -45,8 +44,6 @@ class VendeMaisMais{
   int getClientesIndexByName(string nameOfClient);
   void saveChanges() const;
   void removeClient(string idOrNameOfCliente);
-  void updateNomeProdutoToIndexMap();
-  int indiceProduto(string nome); // uso do map para "traduzir" o nome em indice no vetor de produtos
   friend class Produto;
 
   friend ostream& operator<<(ostream& out, const VendeMaisMais & supermercado);

@@ -49,8 +49,6 @@ void lerProdutosTxt(VendeMaisMais &loja) {
 		inStream.close();
 	}
 	loja.listarProdutos();
-	loja.updateMapProdutoNameToIndex();
-
 
 }
 
@@ -202,21 +200,6 @@ void VendeMaisMais::listarProdutos(){
 	sort(produtosVector.begin(), produtosVector.end(), less<Produto>());
 	cout << "Produtos ordenados com sucesso por ordem alfabetica" << endl;
 	return;
-
-}
-void VendeMaisMais::updateNomeProdutoToIndexMap() {
-	for (unsigned int i = 0; i < produtosVector.size(); i++) {
-		nomeProdutoToIndexMap.insert(pair <string, unsigned int>(produtosVector.at(i).getNome(), i));
-	}
-	return;
-}
-int VendeMaisMais::indiceProduto(string nome) {
-	if (nomeProdutoToIndexMap.find(nome) != nomeProdutoToIndexMap.end()) {
-		return nomeProdutoToIndexMap.find(nome)->second;
-	}
-	else {
-		return -1;
-	}
 
 }
 
