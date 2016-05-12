@@ -216,8 +216,10 @@ void VendeMaisMais::listarTransacoesData() {
 }
 
 void VendeMaisMais::addTransacao(Transacao newTransaction, unsigned int clienteIndex, float volCompras) {
+	unsigned int newVolCompras;
+	newVolCompras = clientesVector.at(clienteIndex).getVolCompras() + volCompras;
 	transacoesVector.push_back(newTransaction);
-	clientesVector.at(clienteIndex).setVolCompras(volCompras);
+	clientesVector.at(clienteIndex).setVolCompras(newVolCompras);
 	listarTransacoesData();
 }
 
