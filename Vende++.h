@@ -31,6 +31,10 @@ class VendeMaisMais{
   map<string, unsigned int> produtoNameToIndex;  // map para "traduzir" nome do produto no indice dele no vetor de produtos
   multimap<unsigned int, unsigned int> transacaoIdToIndex; // multimap para "traduzir" o identificador do cliente nos indices das suas transacoes no vetor de transacoes
 
+  vector<vector<bool>> matriz;
+  map<unsigned int, unsigned int> matrizIndexToId;
+  vector <int> matrizNProdutos;
+
  public:
   VendeMaisMais(string loja, string fichClients, string fichProdutos, string fichTransacoes);
   void listarClientesOrdemAlfa();
@@ -44,7 +48,6 @@ class VendeMaisMais{
   int getClientesIndexByName(string nameOfClient);
   void saveChanges() const;
   void removeClient(string idOrNameOfCliente);
-  friend class Produto;
 
   friend ostream& operator<<(ostream& out, const VendeMaisMais & supermercado);
   friend void lerClientesTxt(VendeMaisMais &loja);
@@ -66,4 +69,7 @@ class VendeMaisMais{
   int ClienteNameToId(string clienteName);
   int ProdutoNameToIndex(string produtoName);
   pair <std::multimap<unsigned int, unsigned int>::iterator, std::multimap<unsigned int, unsigned int>::iterator> TransacaoIdToIndex(unsigned int clienteId);
+
+  void updateMatriz();
+  string matrizRecomendacao(unsigned int clienteId);
 };
