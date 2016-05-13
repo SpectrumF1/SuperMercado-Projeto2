@@ -33,6 +33,7 @@ class VendeMaisMais{
 
   vector<vector<bool>> matriz;
   map<unsigned int, unsigned int> matrizIndexToId;
+  vector <int> matrizNProdutos;
 
  public:
   VendeMaisMais(string loja, string fichClients, string fichProdutos, string fichTransacoes);

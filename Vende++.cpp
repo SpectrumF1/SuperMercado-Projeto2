@@ -277,11 +277,10 @@ pair <int, int> VendeMaisMais::getIndexDateByDateToDate(Data date1, Data date2) 
 ********************************/
 
 void VendeMaisMais::updateMatriz() {
-	vector<Produto> produtosVector;
-	vector<Transacao> transacoesVector;
-	vector<Cliente> clientesVector;
 	unsigned int equal = 0;
-
+	
+	matrizNProdutos.clear();
+	matrizNProdutos.resize(produtosVector.size());
 	matrizIndexToId.clear();
 
 	//criacao de vetor de correspondecia de id's e criação de matriz
@@ -302,19 +301,21 @@ void VendeMaisMais::updateMatriz() {
 	}
 
 	//alteracao da matriz para valores "true"
-	for (unsigned int idindex = 0; idindex < matriz.size(); idindex++)
+	for (unsigned int matrizClienteIndex = 0; matrizClienteIndex < matriz.size(); matrizClienteIndex++)
 	{
-		for (unsigned int transactionindex = 0; transactionindex < transacoesVector.size(); transactionindex++)
+		for (unsigned int transactionIndex = 0; transactionIndex < transacoesVector.size(); transactionIndex++)
 		{
-			if (matrizIndexToId.at(idindex) == transacoesVector.at(transactionindex).getIdCliente())
+			if (matrizIndexToId.at(matrizClienteIndex) == transacoesVector.at(transactionIndex).getIdCliente())
 			{
-				for (unsigned int prodindex = 0; prodindex < transacoesVector.at(transactionindex).getProdutosVector().size(); prodindex++)
+				for (unsigned int transacoesProdutoIndex = 0; transacoesProdutoIndex < transacoesVector.at(transactionIndex).getProdutosVector().size(); transacoesProdutoIndex++)
 				{
-					for (unsigned int Mproindex = 0; Mproindex < produtosVector.size(); Mproindex++)
+					for (unsigned int matrizProdutoIndex = 0; matrizProdutoIndex < produtosVector.size(); matrizProdutoIndex++)
 					{
-						if (transacoesVector.at(transactionindex).getProdutosVector().at(prodindex) == produtosVector.at(Mproindex).getNome())
+						if (transacoesVector.at(transactionIndex).getProdutosVector().at(transacoesProdutoIndex) == produtosVector.at(matrizProdutoIndex).getNome())
 						{
-							matriz.at(idindex).at(Mproindex) = true;
+							matriz.at(matrizClienteIndex).at(matrizProdutoIndex) = true;
+							matrizNProdutos.at(matrizProdutoIndex)++;
+							matrizProdutoIndex = produtosVector.size();
 						}
 					}
 				}
@@ -322,6 +323,7 @@ void VendeMaisMais::updateMatriz() {
 		}
 	}
 }
+
 
 struct MatrizHitVec {
 	int hit;
@@ -336,7 +338,6 @@ string VendeMaisMais::matrizRecomendacao(unsigned int clienteId) {
 	int maxprod = -1;
 	int maxprodid = -1;
 	vector <MatrizHitVec> analysis;
-	vector <int> Nproducts(produtosVector.size(), 0);
 	vector <int> maxidVEC;
 
 	//encotra o index do cliente a publicitar
@@ -357,11 +358,9 @@ string VendeMaisMais::matrizRecomendacao(unsigned int clienteId) {
 			if (matriz.at(IndexId).at(iproducts) && matriz.at(iid).at(iproducts))
 			{
 				analysis.at(iid).hit++;
-				Nproducts.at(iproducts)++;
 			}
 			else if (!(matriz.at(IndexId).at(iproducts)) && matriz.at(iid).at(iproducts))
 			{
-				Nproducts.at(iproducts)++;
 				analysis.at(iid).vec.push_back(iproducts);
 			}
 		}
@@ -391,9 +390,11 @@ string VendeMaisMais::matrizRecomendacao(unsigned int clienteId) {
 		{
 			for (unsigned int j = 0; j < analysis.at(maxidVEC.at(i)).vec.size(); j++)
 			{
-				if (maxprod < Nproducts.at(analysis.at(maxidVEC.at(i)).vec.at(j)))
+				unsigned int NproductsIndex = analysis.at(maxidVEC.at(i)).vec.at(j);
+				int Nprod = matrizNProdutos.at(NproductsIndex);
+				if (maxprod < Nprod)
 				{
-					maxprod = Nproducts.at(analysis.at(maxidVEC.at(i)).vec.at(j));
+					maxprod = Nprod;
 					maxprodid = j;
 					maxid = maxidVEC.at(i);
 				}
