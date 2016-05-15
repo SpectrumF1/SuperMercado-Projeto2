@@ -63,13 +63,14 @@ unsigned short int menuGestaoClientes(){
   cout << endl;
   cout << TAB << "1 - Listar clientes" << endl;
   cout << TAB << "2 - Ver informacao cliente" << endl;
-  cout << TAB << "3 - Editar cliente" << endl;
-  cout << TAB << "4 - Remover cliente" << endl;
-  cout << TAB << "5 - Voltar ao menu inicial" << endl << endl;
+  cout << TAB << "3 - Adicionar cliente" << endl;
+  cout << TAB << "4 - Editar cliente" << endl;
+  cout << TAB << "5 - Remover cliente" << endl;
+  cout << TAB << "6 - Voltar ao menu inicial" << endl << endl;
   cout << TAB << "Qual a sua opcao: ";
-  opcao = leUnsignedShortInt(1, 5);
+  opcao = leUnsignedShortInt(1, 6);
 
-  if(opcao == 5)
+  if(opcao == 6)
     return 0;
 
   return opcao;
@@ -80,6 +81,13 @@ void opcoesGestaoClientes(VendeMaisMais & supermercado){
 	unsigned int opcao, clienteIndex;
   string nome;
   string clienteNameOrId;
+  unsigned int nextId = supermercado.getMaxClientesId() + 1;
+  string newName;
+  Data newDataAdesao;
+  string newDataString;
+  float newVolCompras;
+  Cliente newCliente;
+  
   while((opcao = menuGestaoClientes()))
     switch (opcao){
     case 1: 
@@ -103,12 +111,29 @@ void opcoesGestaoClientes(VendeMaisMais & supermercado){
 	  }
 	  system("pause");
       break;
-    case 3:
+	case 3:
+		cout << "Nome do novo cliente: ";
+		getline(cin, newName);
+		cout << endl;
+		cout << "Data Adesao: ";
+		getline(cin,newDataString);
+		newDataAdesao.setData(newDataString);
+		cout << endl;
+		cout << "Montante inicial de compras: ";
+		newVolCompras = leFloat();
+		system("pause");
+		newCliente.setId(nextId);
+		newCliente.setNome(newName);
+		newCliente.setDataAdesao(newDataAdesao);
+		newCliente.setVolCompras(newVolCompras);
+		supermercado.addCliente(newCliente);
+		break;
+    case 4:
 		cout << "Introduza o Id ou o Nome do cliente a editar: ";
 		getline(cin, clienteNameOrId);
 		editClient(clienteNameOrId, supermercado);
       break;
-    case 4:
+    case 5:
 		cout << "Introduza o Id ou o Nome do cliente a remover: ";
 		getline(cin, clienteNameOrId);
 		supermercado.removeClient(clienteNameOrId);
@@ -340,7 +365,10 @@ void opcoesIniciais(VendeMaisMais & supermercado){
     switch (opcao){
     case 1: opcoesGestaoClientes(supermercado);
       break;
-    case 2: supermercado.listarProdutos();
+    case 2: 
+		for (unsigned int indexProduto = 0; indexProduto < supermercado.getProdutosVector().size(); indexProduto++) {
+			cout << supermercado.getProdutosVector().at(indexProduto);
+		}
       break;
     case 3: opcoesGestaoTransacoes(supermercado);
       break;

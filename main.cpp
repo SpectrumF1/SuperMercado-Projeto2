@@ -30,7 +30,9 @@ int main(){
   lerClientesTxt(supermercado);
   lerProdutosTxt(supermercado);
   lerTransacoesTxt(supermercado);
-  
+  supermercado.setMaxClientesId();
+  unsigned int maxId;
+  maxId = supermercado.getMaxClientesId();
 
   cout << "Informacao da loja '" << loja << " do supermercado Vende++:" << endl;
   cout << supermercado << endl;  // mostra estatisticas da loja
