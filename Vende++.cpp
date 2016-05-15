@@ -67,6 +67,7 @@ void lerTransacoesTxt(VendeMaisMais &loja) {
 		}
 		loja.listarTransacoesData();
 		loja.updateMapTransacaoIdToIndex();
+		loja.updateMatriz();
 }
 void VendeMaisMais::setMaxClientesId() {
 	int temporaryMax = 0;
@@ -113,6 +114,7 @@ void VendeMaisMais::removeClient(string idOrNameOfCliente) {
 		clientName = clientesVector.at(indexOfClient).getNome();
 		clientesVector.erase(clientesVector.begin() + indexOfClient);
 		clienteNameToId.erase(clientName);
+		updateMatriz();
 		cout << "Cliente " << clientName << " Removido com Sucesso" << endl;
 		}
 	else if (isdigit(idOrNameOfCliente.at(0))) {
@@ -248,6 +250,7 @@ void VendeMaisMais::addTransacao(Transacao newTransaction, unsigned int clienteI
 	clientesVector.at(clienteIndex).setVolCompras(newVolCompras);
 	listarTransacoesData();
 	updateMapTransacaoIdToIndex();
+	updateMatriz();
 }
 
 pair <int, int> VendeMaisMais::getIndexDataByData(Data date) {
@@ -291,6 +294,139 @@ pair <int, int> VendeMaisMais::getIndexDateByDateToDate(Data date1, Data date2) 
 }
 
 
+/*********************************
+* Gestao de Recomendacoes
+********************************/
+
+void VendeMaisMais::updateMatriz() {
+	unsigned int equal = 0;
+	
+	matrizNProdutos.clear();
+	matrizNProdutos.resize(produtosVector.size());
+	matrizIndexToId.clear();
+
+	//criacao de vetor de correspondecia de id's e criação de matriz
+	for (unsigned int i = 0; i < clientesVector.size(); i++)
+	{
+		matrizIndexToId[i] = clientesVector.at(i).getId();
+		matriz.push_back(vector <bool>(produtosVector.size(), false));
+	}
+
+	for (unsigned int i = 0; i < transacoesVector.size(); i++)
+	{
+		equal = getClientesIndexById(transacoesVector.at(i).getIdCliente());
+		if (equal == -1)
+		{
+			matrizIndexToId[matriz.size()] = transacoesVector.at(i).getIdCliente();
+			matriz.push_back(vector <bool>(produtosVector.size(), false));
+		}
+	}
+
+	//alteracao da matriz para valores "true"
+	for (unsigned int matrizClienteIndex = 0; matrizClienteIndex < matriz.size(); matrizClienteIndex++)
+	{
+		for (unsigned int transactionIndex = 0; transactionIndex < transacoesVector.size(); transactionIndex++)
+		{
+			if (matrizIndexToId.at(matrizClienteIndex) == transacoesVector.at(transactionIndex).getIdCliente())
+			{
+				for (unsigned int transacoesProdutoIndex = 0; transacoesProdutoIndex < transacoesVector.at(transactionIndex).getProdutosVector().size(); transacoesProdutoIndex++)
+				{
+					for (unsigned int matrizProdutoIndex = 0; matrizProdutoIndex < produtosVector.size(); matrizProdutoIndex++)
+					{
+						if (transacoesVector.at(transactionIndex).getProdutosVector().at(transacoesProdutoIndex) == produtosVector.at(matrizProdutoIndex).getNome())
+						{
+							matriz.at(matrizClienteIndex).at(matrizProdutoIndex) = true;
+							matrizNProdutos.at(matrizProdutoIndex)++;
+							matrizProdutoIndex = produtosVector.size();
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+
+struct MatrizHitVec {
+	int hit;
+	vector <int> vec;
+};
+
+string VendeMaisMais::matrizRecomendacao(unsigned int clienteId) {
+	string produtoRecomendacao;
+	int IndexId;
+	int max = -1;
+	int maxid = -1;
+	int maxprod = -1;
+	int maxprodid = -1;
+	vector <MatrizHitVec> analysis;
+	vector <int> maxidVEC;
+
+	//encotra o index do cliente a publicitar
+	for (unsigned int i = 0; i < matrizIndexToId.size(); i++)
+	{
+		if (clienteId == matrizIndexToId.at(i))
+		{
+			IndexId = i;
+		}
+	}
+
+	//analise da matriz
+	for (unsigned int iid = 0; iid < matriz.size(); iid++)
+	{
+		analysis.push_back(MatrizHitVec());
+		for (unsigned int iproducts = 0; iproducts < produtosVector.size(); iproducts++)
+		{
+			if (matriz.at(IndexId).at(iproducts) && matriz.at(iid).at(iproducts))
+			{
+				analysis.at(iid).hit++;
+			}
+			else if (!(matriz.at(IndexId).at(iproducts)) && matriz.at(iid).at(iproducts))
+			{
+				analysis.at(iid).vec.push_back(iproducts);
+			}
+		}
+	}
+
+	//encontra cliente mais parecido
+	for (unsigned int i = 0; i < analysis.size(); i++)
+	{
+		if (max < analysis.at(i).hit && (!analysis.at(i).vec.empty()))
+		{
+			max = analysis.at(i).hit;
+			maxid = i;
+		}
+	}
+	for (unsigned int i = 0; i < analysis.size(); i++)
+	{
+		if (max == analysis.at(i).hit && (!analysis.at(i).vec.empty()))
+		{
+			maxidVEC.push_back(i);
+		}
+	}
+
+	//encontra produto com mais frequencia
+	if (maxidVEC.size() >= 1)
+	{
+		for (unsigned int i = 0; i < maxidVEC.size(); i++)
+		{
+			for (unsigned int j = 0; j < analysis.at(maxidVEC.at(i)).vec.size(); j++)
+			{
+				unsigned int NproductsIndex = analysis.at(maxidVEC.at(i)).vec.at(j);
+				int Nprod = matrizNProdutos.at(NproductsIndex);
+				if (maxprod < Nprod)
+				{
+					maxprod = Nprod;
+					maxprodid = j;
+					maxid = maxidVEC.at(i);
+				}
+			}
+		}
+		produtoRecomendacao = produtosVector.at(analysis.at(maxid).vec.at(maxprodid)).getNome();
+	}
+
+	return produtoRecomendacao;
+}
 
 
 /*********************************

@@ -312,25 +312,38 @@ void opcoesGestaoTransacoes(VendeMaisMais & supermercado){
 }
 
 /******************************************
- * Gestao de Transacoes
+ * Menu de Recomendacoes
  ******************************************/
 unsigned short int menuRecomendacao(){
+	unsigned short int opcao;
 
-	return 0;
+	clearScreen();
+	cout << TAB_BIG << "Recomendacoes" << endl;
+	cout << endl;
+	cout << TAB << "1 - Recomendacao para um cliente" << endl;
+	cout << TAB << "2 - Recomendacao para os Bottom10" << endl;
+	cout << TAB << "3 - Regressar ao Menu Inicial" << endl << endl;
+	opcao = leUnsignedShortInt(1, 3);
+
+	if (opcao == 3)
+		return 0;
+
+	return opcao;
 }
 
 void opcoesRecomendacao(VendeMaisMais & supermercado){
   unsigned int opcao;
+  unsigned int clienteID;
 
   while((opcao = menuRecomendacao()))
     switch (opcao){
     case 1:
+		cout << "Introduz o id do cliente: ";
+		cin >> clienteID;
+		cout << "O produto a comprar e: " << supermercado.matrizRecomendacao(clienteID) << endl;
+		system("pause");
       break;
     case 2:
-      break;
-    case 3:
-      break;
-    case 4:
       break;
     }
 
@@ -350,7 +363,6 @@ unsigned short int menuInicial(){
   cout << TAB << "3 - Gestao de transacoes" << endl;
   cout << TAB << "4 - Recomendacoes" << endl;
   cout << TAB << "5 - Sair do programa" << endl << endl;
-  cout << TAB << "Qual a sua opcao: ";
   opcao = leUnsignedShortInt(1, 5);
 
   if(opcao == 5)
