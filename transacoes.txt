@@ -1,6 +1,33 @@
-5
+32
 1 ; 03/01/2016 ; cerveja,batata frita,amendoins,fiambre
 1 ; 04/01/2016 ; cerveja,amendoins,pao
-2 ; 04/01/2016 ; peixe,carne,batatas
+2 ; 04/01/2016 ; peixe,carne,batata
 3 ; 10/01/2016 ; agua,acucar,cha
 1 ; 01/02/2016 ; cerveja,batata frita,amendoins,presunto
+2 ; 05/01/2016 ; chokapitos,estrelitas,sal
+2 ; 29/01/2016 ; acucar,batata,presunto
+4 ; 24/02/2016 ; peixe,presunto,fiambre
+4 ; 27/02/2016 ; vinho,agua,bolachas
+5 ; 29/02/2016 ; pao,sumo,fiambre
+5 ; 01/03/2016 ; cha,chokapitos,estrelitas
+6 ; 01/03/2016 ; acucar,feijao,amendoins
+6 ; 02/03/2016 ; cerceja,vinho,sumo,pao
+7 ; 02/03/2016 ; amendoins,presunto,peixe
+7 ; 03/03/2016 ; carne,batata,acucar
+8 ; 03/03/2016 ; cafe,sal,chokapitos
+8 ; 04/03/2016 ; estrelitas,carne,sumo
+9 ; 05/03/2016 ; vinho,fiambre,cha
+9 ; 06/03/2016 ; acucar,pao,bolachas
+10 ; 06/03/2016 ; cerveja,chokapitos,cafe
+10 ; 07/03/2016 ; sal,feijao,cerveja
+11 ; 08/03/2016 ; vinho,acucar,sal
+11 ; 08/03/2016 ; amendoins,batata,carne
+12 ; 09/03/2016 ; cerveja,agua,bolachas,amendoins,presunto,peixe
+13 ; 09/03/2016 ; fiambre,presunto,peixe,carne,batata
+14 ; 11/03/2016 ; acucar, cha,feijao,chokapitos,estrelitas
+15 ; 11/03/2016 ; feijao,sal,chokapitos,cerveja,vinho
+16 ; 15/03/2016 ; sumo,agua,bolachas,pao,batata frita, amendoins
+17 ; 15/03/2016 ; batata frita,amendoins,sal,presunto,peixe
+18 ; 19/03/2016 ; fiambre,cerveja,vinho,sal,feijao
+19 ; 19/03/2016 ; sumo,agua,batata frita,fiambre,presunto,carne
+20 ; 30/03/2016 ; peixe,acucar,cha,feijao,sal,estrelitas
