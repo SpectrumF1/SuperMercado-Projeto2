@@ -187,11 +187,7 @@ void opcoesGestaoTransacoes(VendeMaisMais & supermercado){
 			  cout << "Introduza a data da transacao:";
 			  getline(cin, dataString);
 
-			  clearScreen();
-			  for (unsigned int i = 0; i < supermercado.getProdutosVector().size(); i++)
-			  {
-				  cout << i << "). " << supermercado.getProdutosVector().at(i);
-			  }
+			  supermercado.mostraProdutos();
 			  cout << "Que produto deseja?" << endl;
 			  produtoIndex = leUnsignedInt();
 			  while (produtoIndex < 0 && produtoIndex >= supermercado.getProdutosVector().size())
@@ -217,11 +213,7 @@ void opcoesGestaoTransacoes(VendeMaisMais & supermercado){
 				  //alteracao
 				  if (decision == 'Y' || decision == 'y')
 				  {
-					  clearScreen();
-					  for (unsigned int i = 0; i < supermercado.getProdutosVector().size(); i++)
-					  {
-						  cout << i << "). " << supermercado.getProdutosVector().at(i);
-					  }
+					  supermercado.mostraProdutos();
 					  cout << "Que produto deseja?" << endl;
 					  produtoIndex = leUnsignedInt();
 					  while (produtoIndex < 0 && produtoIndex >= supermercado.getProdutosVector().size())
@@ -377,10 +369,7 @@ void opcoesIniciais(VendeMaisMais & supermercado){
     switch (opcao){
     case 1: opcoesGestaoClientes(supermercado);
       break;
-    case 2: 
-		for (unsigned int indexProduto = 0; indexProduto < supermercado.getProdutosVector().size(); indexProduto++) {
-			cout << supermercado.getProdutosVector().at(indexProduto);
-		}
+	case 2: supermercado.mostraProdutos();
       break;
     case 3: opcoesGestaoTransacoes(supermercado);
       break;
