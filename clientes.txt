@@ -1,4 +1,4 @@
-4
+20
 1
 Manuel Antonio Guedes
 1/7/2016
@@ -15,3 +15,67 @@ Jose Antonio Marques
 Maria Alice Almeida
 10/7/2016
 120.33
+5
+Ines Alves
+15/12/2015
+130.10
+6
+Renato Campos
+05/12/2015
+127.20
+7
+Joana Maria
+04/10/2014
+126.75
+8
+Mariana Ferreira
+02/07/2013
+135.66
+9
+Joana Almeida
+28/02/2016
+222.65
+10
+Manuel Alexandre
+12/07/2015
+129.39
+11
+Jusefina Conceicao
+13/2/2016
+981.98
+12
+Joao Carvalho
+11/02/2016
+13.37
+13
+Bruno Melo
+16/04/2015
+124.99
+14
+Maria Albertina
+05/01/2016
+145.23
+15
+Joao Pocas
+13/11/2015
+457.54
+16
+Lyubov Patheletik
+02/01/2015
+13.37
+17
+Katarina Thunderstorm
+05/07/2015
+188.98
+18
+Leona Shield
+09/08/2016
+545.55
+19
+Alistar The Minotaur
+20/01/2016
+64.99
+20
+Brand On Fire
+29/08/2016
+75.20

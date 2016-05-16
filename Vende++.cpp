@@ -69,11 +69,33 @@ void lerTransacoesTxt(VendeMaisMais &loja) {
 		loja.updateMapTransacaoIdToIndex();
 		loja.updateMatriz();
 }
+void VendeMaisMais::setMaxClientesId() {
+	int temporaryMax = 0;
+	for (unsigned int indexClientes = 0; indexClientes < clientesVector.size(); indexClientes++) {
+		if (clientesVector.at(indexClientes).getId() > temporaryMax) {
+			temporaryMax = clientesVector.at(indexClientes).getId();
+		}
+	}
+	for (unsigned int indexTransacoes = 0; indexTransacoes < transacoesVector.size(); indexTransacoes++) {
+		if (transacoesVector.at(indexTransacoes).getIdCliente() > temporaryMax) {
+			temporaryMax = transacoesVector.at(indexTransacoes).getIdCliente();
+		}
+	}
+	maxClientesId = temporaryMax;
+}
+unsigned int VendeMaisMais::getMaxClientesId() {
+	return maxClientesId;
+}
 
 
 /*********************************
  * Gestao de Clientes
  ********************************/  
+
+void VendeMaisMais::addCliente(Cliente newCliente) {
+	clientesVector.push_back(newCliente);
+	return;
+}
 
 // lista os clientes por ordem alfabetica crescente
 void VendeMaisMais::listarClientesOrdemAlfa(){

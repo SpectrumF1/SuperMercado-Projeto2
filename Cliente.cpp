@@ -2,6 +2,12 @@
 #include <algorithm>
 using namespace std;
 
+Cliente::Cliente() {
+	Data newData;
+	id = NULL;
+	nome = "";
+	volCompras = NULL;
+}
 Cliente::Cliente(ifstream & in){
 	string line;
 	getline(in, line);
@@ -57,19 +63,20 @@ ostream& operator<<(ostream& out, const Cliente & cli){
 bool operator<(const Cliente &cli1, const Cliente &cli2){
 	return cli1.nome < cli2.nome;
 }
+void Cliente::setId(unsigned int newId){
+	id = newId;
+}
+
 void Cliente::setNome(string newName){
 	nome = newName;
-	cout << "Nome de cliente com id: " << id << ", editado com sucesso para: " << nome << endl;
 	return;
 }
 void Cliente::setDataAdesao(Data newDate){
 	dataAdesao = newDate;
-	cout << "Data de adesao de cliente com id: " << id << ", editado com sucesso para: " << dataAdesao << endl;
 	return;
 }
 void Cliente::setVolCompras(float newVolCompras){
 	volCompras = newVolCompras;
-	cout << "Vol. de Compras de cliente com id: " << id << ", editado com sucesso para: " << volCompras << endl;
 	return;
 }
 
