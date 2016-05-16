@@ -41,7 +41,10 @@ class VendeMaisMais{
   void listarProdutos();
   void mostraProdutos();
   void listarTransacoesData();
+  void setMaxClientesId();
+  unsigned int getMaxClientesId();
   void addTransacao(Transacao newTransaction, unsigned int clienteIndex, float volCompras);
+  void addCliente(Cliente newCliente);
   pair<int, int> getIndexDataByData(Data date);
   pair<int, int> getIndexDateByDateToDate(Data date1, Data date2);
   void mostraInformacaoCliente(unsigned int clienteIndex);

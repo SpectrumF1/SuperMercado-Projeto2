@@ -18,6 +18,7 @@ class Cliente {
   float volCompras;
 
  public:
+	 Cliente();
   Cliente(ifstream & in);
   Cliente(unsigned int newId, string newNome, Data newData, float newVolCompras);
   string getNome() const;
@@ -27,6 +28,7 @@ class Cliente {
   void save(ofstream & out) const;
   friend ostream& operator<<(ostream& out, const Cliente & cli);  // mostra informacao do cliente no ecra
   friend bool operator<(const Cliente &cli1, const Cliente &cli2); // compara 2 clientes (1 cliente e menor que outro se o seu nome for "alfabeticamente" inferior)
+  void setId(unsigned int newId);
   void setNome(string newName);
   void setDataAdesao(Data newDate);
   void setVolCompras(float newVolCompras);
