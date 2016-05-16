@@ -231,6 +231,14 @@ void VendeMaisMais::listarProdutos(){
 
 }
 
+void VendeMaisMais::mostraProdutos() {
+	clearScreen();
+	for (unsigned int i = 0; i < produtosVector.size(); i++)
+	{
+		cout << i << "). " << produtosVector.at(i);
+	}
+}
+
 
 /*********************************
 * Gestao de Transacoes
