@@ -39,6 +39,7 @@ class VendeMaisMais{
   VendeMaisMais(string loja, string fichClients, string fichProdutos, string fichTransacoes);
   void listarClientesOrdemAlfa();
   void listarProdutos();
+  void mostraProdutos();
   void listarTransacoesData();
   void addTransacao(Transacao newTransaction, unsigned int clienteIndex, float volCompras);
   pair<int, int> getIndexDataByData(Data date);
