@@ -2,9 +2,7 @@
 
 
 void clearScreen(){
-	for (unsigned int i = 0; i < ALTURA_ECRA; i++){
-		cout << endl;
-	}
+	system("CLS");
 }
 
 
