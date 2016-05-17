@@ -79,4 +79,5 @@ class VendeMaisMais{
 
   void updateMatriz();
   string matrizRecomendacao(unsigned int clienteId);
+  string matrizRecomendacaoBottom10();
 };

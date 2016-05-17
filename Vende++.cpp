@@ -479,6 +479,12 @@ string VendeMaisMais::matrizRecomendacao(unsigned int clienteId) {
 	return produtoRecomendacao;
 }
 
+string VendeMaisMais::matrizRecomendacaoBottom10() {
+	string produtoRecomendacao;
+
+	return produtoRecomendacao;
+}
+
 
 /*********************************
  * Preservar Informacao
