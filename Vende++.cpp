@@ -209,6 +209,7 @@ void editClient(string clientIdOrName, VendeMaisMais &supermercado) {
 
 void VendeMaisMais::updateVolComprasByTransactions(unsigned int indexOfClientToUpdate) {
 	float sumOfVolCompras = 0;
+	float epsilon = 0.001;
 	for (unsigned int indexInTransactions = 0; indexInTransactions < transacoesVector.size(); indexInTransactions++) {
 		vector<string> actualProductsVector = transacoesVector.at(indexInTransactions).getProdutosVector();
 		if (clientesVector.at(indexOfClientToUpdate).getId() == transacoesVector.at(indexInTransactions).getIdCliente()) {
@@ -222,7 +223,7 @@ void VendeMaisMais::updateVolComprasByTransactions(unsigned int indexOfClientToU
 			}
 		}
 	}
-	if (clientesVector.at(indexOfClientToUpdate).getVolCompras() != sumOfVolCompras)
+	if (abs(clientesVector.at(indexOfClientToUpdate).getVolCompras() - sumOfVolCompras) >= epsilon)
 	{
 		clientesVector.at(indexOfClientToUpdate).setVolCompras(sumOfVolCompras);
 		clientesAlterados = true;
