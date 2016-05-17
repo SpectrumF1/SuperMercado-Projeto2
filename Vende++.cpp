@@ -251,12 +251,10 @@ void VendeMaisMais::updateBottom10() {
 	float max10VolCompras = 0;
 	int vectorLoad = 0;
 	unsigned int clientWithMaxVolCompras;
-	unsigned int clienteId;
 	float clienteVolCompras;
 	for (unsigned int i = 0; i < clientesVector.size(); i++)
 	{
 		clienteVolCompras = clientesVector.at(i).getVolCompras();
-		clienteId = clientesVector.at(i).getId();
 		if (vectorLoad < 10)
 		{
 			if (clienteVolCompras > max10VolCompras)
@@ -264,21 +262,22 @@ void VendeMaisMais::updateBottom10() {
 				max10VolCompras = clienteVolCompras;
 				clientWithMaxVolCompras = vectorLoad;
 			}
-			bottom10Vector.push_back(clienteId);
+			bottom10Vector.push_back(clientesVector.at(i));
 			vectorLoad++;
 		}
 		else
 		{
 			if (clienteVolCompras < max10VolCompras)
 			{
-				bottom10Vector[clientWithMaxVolCompras] = clienteId;
+				bottom10Vector[clientWithMaxVolCompras] = clientesVector.at(i);
 				max10VolCompras = clienteVolCompras;
 			}
 		}
 	}
+	sort(bottom10Vector.begin(), bottom10Vector.end(), less<Cliente>());
 }
 
-vector<unsigned int> VendeMaisMais::getBottom10() {
+vector<Cliente> VendeMaisMais::getBottom10() {
 	return bottom10Vector;
 }
 
@@ -381,6 +380,7 @@ void VendeMaisMais::updateMatriz() {
 	for (unsigned int i = 0; i < clientesVector.size(); i++)
 	{
 		matrizIndexToId[i] = clientesVector.at(i).getId();
+		matrizIdToIndex[clientesVector.at(i).getId()] = i;
 		matriz.push_back(vector <bool>(produtosVector.size(), false));
 	}
 
@@ -390,6 +390,7 @@ void VendeMaisMais::updateMatriz() {
 		if (equal == -1)
 		{
 			matrizIndexToId[matriz.size()] = transacoesVector.at(i).getIdCliente();
+			matrizIdToIndex[transacoesVector.at(i).getIdCliente()] = matriz.size();
 			matriz.push_back(vector <bool>(produtosVector.size(), false));
 		}
 	}
@@ -503,6 +504,46 @@ string VendeMaisMais::matrizRecomendacao(unsigned int clienteId) {
 
 string VendeMaisMais::matrizRecomendacaoBottom10() {
 	string produtoRecomendacao;
+	unsigned int clientIndexOnMatrix;
+	bool productBuyByBottom10 = true;
+	vector <unsigned int> productsBuyByAllBottom10;
+	vector <unsigned int> indexClientesInteressantesVector;
+	vector <unsigned int> indexClientesInteressantesVectorTemp;
+	unsigned int lastClientIndex = 0;
+
+	for (unsigned int productIndexOnMatrix = 0; productIndexOnMatrix < matriz.at(0).size(); productIndexOnMatrix++)
+	{
+		productBuyByBottom10 = true;
+		for (unsigned int clienteIndexOnBottom10 = 0; clienteIndexOnBottom10 < bottom10Vector.size(); clienteIndexOnBottom10++)
+		{
+			clientIndexOnMatrix = matrizIdToIndex.at(bottom10Vector.at(clienteIndexOnBottom10).getId());
+			if (!matriz.at(clientIndexOnMatrix).at(productIndexOnMatrix))
+			{
+				break; //verificar se faz mesmo o break pretendido
+				productBuyByBottom10 = false;
+			}
+			for (unsigned int indexOnMatrixClientsInteresting = lastClientIndex; indexOnMatrixClientsInteresting < clientIndexOnMatrix; indexOnMatrixClientsInteresting++)
+			{
+				if (matriz.at(indexOnMatrixClientsInteresting).at(productIndexOnMatrix))
+				{
+					indexClientesInteressantesVectorTemp.push_back(indexOnMatrixClientsInteresting);
+				}
+			}
+			lastClientIndex = clientIndexOnMatrix+1;
+		}
+		if (productBuyByBottom10)
+		{
+			productsBuyByAllBottom10.push_back(productIndexOnMatrix);
+			indexClientesInteressantesVector.insert(indexClientesInteressantesVector.begin(), indexClientesInteressantesVectorTemp.begin(), indexClientesInteressantesVectorTemp.end());
+		}
+		else
+		{
+			indexClientesInteressantesVectorTemp.clear();
+		}
+
+	}
+
+
 
 	return produtoRecomendacao;
 }

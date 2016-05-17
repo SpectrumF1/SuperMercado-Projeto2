@@ -34,13 +34,14 @@ class VendeMaisMais{
   vector<unsigned int>indexOfCommonProductsOfBottom10;
   vector<vector<bool>> matriz;
   map<unsigned int, unsigned int> matrizIndexToId;
+  map<unsigned int, unsigned int> matrizIdToIndex;
   vector <int> matrizNProdutos;
-  vector <unsigned int> bottom10Vector;
+  vector <Cliente> bottom10Vector;
 
  public:
   VendeMaisMais(string loja, string fichClients, string fichProdutos, string fichTransacoes);
   void listarClientesOrdemAlfa();
-  vector<unsigned int> getBottom10();
+  vector<Cliente> getBottom10();
   void listarProdutos();
   void mostraProdutos();
   void listarTransacoesData();
