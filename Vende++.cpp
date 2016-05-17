@@ -71,6 +71,7 @@ void lerTransacoesTxt(VendeMaisMais &loja) {
 		loja.updateMatriz();
 		for (unsigned int i = 0; i < loja.clientesVector.size();i++){
 			loja.updateVolComprasByTransactions(i);
+			loja.clientesAlterados = true;
 		}
 		
 }
