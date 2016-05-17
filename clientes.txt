@@ -1,81 +1,81 @@
 20
-1
-Manuel Antonio Guedes
-1/7/2016
-10.03
 2
 Albina Martins
 2/7/2016
-223.00
-3
-Jose Antonio Marques
-9/7/2016
-221.10
-4
-Maria Alice Almeida
-10/7/2016
-120.33
+29.3
+19
+Alistar The Minotaur
+20/1/2016
+21.8
+20
+Brand On Fire
+29/8/2016
+16.9
+13
+Bruno Melo
+16/4/2015
+25.1
 5
 Ines Alves
 15/12/2015
-130.10
-6
-Renato Campos
-05/12/2015
-127.20
-7
-Joana Maria
-04/10/2014
-126.75
-8
-Mariana Ferreira
-02/07/2013
-135.66
+10.6
 9
 Joana Almeida
-28/02/2016
-222.65
-10
-Manuel Alexandre
-12/07/2015
-129.39
-11
-Jusefina Conceicao
-13/2/2016
-981.98
+28/2/2016
+15.8
+7
+Joana Maria
+4/10/2014
+25.3
 12
 Joao Carvalho
-11/02/2016
-13.37
-13
-Bruno Melo
-16/04/2015
-124.99
-14
-Maria Albertina
-05/01/2016
-145.23
+11/2/2016
+18.3
 15
 Joao Pocas
 13/11/2015
-457.54
-16
-Lyubov Patheletik
-02/01/2015
-13.37
+16.8
+3
+Jose Antonio Marques
+9/7/2016
+2.4
+11
+Jusefina Conceicao
+13/2/2016
+23.9
 17
 Katarina Thunderstorm
-05/07/2015
-188.98
+5/7/2015
+18.2
 18
 Leona Shield
-09/08/2016
-545.55
-19
-Alistar The Minotaur
-20/01/2016
-64.99
-20
-Brand On Fire
-29/08/2016
-75.20
+9/8/2016
+18.6
+16
+Lyubov Patheletik
+2/1/2015
+6.6
+10
+Manuel Alexandre
+12/7/2015
+10.6
+1
+Manuel Antonio Guedes
+1/7/2016
+13.9
+14
+Maria Albertina
+5/1/2016
+8.1
+4
+Maria Alice Almeida
+10/7/2016
+26.8
+8
+Mariana Ferreira
+2/7/2013
+18.9
+6
+Renato Campos
+5/12/2015
+18.1
