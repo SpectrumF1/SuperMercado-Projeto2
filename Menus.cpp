@@ -350,12 +350,6 @@ void opcoesRecomendacao(VendeMaisMais & supermercado) {
 			system("pause");
 			break;
 		case 2:
-			bottom10Vec = supermercado.getBottom10();
-			for (unsigned int i = 0; i < bottom10Vec.size(); i++)
-			{
-				clienteId = bottom10Vec.at(i);
-				cout << supermercado.getClientesVector().at(supermercado.getClientesIndexById(clienteId)).getNome() << " - " << supermercado.matrizRecomendacao(clienteId) << endl;
-			}
 			system("pause");
 			break;
 		}
