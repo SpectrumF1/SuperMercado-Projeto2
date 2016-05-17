@@ -69,6 +69,10 @@ void lerTransacoesTxt(VendeMaisMais &loja) {
 		loja.listarTransacoesData();
 		loja.updateMapTransacaoIdToIndex();
 		loja.updateMatriz();
+		for (unsigned int i = 0; i < loja.clientesVector.size();i++){
+			loja.updateVolComprasByTransactions(i);
+		}
+		
 }
 void VendeMaisMais::setMaxClientesId() {
 	int temporaryMax = 0;
@@ -202,6 +206,24 @@ void editClient(string clientIdOrName, VendeMaisMais &supermercado) {
 	}
 }
 
+
+void VendeMaisMais::updateVolComprasByTransactions(unsigned int indexOfClientToUpdate) {
+	float sumOfVolCompras = 0;
+	for (unsigned int indexInTransactions = 0; indexInTransactions < transacoesVector.size(); indexInTransactions++) {
+		vector<string> actualProductsVector = transacoesVector.at(indexInTransactions).getProdutosVector();
+		if (clientesVector.at(indexOfClientToUpdate).getId() == transacoesVector.at(indexInTransactions).getIdCliente()) {
+			for (int indexInActualProductsVector = 0; indexInActualProductsVector < actualProductsVector.size(); indexInActualProductsVector++) {
+				for (unsigned int indexInProductsVector = 0; indexInProductsVector < produtosVector.size(); indexInProductsVector++) {
+					if (actualProductsVector.at(indexInActualProductsVector) == produtosVector.at(indexInProductsVector).getNome()) {
+						sumOfVolCompras += produtosVector.at(indexInProductsVector).getCusto();
+						break;
+					}
+				}
+			}
+		}
+	}
+	clientesVector.at(indexOfClientToUpdate).setVolCompras(sumOfVolCompras);
+}
 
 int VendeMaisMais::getClientesIndexById(unsigned int idOfClient) {
 	for (unsigned int i = 0; i < clientesVector.size(); i++)
