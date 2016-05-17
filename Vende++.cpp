@@ -578,6 +578,7 @@ void VendeMaisMais::saveChanges() const{
 		if (decision == 'Y' || decision == 'y')
 		{
 			fileOut.open(fichClientes);
+			fileOut << clientesVector.size() << endl;
 			for (unsigned int i = 0; i < clientesVector.size(); i++)
 			{
 				clientesVector.at(i).save(fileOut);
@@ -605,6 +606,7 @@ void VendeMaisMais::saveChanges() const{
 		if (decision == 'Y' || decision == 'y')
 		{
 			fileOut.open(fichTransacoes);
+			fileOut << transacoesVector.size() << endl;
 			for (unsigned int i = 0; i < transacoesVector.size(); i++)
 			{
 				transacoesVector.at(i).save(fileOut);
