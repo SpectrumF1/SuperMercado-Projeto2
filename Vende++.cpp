@@ -456,6 +456,7 @@ string VendeMaisMais::matrizRecomendacao(unsigned int clienteId) {
 	}
 
 	//encontra produto com mais frequencia
+	int Nprod;
 	if (maxidVEC.size() >= 1)
 	{
 		for (unsigned int i = 0; i < maxidVEC.size(); i++)
@@ -463,7 +464,7 @@ string VendeMaisMais::matrizRecomendacao(unsigned int clienteId) {
 			for (unsigned int j = 0; j < analysis.at(maxidVEC.at(i)).vec.size(); j++)
 			{
 				unsigned int NproductsIndex = analysis.at(maxidVEC.at(i)).vec.at(j);
-				int Nprod = matrizNProdutos.at(NproductsIndex);
+				Nprod = matrizNProdutos.at(NproductsIndex);
 				if (maxprod < Nprod)
 				{
 					maxprod = Nprod;
