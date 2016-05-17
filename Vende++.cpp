@@ -71,7 +71,6 @@ void lerTransacoesTxt(VendeMaisMais &loja) {
 		loja.updateMatriz();
 		for (unsigned int i = 0; i < loja.clientesVector.size();i++){
 			loja.updateVolComprasByTransactions(i);
-			loja.clientesAlterados = true;
 		}
 		
 }
@@ -223,7 +222,11 @@ void VendeMaisMais::updateVolComprasByTransactions(unsigned int indexOfClientToU
 			}
 		}
 	}
-	clientesVector.at(indexOfClientToUpdate).setVolCompras(sumOfVolCompras);
+	if (clientesVector.at(indexOfClientToUpdate).getVolCompras() != sumOfVolCompras)
+	{
+		clientesVector.at(indexOfClientToUpdate).setVolCompras(sumOfVolCompras);
+		clientesAlterados = true;
+	}
 }
 
 int VendeMaisMais::getClientesIndexById(unsigned int idOfClient) {
