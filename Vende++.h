@@ -31,6 +31,7 @@ class VendeMaisMais{
   map<string, unsigned int> produtoNameToIndex;  // map para "traduzir" nome do produto no indice dele no vetor de produtos
   multimap<unsigned int, unsigned int> transacaoIdToIndex; // multimap para "traduzir" o identificador do cliente nos indices das suas transacoes no vetor de transacoes
 
+  vector<unsigned int>indexOfCommonProductsOfBottom10;
   vector<vector<bool>> matriz;
   map<unsigned int, unsigned int> matrizIndexToId;
   vector <int> matrizNProdutos;
@@ -47,6 +48,7 @@ class VendeMaisMais{
   unsigned int getMaxClientesId();
   void addTransacao(Transacao newTransaction, unsigned int clienteIndex, float volCompras);
   void addCliente(Cliente newCliente);
+  void updateVolComprasByTransactions(unsigned int indexOfClientToUpdate);
   pair<int, int> getIndexDataByData(Data date);
   pair<int, int> getIndexDateByDateToDate(Data date1, Data date2);
   void mostraInformacaoCliente(unsigned int clienteIndex);
