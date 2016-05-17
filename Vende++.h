@@ -34,11 +34,14 @@ class VendeMaisMais{
   vector<vector<bool>> matriz;
   map<unsigned int, unsigned int> matrizIndexToId;
   vector <int> matrizNProdutos;
+  vector <unsigned int> bottom10Vector;
 
  public:
   VendeMaisMais(string loja, string fichClients, string fichProdutos, string fichTransacoes);
   void listarClientesOrdemAlfa();
+  vector<unsigned int> getBottom10();
   void listarProdutos();
+  void mostraProdutos();
   void listarTransacoesData();
   void setMaxClientesId();
   unsigned int getMaxClientesId();
@@ -49,6 +52,7 @@ class VendeMaisMais{
   void mostraInformacaoCliente(unsigned int clienteIndex);
   int getClientesIndexById(unsigned int idOfClient);
   int getClientesIndexByName(string nameOfClient);
+  void updateBottom10();
   void saveChanges() const;
   void removeClient(string idOrNameOfCliente);
 

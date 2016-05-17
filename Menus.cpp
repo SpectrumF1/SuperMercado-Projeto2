@@ -6,7 +6,7 @@
 bool infoInicial(string &loja, string &fichClientes, string &fichProdutos, string &fichTransacoes){
 	ifstream fileTeste;
 	cout << "Indique o Nome da Loja." << endl;
-	cin >> loja;
+	getline(cin, loja);
 	cout << "Indique o Nome do Ficheiro com os Dados dos Clientes, Incluindo a Extencao." << endl;
 	cin >> fichClientes;
 	while (fichClientes.find(".txt") != fichClientes.length() - 4)
@@ -187,11 +187,7 @@ void opcoesGestaoTransacoes(VendeMaisMais & supermercado){
 			  cout << "Introduza a data da transacao:";
 			  getline(cin, dataString);
 
-			  clearScreen();
-			  for (unsigned int i = 0; i < supermercado.getProdutosVector().size(); i++)
-			  {
-				  cout << i << "). " << supermercado.getProdutosVector().at(i);
-			  }
+			  supermercado.mostraProdutos();
 			  cout << "Que produto deseja?" << endl;
 			  produtoIndex = leUnsignedInt();
 			  while (produtoIndex < 0 && produtoIndex >= supermercado.getProdutosVector().size())
@@ -217,11 +213,7 @@ void opcoesGestaoTransacoes(VendeMaisMais & supermercado){
 				  //alteracao
 				  if (decision == 'Y' || decision == 'y')
 				  {
-					  clearScreen();
-					  for (unsigned int i = 0; i < supermercado.getProdutosVector().size(); i++)
-					  {
-						  cout << i << "). " << supermercado.getProdutosVector().at(i);
-					  }
+					  supermercado.mostraProdutos();
 					  cout << "Que produto deseja?" << endl;
 					  produtoIndex = leUnsignedInt();
 					  while (produtoIndex < 0 && produtoIndex >= supermercado.getProdutosVector().size())
@@ -331,22 +323,42 @@ unsigned short int menuRecomendacao(){
 	return opcao;
 }
 
-void opcoesRecomendacao(VendeMaisMais & supermercado){
-  unsigned int opcao;
-  unsigned int clienteID;
-
-  while((opcao = menuRecomendacao()))
-    switch (opcao){
-    case 1:
-		cout << "Introduz o id do cliente: ";
-		cin >> clienteID;
-		cout << "O produto a comprar e: " << supermercado.matrizRecomendacao(clienteID) << endl;
-		system("pause");
-      break;
-    case 2:
-      break;
-    }
-
+void opcoesRecomendacao(VendeMaisMais & supermercado) {
+	unsigned int opcao;
+	int clienteId;
+	string clientNameOrId;
+	vector<unsigned int> bottom10Vec;
+	while ((opcao = menuRecomendacao()))
+		switch (opcao)
+		{
+		case 1:
+			cout << "Introduz o id ou o nome do cliente: ";
+			getline(cin, clientNameOrId);
+			if (isalpha(clientNameOrId.at(0)))
+			{
+				clienteId = supermercado.ClienteNameToId(clientNameOrId);
+				if (clienteId != -1)
+				{
+					cout << "O produto a comprar e: " << supermercado.matrizRecomendacao(clienteId) << endl;
+				}
+			}
+			else if (isdigit(clientNameOrId.at(0)))
+			{
+				clienteId = stoi(clientNameOrId);
+				cout << "O produto a comprar e: " << supermercado.matrizRecomendacao(clienteId) << endl;
+			}
+			system("pause");
+			break;
+		case 2:
+			bottom10Vec = supermercado.getBottom10();
+			for (unsigned int i = 0; i < bottom10Vec.size(); i++)
+			{
+				clienteId = bottom10Vec.at(i);
+				cout << supermercado.getClientesVector().at(supermercado.getClientesIndexById(clienteId)).getNome() << " - " << supermercado.matrizRecomendacao(clienteId) << endl;
+			}
+			system("pause");
+			break;
+		}
 }
 
 /******************************************
@@ -377,10 +389,8 @@ void opcoesIniciais(VendeMaisMais & supermercado){
     switch (opcao){
     case 1: opcoesGestaoClientes(supermercado);
       break;
-    case 2: 
-		for (unsigned int indexProduto = 0; indexProduto < supermercado.getProdutosVector().size(); indexProduto++) {
-			cout << supermercado.getProdutosVector().at(indexProduto);
-		}
+	case 2: supermercado.mostraProdutos();
+		system("pause");
       break;
     case 3: opcoesGestaoTransacoes(supermercado);
       break;
