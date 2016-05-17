@@ -488,6 +488,7 @@ string VendeMaisMais::matrizRecomendacaoBottom10() {
 	vector <unsigned int> indexClientesInteressantesVector;
 	vector <unsigned int> indexClientesInteressantesVectorTemp;
 	unsigned int lastClientIndex = 0;
+
 	for (unsigned int productIndexOnMatrix = 0; productIndexOnMatrix < matriz.size(); productIndexOnMatrix++)
 	{
 		productBuyByBottom10 = true;
