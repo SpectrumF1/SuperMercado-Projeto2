@@ -33,6 +33,7 @@ void lerClientesTxt(VendeMaisMais &loja) {
 	}
 	loja.listarClientesOrdemAlfa();
 	loja.updateMapClienteNameToId();
+	loja.updateBottom10();
 }
 
 void lerProdutosTxt(VendeMaisMais &loja) {
@@ -94,6 +95,8 @@ unsigned int VendeMaisMais::getMaxClientesId() {
 
 void VendeMaisMais::addCliente(Cliente newCliente) {
 	clientesVector.push_back(newCliente);
+	updateMatriz();
+	clientesAlterados = true;
 	return;
 }
 
@@ -122,6 +125,7 @@ void VendeMaisMais::removeClient(string idOrNameOfCliente) {
 		clientName = clientesVector.at(indexOfClient).getNome();
 		clientesVector.erase(clientesVector.begin() + indexOfClient);
 		clienteNameToId.erase(clientName);
+		updateMatriz();
 		cout << "Cliente " << clientName << " Removido com Sucesso" << endl;
 	}
 	return;
@@ -147,7 +151,7 @@ void editClientByIndex(unsigned int indexOfCliente, VendeMaisMais &supermercado)
 		supermercado.clientesVector.at(indexOfCliente).setNome(newName);
 		supermercado.clienteNameToId[newName] = indexOfCliente;
 		supermercado.listarClientesOrdemAlfa();
-		
+		supermercado.clientesAlterados = true;
 	}
 	cout << "Alterar Data de Adesao? (y/n): ";
 	changeDate = leCharYorN();
@@ -157,6 +161,7 @@ void editClientByIndex(unsigned int indexOfCliente, VendeMaisMais &supermercado)
 		getline(cin, newDate);
 		Data novaDate(newDate);
 		supermercado.clientesVector.at(indexOfCliente).setDataAdesao(novaDate);
+		supermercado.clientesAlterados = true;
 	}
 	cout << "Alterar montante de compras? (y/n): ";
 	changeAmount = leCharYorN();
@@ -165,6 +170,7 @@ void editClientByIndex(unsigned int indexOfCliente, VendeMaisMais &supermercado)
 		cout << "Insira o novo montante: ";
 		newAmount = leFloat();
 		supermercado.clientesVector.at(indexOfCliente).setVolCompras(newAmount);
+		supermercado.clientesAlterados = true;
 	}
 	cout << "Cliente Editado com sucesso";
 }
@@ -219,6 +225,41 @@ int VendeMaisMais::getClientesIndexByName(string nameOfClient) {
 	return -1;
 }
 
+void VendeMaisMais::updateBottom10() {
+	float max10VolCompras = 0;
+	int vectorLoad = 0;
+	unsigned int clientWithMaxVolCompras;
+	unsigned int clienteId;
+	float clienteVolCompras;
+	for (unsigned int i = 0; i < clientesVector.size(); i++)
+	{
+		clienteVolCompras = clientesVector.at(i).getVolCompras();
+		clienteId = clientesVector.at(i).getId();
+		if (vectorLoad < 10)
+		{
+			if (clienteVolCompras > max10VolCompras)
+			{
+				max10VolCompras = clienteVolCompras;
+				clientWithMaxVolCompras = vectorLoad;
+			}
+			bottom10Vector.push_back(clienteId);
+			vectorLoad++;
+		}
+		else
+		{
+			if (clienteVolCompras < max10VolCompras)
+			{
+				bottom10Vector[clientWithMaxVolCompras] = clienteId;
+				max10VolCompras = clienteVolCompras;
+			}
+		}
+	}
+}
+
+vector<unsigned int> VendeMaisMais::getBottom10() {
+	return bottom10Vector;
+}
+
 /*********************************
  * Gestao de Produtos
  ********************************/  
@@ -259,6 +300,7 @@ void VendeMaisMais::addTransacao(Transacao newTransaction, unsigned int clienteI
 	listarTransacoesData();
 	updateMapTransacaoIdToIndex();
 	updateMatriz();
+	transacoesAlteradas = true;
 }
 
 pair <int, int> VendeMaisMais::getIndexDataByData(Data date) {
@@ -414,6 +456,7 @@ string VendeMaisMais::matrizRecomendacao(unsigned int clienteId) {
 	}
 
 	//encontra produto com mais frequencia
+	int Nprod;
 	if (maxidVEC.size() >= 1)
 	{
 		for (unsigned int i = 0; i < maxidVEC.size(); i++)
@@ -421,7 +464,7 @@ string VendeMaisMais::matrizRecomendacao(unsigned int clienteId) {
 			for (unsigned int j = 0; j < analysis.at(maxidVEC.at(i)).vec.size(); j++)
 			{
 				unsigned int NproductsIndex = analysis.at(maxidVEC.at(i)).vec.at(j);
-				int Nprod = matrizNProdutos.at(NproductsIndex);
+				Nprod = matrizNProdutos.at(NproductsIndex);
 				if (maxprod < Nprod)
 				{
 					maxprod = Nprod;
@@ -432,6 +475,12 @@ string VendeMaisMais::matrizRecomendacao(unsigned int clienteId) {
 		}
 		produtoRecomendacao = produtosVector.at(analysis.at(maxid).vec.at(maxprodid)).getNome();
 	}
+
+	return produtoRecomendacao;
+}
+
+string VendeMaisMais::matrizRecomendacaoBottom10() {
+	string produtoRecomendacao;
 
 	return produtoRecomendacao;
 }
@@ -497,7 +546,7 @@ void VendeMaisMais::saveChanges() const{
 		}
 		else
 		{
-			cout << "Nenhuma Alteracao Guardada!";
+			cout << "Nenhuma Alteracao Guardada!" << endl;
 		}
 	}
 }
