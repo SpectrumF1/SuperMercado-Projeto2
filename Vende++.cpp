@@ -489,7 +489,7 @@ string VendeMaisMais::matrizRecomendacaoBottom10() {
 	vector <unsigned int> indexClientesInteressantesVectorTemp;
 	unsigned int lastClientIndex = 0;
 
-	for (unsigned int productIndexOnMatrix = 0; productIndexOnMatrix < matriz.size(); productIndexOnMatrix++)
+	for (unsigned int productIndexOnMatrix = 0; productIndexOnMatrix < matriz.at(0).size(); productIndexOnMatrix++)
 	{
 		productBuyByBottom10 = true;
 		for (unsigned int clienteIndexOnBottom10 = 0; clienteIndexOnBottom10 < bottom10Vector.size(); clienteIndexOnBottom10++)
@@ -497,7 +497,7 @@ string VendeMaisMais::matrizRecomendacaoBottom10() {
 			clientIndexOnMatrix = matrizIdToIndex.at(bottom10Vector.at(clienteIndexOnBottom10).getId());
 			if (!matriz.at(clientIndexOnMatrix).at(productIndexOnMatrix))
 			{
-				clienteIndexOnBottom10 = bottom10Vector.size();
+				break; //verificar se faz mesmo o break pretendido
 				productBuyByBottom10 = false;
 			}
 			for (unsigned int indexOnMatrixClientsInteresting = lastClientIndex; indexOnMatrixClientsInteresting < clientIndexOnMatrix; indexOnMatrixClientsInteresting++)
@@ -507,7 +507,7 @@ string VendeMaisMais::matrizRecomendacaoBottom10() {
 					indexClientesInteressantesVectorTemp.push_back(indexOnMatrixClientsInteresting);
 				}
 			}
-			lastClientIndex = clienteIndexOnBottom10;
+			lastClientIndex = clientIndexOnMatrix+1;
 		}
 		if (productBuyByBottom10)
 		{
