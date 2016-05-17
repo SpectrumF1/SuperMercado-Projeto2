@@ -350,6 +350,7 @@ void opcoesRecomendacao(VendeMaisMais & supermercado) {
 			system("pause");
 			break;
 		case 2:
+			supermercado.matrizRecomendacaoBottom10();
 			system("pause");
 			break;
 		}
