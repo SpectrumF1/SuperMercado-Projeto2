@@ -592,6 +592,10 @@ string VendeMaisMais::matrizRecomendacaoBottom10() {
 				productBuyByBottom10 = false;
 				break; //possivel de retirar se for para verificar os produtos que os clientes interessantes compram
 			}
+			if (clienteIndexOnBottom10 = bottom10Vector.size()-1)
+			{
+				clientIndexOnMatrix = matriz.size() - 1;
+			}
 			for (unsigned int indexOnMatrixOfInterestingClients = lastClientIndex; indexOnMatrixOfInterestingClients < clientIndexOnMatrix; indexOnMatrixOfInterestingClients++)
 			{
 				if (firstRun)
