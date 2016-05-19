@@ -1,13 +1,13 @@
 31
 1 ; 04/01/2016 ; cerveja,amendoins,pao
 2 ; 04/01/2016 ; peixe,carne,batata
-3 ; 10/01/2016 ; agua,acucar,cha
+3 ; 10/01/2016 ; agua,acucar,cha,carne
 1 ; 11/01/2016 ; cerveja,batata frita,amendoins,presunto
 2 ; 12/01/2016 ; chokapitos,estrelitas,sal
 2 ; 29/01/2016 ; acucar,batata,presunto
 4 ; 24/02/2016 ; peixe,presunto,fiambre
 4 ; 27/02/2016 ; vinho,agua,bolachas
-5 ; 29/02/2016 ; pao,sumo,fiambre
+5 ; 29/02/2016 ; pao,sumo,fiambre,batata
 5 ; 01/03/2016 ; cha,chokapitos,estrelitas
 6 ; 01/03/2016 ; acucar,feijao,amendoins
 6 ; 02/03/2016 ; cerveja,vinho,sumo,pao

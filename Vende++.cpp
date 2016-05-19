@@ -724,14 +724,16 @@ string VendeMaisMais::matrizRecomendacaoBottom10() {
 	/*END OF DEBUGGING ZONE*/
 
 	//debug
+	cout << setw(4) << "NPB- ";
 	for (unsigned i = 0; i < produtosCompradosBottom10.size(); i++)
 	{
-		cout << produtosCompradosBottom10.at(i) << "; ";
+		cout << setw(6) << produtosCompradosBottom10.at(i);
 	}
 	cout << endl;
+	cout << setw(4) << "NPA- ";
 	for (unsigned int i = 0; i < matrizNProdutos.size(); i++)
 	{
-		cout << matrizNProdutos.at(i) << "; ";
+		cout << setw(6) << matrizNProdutos.at(i);
 	}
 	cout << endl;
 	for (unsigned int i = 0; i < bottom10Vector.size(); i++)

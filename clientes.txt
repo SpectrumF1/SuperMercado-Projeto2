@@ -18,7 +18,7 @@ Bruno Melo
 5
 Ines Alves
 15/12/2015
-10.6
+11
 9
 Joana Almeida
 28/2/2016
@@ -38,7 +38,7 @@ Joao Pocas
 3
 Jose Antonio Marques
 9/7/2016
-2.4
+11.5
 11
 Jusefina Conceicao
 13/2/2016
