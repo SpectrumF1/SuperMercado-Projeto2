@@ -710,7 +710,7 @@ string VendeMaisMais::matrizRecomendacaoBottom10() {
 	}
 	else
 	{
-		produtoRecomendacao = "Não produto a recomendar";
+		produtoRecomendacao = "Impossivel fazer recomendacao";
 	}
 
 	/*DEBUGGING ZONE*/
