@@ -130,6 +130,7 @@ void opcoesGestaoClientes(VendeMaisMais & supermercado){
 		cout << "Montante inicial de compras: ";
 		newVolCompras = leFloat();
 		newCliente.setId(nextId);
+		nextId++;
 		newCliente.setNome(newName);
 		newCliente.setDataAdesao(newDataAdesao);
 		newCliente.setVolCompras(newVolCompras);

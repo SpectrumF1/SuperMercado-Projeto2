@@ -486,7 +486,9 @@ string VendeMaisMais::matrizRecomendacao(unsigned int clienteId) {
 			}
 		}
 	}
-	cout << endl;
+
+
+	cout << endl << endl;
 	/*END OF DEBUGGING ZONE*/
 
 	//encotra o index do cliente a publicitar
@@ -724,7 +726,7 @@ void VendeMaisMais::saveChanges() const{
 	//guardar clientes
 	if (clientesAlterados)
 	{
-		cout << "Deseja Guarda as Alteracoes Feitas aos Clientes? (y/n)";
+		cout << "Deseja Guarda as Alteracoes Feitas aos Clientes? (y/n): ";
 		cin >> decision;
 		while (!(decision == 'Y' || decision == 'y' || decision == 'N' || decision == 'n'))
 		{
@@ -745,14 +747,14 @@ void VendeMaisMais::saveChanges() const{
 		}
 		else 
 		{
-			cout << "Nenhuma Alteracao Guardada!";
+			cout << endl << "Nenhuma Alteracao Guardada!" << endl;
 		}
 	}
 
 	//guarda transacoes
 
 	if (transacoesAlteradas){
-		cout << "Deseja Guarda as Alteracoes Feitas as Transacoes? (y/n)";
+		cout << "Deseja Guarda as Alteracoes Feitas as Transacoes? (y/n): ";
 		cin >> decision;
 		while (!(decision == 'Y' || decision == 'y' || decision == 'N' || decision == 'n'))
 		{
@@ -773,7 +775,7 @@ void VendeMaisMais::saveChanges() const{
 		}
 		else
 		{
-			cout << "Nenhuma Alteracao Guardada!" << endl;
+			cout << endl << "Nenhuma Alteracao Guardada!" << endl;
 		}
 	}
 }
