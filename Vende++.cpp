@@ -592,6 +592,10 @@ string VendeMaisMais::matrizRecomendacaoBottom10() {
 				productBuyByBottom10 = false;
 				break; //possivel de retirar se for para verificar os produtos que os clientes interessantes compram
 			}
+			if (clienteIndexOnBottom10 == bottom10Vector.size()-1)
+			{
+				clientIndexOnMatrix = matriz.size() - 1;
+			}
 			for (unsigned int indexOnMatrixOfInterestingClients = lastClientIndex; indexOnMatrixOfInterestingClients < clientIndexOnMatrix; indexOnMatrixOfInterestingClients++)
 			{
 				if (firstRun)
@@ -673,7 +677,8 @@ string VendeMaisMais::matrizRecomendacaoBottom10() {
 	else
 	{
 		unsigned int indexOfMax;
-		unsigned int maxN = 0;
+		int maxN = 0xFFFFFFFF;
+		int differencaProdutosInteressanteBottom10;
 		for (unsigned int i = 0; i < indexClientesInteressantesVector.size(); i++)
 		{
 			for (unsigned int indexOfProduct = 0; indexOfProduct < matrizNProdutos.size(); indexOfProduct++)
@@ -685,13 +690,14 @@ string VendeMaisMais::matrizRecomendacaoBottom10() {
 				}
 			}
 		}
-		if (maxN == 0)
+		if (maxN == 0xFFFFFFFF)
 		{
 			for (unsigned int indexOfProduct = 0; indexOfProduct < matrizNProdutos.size(); indexOfProduct++)
 			{
-				if (matrizNProdutos.at(indexOfProduct) - produtosCompradosBottom10.at(indexOfProduct) > maxN)
+				differencaProdutosInteressanteBottom10 = (int)(matrizNProdutos.at(indexOfProduct) - 2 * produtosCompradosBottom10.at(indexOfProduct));
+				if (differencaProdutosInteressanteBottom10 > maxN)
 				{
-					maxN = matrizNProdutos.at(indexOfProduct);
+					maxN = differencaProdutosInteressanteBottom10;
 					indexOfMax = indexOfProduct;
 				}
 			}
@@ -737,12 +743,12 @@ string VendeMaisMais::matrizRecomendacaoBottom10() {
 	{
 		cout << setw(6) << matrizNProdutos.at(i);
 	}
-	cout << endl;
+	cout << endl << "IdB-  ";
 	for (unsigned int i = 0; i < bottom10Vector.size(); i++)
 	{
 		cout << bottom10Vector.at(i).getId() << "; ";
 	}
-	cout << endl;
+	cout << endl << "IdxI- ";
 	for (unsigned int  i = 0; i < indexClientesInteressantesVector.size(); i++)
 	{
 		cout << indexClientesInteressantesVector.at(i) << "; ";
