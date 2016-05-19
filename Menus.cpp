@@ -387,7 +387,7 @@ void opcoesRecomendacao(VendeMaisMais & supermercado) {
 			system("pause");
 			break;
 		case 2:
-			supermercado.matrizRecomendacaoBottom10();
+			cout << "O produto para os bottom10 e: " << supermercado.matrizRecomendacaoBottom10() << endl;
 			system("pause");
 			break;
 		}
