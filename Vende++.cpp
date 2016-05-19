@@ -143,6 +143,7 @@ void VendeMaisMais::mostraInformacaoCliente(unsigned int clienteIndex){
 //edit client
 void editClientByIndex(unsigned int indexOfCliente, VendeMaisMais &supermercado) {
 	char changeName, changeDate, changeAmount;
+	bool isValidData = false;
 	clientesHeader();
 	cout << supermercado.clientesVector.at(indexOfCliente);
 	cout << "Alterar Nome ? (y/n): ";
@@ -162,7 +163,14 @@ void editClientByIndex(unsigned int indexOfCliente, VendeMaisMais &supermercado)
 	if (changeDate == 'y' || changeDate == 'Y') {
 		string newDate;
 		cout << "Insira a nova data de adesao: ";
-		getline(cin, newDate);
+		while (isValidData == false) {
+			getline(cin, newDate);
+			isValidData = validData(newDate);
+			if (!isValidData) {
+				cout << "Data invalida, insira a data outra vez: ";
+			}
+		}
+		isValidData = false;
 		Data novaDate(newDate);
 		supermercado.clientesVector.at(indexOfCliente).setDataAdesao(novaDate);
 		supermercado.clientesAlterados = true;
