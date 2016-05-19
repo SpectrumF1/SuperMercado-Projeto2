@@ -134,6 +134,8 @@ void opcoesGestaoClientes(VendeMaisMais & supermercado){
 		newCliente.setDataAdesao(newDataAdesao);
 		newCliente.setVolCompras(newVolCompras);
 		supermercado.addCliente(newCliente);
+		supermercado.listarClientesOrdemAlfa();
+		supermercado.updateMatriz();
 		system("pause");
 		break;
     case 4:
