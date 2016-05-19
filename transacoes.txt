@@ -26,7 +26,7 @@
 14 ; 11/03/2016 ; acucar,cha,feijao,chokapitos,estrelitas,agua
 15 ; 11/03/2016 ; feijao,sal,chokapitos,cerveja,vinho,agua
 16 ; 15/03/2016 ; sumo,agua,bolachas,pao,batata frita,amendoins,agua
-17 ; 15/03/2016 ; batata,agua frita,amendoins,sal,presunto,peixe,agua
+17 ; 15/03/2016 ; batata frita,amendoins,sal,presunto,peixe,agua
 18 ; 19/03/2016 ; fiambre,cerveja,vinho,sal,feijao,agua
 19 ; 19/03/2016 ; sumo,agua,batata frita,fiambre,presunto,carne,agua
 20 ; 30/03/2016 ; peixe,acucar,cha,feijao,sal,estrelitas,agua
