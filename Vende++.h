@@ -32,10 +32,10 @@ class VendeMaisMais{
   multimap<unsigned int, unsigned int> transacaoIdToIndex; // multimap para "traduzir" o identificador do cliente nos indices das suas transacoes no vetor de transacoes
 
   vector<unsigned int>indexOfCommonProductsOfBottom10;
-  vector<vector<bool>> matriz;
-  map<unsigned int, unsigned int> matrizIndexToId;
-  map<unsigned int, unsigned int> matrizIdToIndex;
-  vector <int> matrizNProdutos;
+  vector<vector<bool>> matriz; //Matriz do sistema de recomendacao
+  map<unsigned int, unsigned int> matrizIndexToId; //map de conversao de index para id na Matriz
+  map<unsigned int, unsigned int> matrizIdToIndex;//map de conversao de id para index na Matriz
+  vector <int> matrizNProdutos; //vetor que regista quantas vezes cada produto foi comprado
   vector <Cliente> bottom10Vector;
   vector <unsigned int> produtosCompradosBottom10;
 

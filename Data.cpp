@@ -24,8 +24,75 @@ int getNumOfDays(unsigned int mes, unsigned int ano) {
 		else
 			return 30;
 }
+bool validData(string dateString) {
+	string month, day, year;
+	unsigned int iDay, iMonth, iYear;
+	unsigned int minYear = 2000;
+	size_t pos1;
+	size_t pos2;
+	if (dateString.size() <8 || dateString.size() > 10) {
+		return false;
+	}
+	if (dateString.find('/') != string::npos) {
+		pos1 = dateString.find("/");
+		if (dateString.find("/", pos1 + 1) == string::npos) {
+			return false;
+		}
+		pos2 = dateString.find("/", pos1 + 1);
+	}
+	else if (dateString.find('-') != string::npos) {
+		pos1 = dateString.find("-");
+		if (dateString.find("-", pos1 + 1) == string::npos) {
+			return false;
+		}
+		pos2 = dateString.find("-", pos1 + 1);
+	}
+	else if (dateString.find(' ') != string::npos) {
+		pos1 = dateString.find(" ");
+		if (dateString.find(" ", pos1 + 1) == string::npos) {
+			return false;
+		}
+		pos2 = dateString.find(" ", pos1 + 1);
+	}
+	else {
+		return false; 
+	}
+		month = dateString.substr(pos1 + 1, (pos2 - pos1) - 1);
+		if (pos1 == 4) { //significa que data esta representada na forma yyyy/mm/dd
+			year = dateString.substr(0, pos1);
+			day = dateString.substr(pos2 + 1);
+		}
+		else if (pos1 < 4) { //significa que data esta representada na forma dd/mm/yyyy
+			day = dateString.substr(0, pos1);
+			year = dateString.substr(pos2 + 1);
+		}
+		iDay = stoi(day);
+		iMonth = stoi(month);
+		iYear = stoi(year);
+		if (iMonth < 1 || iMonth > 12) {
+			return false;
+		}
+		if (iYear < minYear) {
+			return false;
+		}
+		if (iDay < 1 || iDay > getNumOfDays(iMonth, iYear)) {
+			return false;
+		}
+		assert(iDay > 0 && iDay <= getNumOfDays(iMonth, iYear) && iMonth > 0 && iMonth <= 12 && iYear >= minYear);
+	return true;	
+}
 
-Data::Data(string dateString){ // data na forma DD/MM/AAA
+Data::Data()
+{
+	dia = 1;
+	mes = 1;
+	ano = 2000;
+	day = "01";
+	month = "01";
+	year = "2000";
+}
+
+Data::Data(string dateString){ // data na forma DD/MM/AAAA Or DD-MM-AAAA or DD MM AAAA Or AAAA MM DD Or AAAA-MM-DD Or AAAA/MM/DD
 	if (dateString.find('/') != string::npos) {
 		size_t pos1 = dateString.find("/");
 		size_t pos2 = dateString.find("/", pos1 + 1);

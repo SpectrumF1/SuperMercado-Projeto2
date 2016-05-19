@@ -99,7 +99,6 @@ unsigned int VendeMaisMais::getMaxClientesId() {
 
 void VendeMaisMais::addCliente(Cliente newCliente) {
 	clientesVector.push_back(newCliente);
-	updateMatriz();
 	clientesAlterados = true;
 	return;
 }
@@ -107,7 +106,7 @@ void VendeMaisMais::addCliente(Cliente newCliente) {
 // lista os clientes por ordem alfabetica crescente
 void VendeMaisMais::listarClientesOrdemAlfa(){
 	sort(clientesVector.begin(), clientesVector.end(), less<Cliente>());
-	cout << "Clientes ordenados com sucesso por ordem alfabetica" << endl;
+	//cout << "Clientes ordenados com sucesso por ordem alfabetica" << endl;
 	return;
 
 }
@@ -143,6 +142,7 @@ void VendeMaisMais::mostraInformacaoCliente(unsigned int clienteIndex){
 //edit client
 void editClientByIndex(unsigned int indexOfCliente, VendeMaisMais &supermercado) {
 	char changeName, changeDate, changeAmount;
+	bool isValidData = false;
 	clientesHeader();
 	cout << supermercado.clientesVector.at(indexOfCliente);
 	cout << "Alterar Nome ? (y/n): ";
@@ -162,7 +162,14 @@ void editClientByIndex(unsigned int indexOfCliente, VendeMaisMais &supermercado)
 	if (changeDate == 'y' || changeDate == 'Y') {
 		string newDate;
 		cout << "Insira a nova data de adesao: ";
-		getline(cin, newDate);
+		while (isValidData == false) {
+			getline(cin, newDate);
+			isValidData = validData(newDate);
+			if (!isValidData) {
+				cout << "Data invalida, insira a data outra vez: ";
+			}
+		}
+		isValidData = false;
 		Data novaDate(newDate);
 		supermercado.clientesVector.at(indexOfCliente).setDataAdesao(novaDate);
 		supermercado.clientesAlterados = true;
@@ -394,45 +401,48 @@ pair <int, int> VendeMaisMais::getIndexDateByDateToDate(Data date1, Data date2) 
 void VendeMaisMais::updateMatriz() {
 	unsigned int equal = 0;
 	
-	matrizNProdutos.clear();
+	matrizNProdutos.clear(); // VETOR
 	matrizNProdutos.resize(produtosVector.size());
-	matrizIndexToId.clear();
+	matrizIndexToId.clear(); //MAP
+	matrizIdToIndex.clear();
+	matriz.clear();
 
 	//criacao de vetor de correspondecia de id's e criação de matriz
 	for (unsigned int i = 0; i < clientesVector.size(); i++)
 	{
-		matrizIndexToId[i] = clientesVector.at(i).getId();
-		matrizIdToIndex[clientesVector.at(i).getId()] = i;
-		matriz.push_back(vector <bool>(produtosVector.size(), false));
+		matrizIndexToId[i] = clientesVector.at(i).getId(); // fazer corresponder index da Matriz a Id de Cliente;
+		matrizIdToIndex[clientesVector.at(i).getId()] = i; // fazer corresponder id De Cliente a index na Matriz
+		matriz.push_back(vector <bool>(produtosVector.size(), false)); //inicializar cada linha da matriz a false.
 	}
 
-	for (unsigned int i = 0; i < transacoesVector.size(); i++)
+	for (unsigned int i = 0; i < transacoesVector.size(); i++) //Para cada transacao
 	{
-		equal = getClientesIndexById(transacoesVector.at(i).getIdCliente());
-		if (equal == -1)
+		equal = getClientesIndexById(transacoesVector.at(i).getIdCliente()); // equal fica com o index de cada cliente, -1 se o cliente já não
+		//existir no ficheiro dos clientes, mas as suas transacoes ainda se mantém
+		if (equal == -1) //se o cliente ja nao existir
 		{
-			matrizIndexToId[matriz.size()] = transacoesVector.at(i).getIdCliente();
+			matrizIndexToId[matriz.size()] = transacoesVector.at(i).getIdCliente(); //Atualizar os maps
 			matrizIdToIndex[transacoesVector.at(i).getIdCliente()] = matriz.size();
-			matriz.push_back(vector <bool>(produtosVector.size(), false));
+			matriz.push_back(vector <bool>(produtosVector.size(), false)); //Acrescentar mais uma linha à matriz para o cliente que já não existe
 		}
 	}
 
 	//alteracao da matriz para valores "true"
-	for (unsigned int matrizClienteIndex = 0; matrizClienteIndex < matriz.size(); matrizClienteIndex++)
+	for (unsigned int matrizClienteIndex = 0; matrizClienteIndex < matriz.size(); matrizClienteIndex++) //percorre os clientes na matriz
 	{
-		for (unsigned int transactionIndex = 0; transactionIndex < transacoesVector.size(); transactionIndex++)
+		for (unsigned int transactionIndex = 0; transactionIndex < transacoesVector.size(); transactionIndex++) //percore o vetor de transacoes
 		{
-			if (matrizIndexToId.at(matrizClienteIndex) == transacoesVector.at(transactionIndex).getIdCliente())
-			{
+			if (matrizIndexToId.at(matrizClienteIndex) == transacoesVector.at(transactionIndex).getIdCliente()) // se Id de cliente na matriz = id Cliente no vetor de transacoes
+			{ // então é necessário por os valores a "true" para esse cliente
 				for (unsigned int transacoesProdutoIndex = 0; transacoesProdutoIndex < transacoesVector.at(transactionIndex).getProdutosVector().size(); transacoesProdutoIndex++)
-				{
+				{ //percorre os produtos daquela transacao 1 a 1
 					for (unsigned int matrizProdutoIndex = 0; matrizProdutoIndex < produtosVector.size(); matrizProdutoIndex++)
-					{
+					{ // percorre as colunas da matriz(produtos) 1 a 1
 						if (transacoesVector.at(transactionIndex).getProdutosVector().at(transacoesProdutoIndex) == produtosVector.at(matrizProdutoIndex).getNome())
-						{
-							matriz.at(matrizClienteIndex).at(matrizProdutoIndex) = true;
-							matrizNProdutos.at(matrizProdutoIndex)++;
-							matrizProdutoIndex = produtosVector.size();
+						{ // se o produto no vetor de transacoes = produto associado à coluna da matriz
+							matriz.at(matrizClienteIndex).at(matrizProdutoIndex) = true; //coloca esse produto a true para esse cliente
+							matrizNProdutos.at(matrizProdutoIndex)++; //incrementa o vetor que regista quantas vezes cada produto foi comprado
+							break; // seguir para proximo produto do vetor transacoes
 						}
 					}
 				}
@@ -456,6 +466,27 @@ string VendeMaisMais::matrizRecomendacao(unsigned int clienteId) {
 	int maxprodid = -1;
 	vector <MatrizHitVec> analysis;
 	vector <int> maxidVEC;
+
+	/*DEBUGGING ZONE*/
+	//Header (produtos iniciais)
+	cout << "ID";
+	for (unsigned int produtosIndex = 0; produtosIndex < produtosVector.size(); produtosIndex++) {
+		cout << setw(5) << produtosVector.at(produtosIndex).getNome().at(0) << produtosVector.at(produtosIndex).getNome().at(1); // imprimir apenas as iniciais
+	}
+	
+	for (unsigned int linha = 0; linha < matriz.size(); linha++) {
+		cout << endl;
+		cout << matrizIndexToId.at(linha);
+		for (unsigned int coluna = 0; coluna < produtosVector.size(); coluna++) {
+			if (matrizIndexToId.at(linha) >= 10 && coluna == 0) {
+				cout << setw(5) << matriz.at(linha).at(coluna);
+			}
+			else {
+				cout << setw(6) << matriz.at(linha).at(coluna);
+			}
+		}
+	}
+	/*END OF DEBUGGING ZONE*/
 
 	//encotra o index do cliente a publicitar
 	for (unsigned int i = 0; i < matrizIndexToId.size(); i++)

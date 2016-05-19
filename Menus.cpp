@@ -87,6 +87,7 @@ void opcoesGestaoClientes(VendeMaisMais & supermercado){
   string newDataString;
   float newVolCompras;
   Cliente newCliente;
+  bool isValidData = false;
   
   while((opcao = menuGestaoClientes()))
     switch (opcao){
@@ -116,17 +117,26 @@ void opcoesGestaoClientes(VendeMaisMais & supermercado){
 		getline(cin, newName);
 		cout << endl;
 		cout << "Data Adesao: ";
-		getline(cin,newDataString);
+		while (isValidData == false) {
+			getline(cin, newDataString);
+			isValidData = validData(newDataString);
+			if (!isValidData) {
+				cout << "Data invalida, insira a data outra vez: ";
+			}
+		}
+		isValidData = false;
 		newDataAdesao.setData(newDataString);
 		cout << endl;
 		cout << "Montante inicial de compras: ";
 		newVolCompras = leFloat();
-		system("pause");
 		newCliente.setId(nextId);
 		newCliente.setNome(newName);
 		newCliente.setDataAdesao(newDataAdesao);
 		newCliente.setVolCompras(newVolCompras);
 		supermercado.addCliente(newCliente);
+		supermercado.listarClientesOrdemAlfa();
+		supermercado.updateMatriz();
+		system("pause");
 		break;
     case 4:
 		cout << "Introduza o Id ou o Nome do cliente a editar: ";
@@ -169,6 +179,7 @@ void opcoesGestaoTransacoes(VendeMaisMais & supermercado){
 	string dataString, nameString;
 	vector <string> prodVector;
 	bool continuaCompra = true;
+	bool isValidData = false;
 	char decision;
 	float volCompra;
 	Data date, date1, date2;
@@ -185,8 +196,15 @@ void opcoesGestaoTransacoes(VendeMaisMais & supermercado){
 		  if (clienteIndex != -1)
 		  {
 			  cout << "Introduza a data da transacao:";
+			  while (isValidData == false) {
+				  getline(cin, dataString);
+				  isValidData = validData(dataString);
+				  if (!isValidData) {
+					  cout << "Data invalida, insira a data outra vez: ";
+				  }
+			  }
+			  isValidData = false;
 			  getline(cin, dataString);
-
 			  supermercado.mostraProdutos();
 			  cout << "Que produto deseja?" << endl;
 			  produtoIndex = leUnsignedInt();
@@ -251,6 +269,14 @@ void opcoesGestaoTransacoes(VendeMaisMais & supermercado){
       break;
     case 3:
 		cout << "Introduz a data que pretende: ";
+		while (isValidData == false) {
+			getline(cin, dataString);
+			isValidData = validData(dataString);
+			if (!isValidData) {
+				cout << "Data invalida, insira a data outra vez: ";
+			}
+		}
+		isValidData = false;
 		getline(cin, dataString);
 		date.setData(dataString);
 		indexDatas = supermercado.getIndexDataByData(date);
@@ -270,12 +296,25 @@ void opcoesGestaoTransacoes(VendeMaisMais & supermercado){
       break;
     case 4:
 		cout << "Introduz a primeira data que pretende:";
-		getline(cin, dataString);
+		while (isValidData == false) {
+			getline(cin, dataString);
+			isValidData = validData(dataString);
+			if (!isValidData) {
+				cout << "Data invalida, insira a data outra vez: ";
+			}
+		}
+		isValidData = false;
 		date1.setData(dataString);
 		cout << "Introduz a segunda data que pretende:";
-		getline(cin, dataString);
+		while (isValidData == false) {
+			getline(cin, dataString);
+			isValidData = validData(dataString);
+			if (!isValidData) {
+				cout << "Data invalida, insira a data outra vez: ";
+			}
+		}
+		isValidData = false;
 		date2.setData(dataString);
-
 		indexDatas = supermercado.getIndexDateByDateToDate(date1, date2);
 		if (indexDatas.first != -1 && indexDatas.second != -1)
 		{

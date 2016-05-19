@@ -3,8 +3,8 @@
 #include <iostream>
 #include <vector>
 #include <cstdlib>
-
 #include "defs.h"
+#include "Data.h"
 
 using namespace std;
 
@@ -22,4 +22,4 @@ float leFloat();
 char leCharYorN();
 
 void clientesHeader();
-int binarySearch();
+

@@ -31,14 +31,14 @@ string Cliente::getNome() const{
   return nome;
 }
 
-unsigned int Cliente::getId() const{
+ unsigned int Cliente::getId() const{
   return id;
 }
-Data Cliente::getDataAdesao() const{
+ Data Cliente::getDataAdesao() const{
 	return dataAdesao;
 }
 
-float Cliente::getVolCompras() const{
+ float Cliente::getVolCompras() const{
   return volCompras;
 }
 

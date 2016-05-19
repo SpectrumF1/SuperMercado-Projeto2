@@ -18,7 +18,7 @@ class Cliente {
   float volCompras;
 
  public:
-	 Cliente();
+  Cliente();
   Cliente(ifstream & in);
   Cliente(unsigned int newId, string newNome, Data newData, float newVolCompras);
   string getNome() const;
