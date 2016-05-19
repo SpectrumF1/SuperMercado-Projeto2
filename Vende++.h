@@ -37,6 +37,7 @@ class VendeMaisMais{
   map<unsigned int, unsigned int> matrizIdToIndex;
   vector <int> matrizNProdutos;
   vector <Cliente> bottom10Vector;
+  vector <unsigned int> produtosCompradosBottom10;
 
  public:
   VendeMaisMais(string loja, string fichClients, string fichProdutos, string fichTransacoes);
@@ -55,7 +56,6 @@ class VendeMaisMais{
   void mostraInformacaoCliente(unsigned int clienteIndex);
   int getClientesIndexById(unsigned int idOfClient);
   int getClientesIndexByName(string nameOfClient);
-  void updateBottom10();
   void saveChanges() const;
   void removeClient(string idOrNameOfCliente);
 
@@ -83,4 +83,5 @@ class VendeMaisMais{
   void updateMatriz();
   string matrizRecomendacao(unsigned int clienteId);
   string matrizRecomendacaoBottom10();
+  void updateBottom10();
 };

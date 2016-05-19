@@ -33,7 +33,6 @@ void lerClientesTxt(VendeMaisMais &loja) {
 	}
 	loja.listarClientesOrdemAlfa();
 	loja.updateMapClienteNameToId();
-	loja.updateBottom10();
 }
 
 void lerProdutosTxt(VendeMaisMais &loja) {
@@ -50,7 +49,7 @@ void lerProdutosTxt(VendeMaisMais &loja) {
 		inStream.close();
 	}
 	loja.listarProdutos();
-
+	loja.updateMapProdutoNameToIndex();
 }
 
 void lerTransacoesTxt(VendeMaisMais &loja) {
@@ -72,6 +71,7 @@ void lerTransacoesTxt(VendeMaisMais &loja) {
 		for (unsigned int i = 0; i < loja.clientesVector.size();i++){
 			loja.updateVolComprasByTransactions(i);
 		}
+		loja.updateBottom10();
 		
 }
 void VendeMaisMais::setMaxClientesId() {
@@ -280,6 +280,23 @@ void VendeMaisMais::updateBottom10() {
 		}
 	}
 	sort(bottom10Vector.begin(), bottom10Vector.end(), less<Cliente>());
+	produtosCompradosBottom10.resize(produtosVector.size(), 0);
+	pair <multimap<unsigned int, unsigned int>::iterator, multimap<unsigned int, unsigned int>::iterator> iterador;
+	string productName;
+	int produtoIndex;
+	for (unsigned int i = 0; i < bottom10Vector.size(); i++)
+	{
+		iterador = transacaoIdToIndex.equal_range(bottom10Vector.at(i).getId());
+		for (multimap<unsigned int, unsigned int>::iterator it = iterador.first; it != iterador.second; it++)
+		{
+			for (unsigned int j = 0; j < transacoesVector.at(it->second).getProdutosVector().size(); j++)
+			{
+				productName = transacoesVector.at(it->second).getProdutosVector().at(j);
+				produtoIndex = produtoNameToIndex.at(productName);
+				produtosCompradosBottom10.at(produtoIndex)++;
+			}
+		}
+	}
 }
 
 vector<Cliente> VendeMaisMais::getBottom10() {
@@ -511,44 +528,112 @@ string VendeMaisMais::matrizRecomendacaoBottom10() {
 	string produtoRecomendacao;
 	unsigned int clientIndexOnMatrix;
 	bool productBuyByBottom10 = true;
+	bool firstRun = true;
 	vector <unsigned int> productsBuyByAllBottom10;
 	vector <unsigned int> indexClientesInteressantesVector;
-	vector <unsigned int> indexClientesInteressantesVectorTemp;
-	unsigned int lastClientIndex = 0;
+	unsigned int lastClientIndex;
+	unsigned int indexClientesInteressantes;
+	unsigned int nClientesInteressantes;
 
 	for (unsigned int productIndexOnMatrix = 0; productIndexOnMatrix < matriz.at(0).size(); productIndexOnMatrix++)
 	{
 		productBuyByBottom10 = true;
+		lastClientIndex = 0;
+		indexClientesInteressantes = 0;
+		nClientesInteressantes = 0;
 		for (unsigned int clienteIndexOnBottom10 = 0; clienteIndexOnBottom10 < bottom10Vector.size(); clienteIndexOnBottom10++)
 		{
 			clientIndexOnMatrix = matrizIdToIndex.at(bottom10Vector.at(clienteIndexOnBottom10).getId());
-			if (!matriz.at(clientIndexOnMatrix).at(productIndexOnMatrix))
+			if (!matriz.at(clientIndexOnMatrix).at(productIndexOnMatrix) && productBuyByBottom10)
 			{
-				break; //verificar se faz mesmo o break pretendido
 				productBuyByBottom10 = false;
+				break; //possivel de retirar se for para verificar os produtos que os clientes interessantes compram
 			}
-			for (unsigned int indexOnMatrixClientsInteresting = lastClientIndex; indexOnMatrixClientsInteresting < clientIndexOnMatrix; indexOnMatrixClientsInteresting++)
+			for (unsigned int indexOnMatrixOfInterestingClients = lastClientIndex; indexOnMatrixOfInterestingClients < clientIndexOnMatrix; indexOnMatrixOfInterestingClients++)
 			{
-				if (matriz.at(indexOnMatrixClientsInteresting).at(productIndexOnMatrix))
+				if (firstRun)
 				{
-					indexClientesInteressantesVectorTemp.push_back(indexOnMatrixClientsInteresting);
+					if (matriz.at(indexOnMatrixOfInterestingClients).at(productIndexOnMatrix))
+					{
+						//cria o vetor com os possivel clientes interessantes
+						indexClientesInteressantesVector.push_back(indexOnMatrixOfInterestingClients);
+						nClientesInteressantes++;
+					}
+				}
+				//verifica se os clientes interessantes se mantiveram
+				else
+				{
+					if (indexClientesInteressantes < indexClientesInteressantesVector.size())
+					{
+						if (matriz.at(indexOnMatrixOfInterestingClients).at(productIndexOnMatrix))
+						{
+							if (indexClientesInteressantesVector.at(indexClientesInteressantes) == indexOnMatrixOfInterestingClients)
+							{
+								indexClientesInteressantes++;
+							}
+						}
+						// caso um cliente interessante deixe de ser interessante por nao ter comprado o produto
+						else if (indexClientesInteressantesVector.at(indexClientesInteressantes) == indexOnMatrixOfInterestingClients)
+						{
+							indexClientesInteressantesVector.erase(indexClientesInteressantesVector.begin() + indexClientesInteressantes);
+						}
+					}
 				}
 			}
-			lastClientIndex = clientIndexOnMatrix+1;
+			lastClientIndex = clientIndexOnMatrix + 1;
 		}
 		if (productBuyByBottom10)
 		{
 			productsBuyByAllBottom10.push_back(productIndexOnMatrix);
-			indexClientesInteressantesVector.insert(indexClientesInteressantesVector.begin(), indexClientesInteressantesVectorTemp.begin(), indexClientesInteressantesVectorTemp.end());
+			if (indexClientesInteressantesVector.size())
+			{
+				break;
+			}
+			if (firstRun)
+			{
+				firstRun = false;
+			}
 		}
 		else
 		{
-			indexClientesInteressantesVectorTemp.clear();
+			indexClientesInteressantesVector.erase(indexClientesInteressantesVector.end() - nClientesInteressantes, indexClientesInteressantesVector.end());
 		}
+	}
+
+	if (indexClientesInteressantesVector.size() == 0) // No caso de não terem sido encontrados clientes interessantes
+	{
+		unsigned int indexOfMax;
+		unsigned int maxN = 0;
+		for (unsigned int indexOfProduct = 0; indexOfProduct < matrizNProdutos.size(); indexOfProduct++)
+		{
+			if (matrizNProdutos.at(indexOfProduct) > maxN && produtosCompradosBottom10.at(indexOfProduct) == 0)
+			{
+				maxN = matrizNProdutos.at(indexOfProduct);
+				indexOfMax = indexOfProduct;
+			}
+		}
+		produtoRecomendacao = produtosVector.at(indexOfMax).getNome();
+	}
+	else
+	{
 
 	}
 
-
+	for (unsigned i = 0; i < produtosCompradosBottom10.size(); i++)
+	{
+		cout << produtosCompradosBottom10.at(i) << "; ";
+	}
+	cout << endl;
+	for (unsigned int i = 0; i < matrizNProdutos.size(); i++)
+	{
+		cout << matrizNProdutos.at(i) << "; ";
+	}
+	cout << endl;
+	for (unsigned int i = 0; i < bottom10Vector.size(); i++)
+	{
+		cout << bottom10Vector.at(i).getId() << "; ";
+	}
+	cout << endl;
 
 	return produtoRecomendacao;
 }
