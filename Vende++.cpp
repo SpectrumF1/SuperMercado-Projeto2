@@ -673,7 +673,8 @@ string VendeMaisMais::matrizRecomendacaoBottom10() {
 	else
 	{
 		unsigned int indexOfMax;
-		unsigned int maxN = 0;
+		int maxN = 0xFFFFFFFF;
+		int differencaProdutosInteressanteBottom10;
 		for (unsigned int i = 0; i < indexClientesInteressantesVector.size(); i++)
 		{
 			for (unsigned int indexOfProduct = 0; indexOfProduct < matrizNProdutos.size(); indexOfProduct++)
@@ -685,13 +686,14 @@ string VendeMaisMais::matrizRecomendacaoBottom10() {
 				}
 			}
 		}
-		if (maxN == 0)
+		if (maxN == 0xFFFFFFFF)
 		{
 			for (unsigned int indexOfProduct = 0; indexOfProduct < matrizNProdutos.size(); indexOfProduct++)
 			{
-				if (matrizNProdutos.at(indexOfProduct) - produtosCompradosBottom10.at(indexOfProduct) > maxN)
+				differencaProdutosInteressanteBottom10 = (int)(matrizNProdutos.at(indexOfProduct) - 2 * produtosCompradosBottom10.at(indexOfProduct));
+				if (differencaProdutosInteressanteBottom10 > maxN)
 				{
-					maxN = matrizNProdutos.at(indexOfProduct);
+					maxN = differencaProdutosInteressanteBottom10;
 					indexOfMax = indexOfProduct;
 				}
 			}
