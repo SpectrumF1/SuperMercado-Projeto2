@@ -467,6 +467,27 @@ string VendeMaisMais::matrizRecomendacao(unsigned int clienteId) {
 	vector <MatrizHitVec> analysis;
 	vector <int> maxidVEC;
 
+	/*DEBUGGING ZONE*/
+	//Header (produtos iniciais)
+	cout << "ID";
+	for (unsigned int produtosIndex = 0; produtosIndex < produtosVector.size(); produtosIndex++) {
+		cout << setw(5) << produtosVector.at(produtosIndex).getNome().at(0) << produtosVector.at(produtosIndex).getNome().at(1); // imprimir apenas as iniciais
+	}
+	
+	for (unsigned int linha = 0; linha < matriz.size(); linha++) {
+		cout << endl;
+		cout << matrizIndexToId.at(linha);
+		for (unsigned int coluna = 0; coluna < produtosVector.size(); coluna++) {
+			if (matrizIndexToId.at(linha) >= 10 && coluna == 0) {
+				cout << setw(5) << matriz.at(linha).at(coluna);
+			}
+			else {
+				cout << setw(6) << matriz.at(linha).at(coluna);
+			}
+		}
+	}
+	/*END OF DEBUGGING ZONE*/
+
 	//encotra o index do cliente a publicitar
 	for (unsigned int i = 0; i < matrizIndexToId.size(); i++)
 	{
