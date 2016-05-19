@@ -486,6 +486,7 @@ string VendeMaisMais::matrizRecomendacao(unsigned int clienteId) {
 			}
 		}
 	}
+	cout << endl;
 	/*END OF DEBUGGING ZONE*/
 
 	//encotra o index do cliente a publicitar
