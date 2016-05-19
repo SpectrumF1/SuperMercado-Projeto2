@@ -260,7 +260,7 @@ void opcoesGestaoTransacoes(VendeMaisMais & supermercado){
     case 2:
 		cout << "Introduz o nome do cliente: ";
 		getline(cin, nameString);
-		//transacoesHeader();
+		transacoesHeader();
 		iterador = supermercado.TransacaoIdToIndex(supermercado.ClienteNameToId(nameString));
 		for (multimap<unsigned int, unsigned int>::iterator it = iterador.first; it != iterador.second; it++)
 		{
@@ -283,7 +283,7 @@ void opcoesGestaoTransacoes(VendeMaisMais & supermercado){
 		indexDatas = supermercado.getIndexDataByData(date);
 		if (indexDatas.first != -1)
 		{
-			//transacoesHeader();
+			transacoesHeader();
 			for (unsigned int i = indexDatas.first; i <= indexDatas.second; i++)
 			{
 				cout << supermercado.getTransacoesVector().at(i);
@@ -319,7 +319,7 @@ void opcoesGestaoTransacoes(VendeMaisMais & supermercado){
 		indexDatas = supermercado.getIndexDateByDateToDate(date1, date2);
 		if (indexDatas.first != -1 && indexDatas.second != -1)
 		{
-			//transacoesHeader();
+			transacoesHeader();
 			for (unsigned int i = indexDatas.first; i <= indexDatas.second; i++)
 			{
 				cout << supermercado.getTransacoesVector().at(i);
@@ -332,7 +332,7 @@ void opcoesGestaoTransacoes(VendeMaisMais & supermercado){
 		system("pause");
       break;
 	case 5:
-		//transacoesHeader();
+		transacoesHeader();
 		for (unsigned int i = 0; i < supermercado.getTransacoesVector().size(); i++)
 		{
 			cout << supermercado.getTransacoesVector().at(i);
@@ -374,6 +374,11 @@ void opcoesRecomendacao(VendeMaisMais & supermercado) {
 		case 1:
 			cout << "Introduz o id ou o nome do cliente: ";
 			getline(cin, clientNameOrId);
+			while (clientNameOrId.size() == 0)
+			{
+				cout << "Introduz o id ou o nome do cliente: ";
+				getline(cin, clientNameOrId);
+			}
 			if (isalpha(clientNameOrId.at(0)))
 			{
 				clienteId = supermercado.ClienteNameToId(clientNameOrId);

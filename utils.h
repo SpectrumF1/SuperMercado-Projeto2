@@ -23,3 +23,4 @@ char leCharYorN();
 
 void clientesHeader();
 
+void transacoesHeader();

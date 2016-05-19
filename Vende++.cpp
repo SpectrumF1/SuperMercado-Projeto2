@@ -269,7 +269,7 @@ void VendeMaisMais::updateBottom10() {
 		clienteVolCompras = clientesVector.at(i).getVolCompras();
 		if (vectorLoad < 10)
 		{
-			if (clienteVolCompras > max10VolCompras)
+			if (clienteVolCompras >= max10VolCompras)
 			{
 				max10VolCompras = clienteVolCompras;
 				clientWithMaxVolCompras = vectorLoad;
@@ -282,7 +282,16 @@ void VendeMaisMais::updateBottom10() {
 			if (clienteVolCompras < max10VolCompras)
 			{
 				bottom10Vector[clientWithMaxVolCompras] = clientesVector.at(i);
-				max10VolCompras = clienteVolCompras;
+				max10VolCompras = 0;
+				for (unsigned int indexMax = 0; indexMax < bottom10Vector.size(); indexMax++)
+				{
+					clienteVolCompras = bottom10Vector.at(indexMax).getVolCompras();
+					if (clienteVolCompras >= max10VolCompras)
+					{
+						max10VolCompras = clienteVolCompras;
+						clientWithMaxVolCompras = indexMax;
+					}
+				}
 			}
 		}
 	}
