@@ -1,7 +1,20 @@
-Este directório contém uma proposta INCOMPLETA de implementação do
-Trabalho 2.  NÃO é obrigatório utilizar esta estrutura de classes e
-ficheiros. O estudante tem toda a liberdade de não usar ou adaptar a
-porção de código fornecida.
+PROJETO 2 - SUPERMERCADOS VENDE++
+Disciplina - Programação
+Projeto realizado por:
+João Filipe Lopes de Carcalho - 1º ano MIEIC - up201504875
+Renato Alexandre Sousa Campos - 1º ano MIEIC - up201504942
 
-
-Bom trabalho ...
+Decisões Tomadas :
+1 - Sistema de Recomendações :
+		- Relativamente ao ponto 6 do PDF sobre o sistema de recomendação :
+"Sugira ao cliente alvo o produto mais frequente da lista que recolheu no ponto 
+anterior e que ele não tenha comprado." - Obtivemos um vetor com os clientes
+que satisfazem as seguintes duas condições: compraram o maior número de produtos
+comprados pelo cliente alvo e compraram pelo menos um produto não comprado pelo
+cliente alvo. A esse clientes vamos chamar "Clientes Aptos". Dos "Clientes Aptos"
+retiramos um vetor com os produtos candidatos a serem recomendados. Agora chegamos
+a uma ambiguidade : A frequencia associada a um produto deve ser obtida tendo em
+conta todos os clientes, ou apenas os "Clientes Aptos". Perante isto, optamos por
+associar a frequencia de um produto ao somatorio do número de vezes que foi comprado 
+por cada cliente, visto que assim podemos ter em conta o facto de um cliente ter 
+comprado o mesmo produto várias vezes.

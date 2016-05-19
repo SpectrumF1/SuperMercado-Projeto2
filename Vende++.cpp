@@ -476,7 +476,7 @@ string VendeMaisMais::matrizRecomendacao(unsigned int clienteId) {
 	vector <MatrizHitVec> analysis;
 	vector <int> maxidVEC;
 
-	/*DEBUGGING ZONE*/
+	/*DEBUGGING ZONE
 	//Header (produtos iniciais)
 	cout << "ID";
 	for (unsigned int produtosIndex = 0; produtosIndex < produtosVector.size(); produtosIndex++) {
@@ -495,6 +495,8 @@ string VendeMaisMais::matrizRecomendacao(unsigned int clienteId) {
 			}
 		}
 	}
+
+
 	cout << endl << endl;
 	/*END OF DEBUGGING ZONE*/
 
