@@ -646,20 +646,20 @@ string VendeMaisMais::matrizRecomendacaoBottom10() {
 	if (indexClientesInteressantesVector.size() == 0) // No caso de não terem sido encontrados clientes interessantes
 	{
 		unsigned int indexOfMax;
-		unsigned int maxN = 0;
+		int maxN = 0xFFFFFFFF;
 		for (unsigned int indexOfProduct = 0; indexOfProduct < matrizNProdutos.size(); indexOfProduct++)
 		{
-			if (matrizNProdutos.at(indexOfProduct) > maxN && produtosCompradosBottom10.at(indexOfProduct) == 0)
+			if ((int) matrizNProdutos.at(indexOfProduct) > maxN && produtosCompradosBottom10.at(indexOfProduct) == 0)
 			{
 				maxN = matrizNProdutos.at(indexOfProduct);
 				indexOfMax = indexOfProduct;
 			}
 		}
-		if (maxN == 0)
+		if (maxN == 0xFFFFFFFF)
 		{
 			for (unsigned int indexOfProduct = 0; indexOfProduct < matrizNProdutos.size(); indexOfProduct++)
 			{
-				if (matrizNProdutos.at(indexOfProduct) - produtosCompradosBottom10.at(indexOfProduct) > maxN)
+				if ((int) (matrizNProdutos.at(indexOfProduct) - 2 * produtosCompradosBottom10.at(indexOfProduct)) > maxN)
 				{
 					maxN = matrizNProdutos.at(indexOfProduct);
 					indexOfMax = indexOfProduct;
