@@ -660,7 +660,7 @@ string VendeMaisMais::matrizRecomendacaoBottom10() {
 		{
 			for (unsigned int indexOfProduct = 0; indexOfProduct < matrizNProdutos.size(); indexOfProduct++)
 			{
-				differencaProdutosInteressanteBottom10 == (int)(matrizNProdutos.at(indexOfProduct) - 2 * produtosCompradosBottom10.at(indexOfProduct));
+				differencaProdutosInteressanteBottom10 = (int)(matrizNProdutos.at(indexOfProduct) - 2 * produtosCompradosBottom10.at(indexOfProduct));
 				if (differencaProdutosInteressanteBottom10 > maxN)
 				{
 					maxN = differencaProdutosInteressanteBottom10;
