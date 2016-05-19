@@ -10,7 +10,7 @@
 5 ; 29/02/2016 ; pao,sumo,fiambre
 5 ; 01/03/2016 ; cha,chokapitos,estrelitas
 6 ; 01/03/2016 ; acucar,feijao,amendoins
-6 ; 02/03/2016 ; cerceja,vinho,sumo,pao
+6 ; 02/03/2016 ; cerveja,vinho,sumo,pao
 7 ; 02/03/2016 ; amendoins,presunto,peixe
 7 ; 03/03/2016 ; carne,batata,acucar
 8 ; 03/03/2016 ; cafe,sal,chokapitos
