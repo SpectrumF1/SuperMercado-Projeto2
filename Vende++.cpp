@@ -612,13 +612,48 @@ string VendeMaisMais::matrizRecomendacaoBottom10() {
 				indexOfMax = indexOfProduct;
 			}
 		}
+		if (maxN == 0)
+		{
+			for (unsigned int indexOfProduct = 0; indexOfProduct < matrizNProdutos.size(); indexOfProduct++)
+			{
+				if (matrizNProdutos.at(indexOfProduct) - produtosCompradosBottom10.at(indexOfProduct) > maxN)
+				{
+					maxN = matrizNProdutos.at(indexOfProduct);
+					indexOfMax = indexOfProduct;
+				}
+			}
+		}
 		produtoRecomendacao = produtosVector.at(indexOfMax).getNome();
 	}
 	else
 	{
-
+		unsigned int indexOfMax;
+		unsigned int maxN = 0;
+		for (unsigned int i = 0; i < indexClientesInteressantesVector.size(); i++)
+		{
+			for (unsigned int indexOfProduct = 0; indexOfProduct < matrizNProdutos.size(); indexOfProduct++)
+			{
+				if (matriz.at(indexClientesInteressantesVector.at(i)).at(indexOfProduct) && produtosCompradosBottom10.at(indexOfProduct) == 0 && matrizNProdutos.at(indexOfProduct) > maxN)
+				{
+					maxN = matrizNProdutos.at(indexOfProduct);
+					indexOfMax = indexOfProduct;
+				}
+			}
+		}
+		if (maxN == 0)
+		{
+			for (unsigned int indexOfProduct = 0; indexOfProduct < matrizNProdutos.size(); indexOfProduct++)
+			{
+				if (matrizNProdutos.at(indexOfProduct) - produtosCompradosBottom10.at(indexOfProduct) > maxN)
+				{
+					maxN = matrizNProdutos.at(indexOfProduct);
+					indexOfMax = indexOfProduct;
+				}
+			}
+		}
 	}
 
+	//debug
 	for (unsigned i = 0; i < produtosCompradosBottom10.size(); i++)
 	{
 		cout << produtosCompradosBottom10.at(i) << "; ";
@@ -632,6 +667,11 @@ string VendeMaisMais::matrizRecomendacaoBottom10() {
 	for (unsigned int i = 0; i < bottom10Vector.size(); i++)
 	{
 		cout << bottom10Vector.at(i).getId() << "; ";
+	}
+	cout << endl;
+	for (unsigned int  i = 0; i < indexClientesInteressantesVector.size(); i++)
+	{
+		cout << indexClientesInteressantesVector.at(i) << "; ";
 	}
 	cout << endl;
 
