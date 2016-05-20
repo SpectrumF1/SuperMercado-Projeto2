@@ -24,7 +24,6 @@ class VendeMaisMais{
   vector<Cliente> clientesVector; // vetor que guarda a informacao dos clientes existentes
   vector<Produto> produtosVector; // vetor que guarda a informacao dos produtos disponiveis
   vector<Transacao> transacoesVector; // vetor que guarda a informacao das transacoes efetuadas
-  multimap<int, int> transacaoIdx; // multimap para "traduzir" o identificador do cliente nos indices das suas transacoes no vetor de transacoes
   map<string, unsigned int> clienteNameToId;  // map para "traduzir" nome do cliente no ID dele no vetor de clientes
   map<string, unsigned int> produtoNameToIndex;  // map para "traduzir" nome do produto no indice dele no vetor de produtos
   multimap<unsigned int, unsigned int> transacaoIdToIndex; // multimap para "traduzir" o identificador do cliente nos indices das suas transacoes no vetor de transacoes

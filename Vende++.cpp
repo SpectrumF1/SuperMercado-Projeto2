@@ -571,9 +571,11 @@ string VendeMaisMais::matrizRecomendacaoBottom10() {
 	string produtoRecomendacao;
 	unsigned int clientIndexOnMatrix;
 	bool productBuyByBottom10 = true;
-	bool firstRun = true;
+	bool firstCommonProduct = true;
+	bool validade = true;
 	vector <unsigned int> productsBuyByAllBottom10;
 	vector <unsigned int> indexClientesInteressantesVector;
+	vector <unsigned int> indexClientesInteressantesVectorTemp;
 	unsigned int lastClientIndex;
 	unsigned int indexClientesInteressantes;
 	unsigned int nClientesInteressantes;
@@ -587,18 +589,18 @@ string VendeMaisMais::matrizRecomendacaoBottom10() {
 		for (unsigned int clienteIndexOnBottom10 = 0; clienteIndexOnBottom10 < bottom10Vector.size(); clienteIndexOnBottom10++)
 		{
 			clientIndexOnMatrix = matrizIdToIndex.at(bottom10Vector.at(clienteIndexOnBottom10).getId());
-			if (!matriz.at(clientIndexOnMatrix).at(productIndexOnMatrix) && productBuyByBottom10)
+			if (!(matriz.at(clientIndexOnMatrix).at(productIndexOnMatrix)) && productBuyByBottom10)
 			{
 				productBuyByBottom10 = false;
 				break; //possivel de retirar se for para verificar os produtos que os clientes interessantes compram
 			}
-			if (clienteIndexOnBottom10 == bottom10Vector.size()-1)
+			if (clienteIndexOnBottom10 == bottom10Vector.size() - 1)
 			{
 				clientIndexOnMatrix = matriz.size() - 1;
 			}
 			for (unsigned int indexOnMatrixOfInterestingClients = lastClientIndex; indexOnMatrixOfInterestingClients < clientIndexOnMatrix; indexOnMatrixOfInterestingClients++)
 			{
-				if (firstRun)
+				if (firstCommonProduct)
 				{
 					if (matriz.at(indexOnMatrixOfInterestingClients).at(productIndexOnMatrix))
 					{
@@ -607,102 +609,123 @@ string VendeMaisMais::matrizRecomendacaoBottom10() {
 						nClientesInteressantes++;
 					}
 				}
-				//verifica se os clientes interessantes se mantiveram
+				//verifica se os clientes interessantes se mantiveram (verificar estas condiçoes pensar que ele pode estar a eliminar elementos que devem pertencer ao vetor mas só o sabe no fim!)
 				else
 				{
-					if (indexClientesInteressantes < indexClientesInteressantesVector.size())
+					if (indexClientesInteressantes < indexClientesInteressantesVectorTemp.size())
 					{
 						if (matriz.at(indexOnMatrixOfInterestingClients).at(productIndexOnMatrix))
 						{
-							if (indexClientesInteressantesVector.at(indexClientesInteressantes) == indexOnMatrixOfInterestingClients)
+							if (indexClientesInteressantesVectorTemp.at(indexClientesInteressantes) == indexOnMatrixOfInterestingClients)
 							{
 								indexClientesInteressantes++;
 							}
 						}
 						// caso um cliente interessante deixe de ser interessante por nao ter comprado o produto
-						else if (indexClientesInteressantesVector.at(indexClientesInteressantes) == indexOnMatrixOfInterestingClients)
+						else if (indexClientesInteressantesVectorTemp.at(indexClientesInteressantes) == indexOnMatrixOfInterestingClients)
 						{
-							indexClientesInteressantesVector.erase(indexClientesInteressantesVector.begin() + indexClientesInteressantes);
+							indexClientesInteressantesVectorTemp.erase(indexClientesInteressantesVectorTemp.begin() + indexClientesInteressantes);
 						}
 					}
 				}
 			}
 			lastClientIndex = clientIndexOnMatrix + 1;
-		}
+		} // end ciclo dos clientes
 		if (productBuyByBottom10)
 		{
 			productsBuyByAllBottom10.push_back(productIndexOnMatrix);
-			if (indexClientesInteressantesVector.size())
+			if (firstCommonProduct)
 			{
-				break;
+				firstCommonProduct = false;
+				if (indexClientesInteressantesVector.size() == 0) // não exitem clientes interessantes
+				{
+					validade = false;
+					break;
+				}
 			}
-			if (firstRun)
+			else
 			{
-				firstRun = false;
+				indexClientesInteressantesVector = indexClientesInteressantesVectorTemp;
 			}
 		}
 		else
 		{
-			indexClientesInteressantesVector.erase(indexClientesInteressantesVector.end() - nClientesInteressantes, indexClientesInteressantesVector.end());
-		}
-	}
-
-	if (indexClientesInteressantesVector.size() == 0) // No caso de não terem sido encontrados clientes interessantes
-	{
-		unsigned int indexOfMax;
-		int maxN = 0xFFFFFFFF;
-		int differencaProdutosInteressanteBottom10;
-		for (unsigned int indexOfProduct = 0; indexOfProduct < matrizNProdutos.size(); indexOfProduct++)
-		{
-			if ((int) matrizNProdutos.at(indexOfProduct) > maxN && produtosCompradosBottom10.at(indexOfProduct) == 0)
+			if (firstCommonProduct)
 			{
-				maxN = matrizNProdutos.at(indexOfProduct);
-				indexOfMax = indexOfProduct;
+				indexClientesInteressantesVector.clear();
+			}
+			else
+			{
+				indexClientesInteressantesVectorTemp = indexClientesInteressantesVector;
 			}
 		}
-		if (maxN == 0xFFFFFFFF)
-		{
-			for (unsigned int indexOfProduct = 0; indexOfProduct < matrizNProdutos.size(); indexOfProduct++)
-			{
-				differencaProdutosInteressanteBottom10 = (int)(matrizNProdutos.at(indexOfProduct) - 2 * produtosCompradosBottom10.at(indexOfProduct));
-				if (differencaProdutosInteressanteBottom10 > maxN)
-				{
-					maxN = differencaProdutosInteressanteBottom10;
-					indexOfMax = indexOfProduct;
-				}
-			}
-		}
-		produtoRecomendacao = produtosVector.at(indexOfMax).getNome();
 	}
-	else
+// end ciclo dos produtos
+	if (validade) //nao haver clientes interessantes
 	{
-		unsigned int indexOfMax;
-		int maxN = 0xFFFFFFFF;
-		int differencaProdutosInteressanteBottom10;
-		for (unsigned int i = 0; i < indexClientesInteressantesVector.size(); i++)
+		if (productsBuyByAllBottom10.size() == 0) // Não ter sido encotrado produto comum 
 		{
+			unsigned int indexOfMax;
+			int maxN = 0xFFFFFFFF;
+			int differencaProdutosInteressanteBottom10;
 			for (unsigned int indexOfProduct = 0; indexOfProduct < matrizNProdutos.size(); indexOfProduct++)
 			{
-				if (matriz.at(indexClientesInteressantesVector.at(i)).at(indexOfProduct) && produtosCompradosBottom10.at(indexOfProduct) == 0 && matrizNProdutos.at(indexOfProduct) > maxN)
+				if ((int)matrizNProdutos.at(indexOfProduct) > maxN && produtosCompradosBottom10.at(indexOfProduct) == 0)
 				{
 					maxN = matrizNProdutos.at(indexOfProduct);
 					indexOfMax = indexOfProduct;
 				}
 			}
-		}
-		if (maxN == 0xFFFFFFFF)
-		{
-			for (unsigned int indexOfProduct = 0; indexOfProduct < matrizNProdutos.size(); indexOfProduct++)
+			if (maxN == 0xFFFFFFFF)
 			{
-				differencaProdutosInteressanteBottom10 = (int)(matrizNProdutos.at(indexOfProduct) - 2 * produtosCompradosBottom10.at(indexOfProduct));
-				if (differencaProdutosInteressanteBottom10 > maxN)
+				for (unsigned int indexOfProduct = 0; indexOfProduct < matrizNProdutos.size(); indexOfProduct++)
 				{
-					maxN = differencaProdutosInteressanteBottom10;
-					indexOfMax = indexOfProduct;
+					differencaProdutosInteressanteBottom10 = (int)(matrizNProdutos.at(indexOfProduct) - 2 * produtosCompradosBottom10.at(indexOfProduct));
+					if (differencaProdutosInteressanteBottom10 > maxN)
+					{
+						maxN = differencaProdutosInteressanteBottom10;
+						indexOfMax = indexOfProduct;
+					}
 				}
 			}
+			produtoRecomendacao = produtosVector.at(indexOfMax).getNome();
+		}
+		else // este else esta mal preciso de um contador de quantidade de cada produto por cliente
+		{
+			unsigned int indexOfMax;
+			int maxN = 0xFFFFFFFF;
+			int differencaProdutosInteressanteBottom10;
+			for (unsigned int i = 0; i < indexClientesInteressantesVector.size(); i++)
+			{
+				for (unsigned int indexOfProduct = 0; indexOfProduct < matrizNProdutos.size(); indexOfProduct++)
+				{
+					if (matriz.at(indexClientesInteressantesVector.at(i)).at(indexOfProduct) && produtosCompradosBottom10.at(indexOfProduct) == 0 && matrizNProdutos.at(indexOfProduct) > maxN)
+					{
+						maxN = matrizNProdutos.at(indexOfProduct);
+						indexOfMax = indexOfProduct;
+					}
+				}
+			}
+			if (maxN == 0xFFFFFFFF) 
+			{
+				for (unsigned int indexOfProduct = 0; indexOfProduct < matrizNProdutos.size(); indexOfProduct++)
+				{
+					differencaProdutosInteressanteBottom10 = (int)(matrizNProdutos.at(indexOfProduct) - 2 * produtosCompradosBottom10.at(indexOfProduct));
+					if (differencaProdutosInteressanteBottom10 > maxN)
+					{
+						maxN = differencaProdutosInteressanteBottom10;
+						indexOfMax = indexOfProduct;
+					}
+				}
+			}
+			produtoRecomendacao = produtosVector.at(indexOfMax).getNome();
 		}
 	}
+	else
+	{
+		produtoRecomendacao = "Impossivel realizar recomendacao";
+	}
+	
 
 	/*DEBUGGING ZONE*/
 	//Header (produtos iniciais)
@@ -749,7 +772,7 @@ string VendeMaisMais::matrizRecomendacaoBottom10() {
 		cout << bottom10Vector.at(i).getId() << "; ";
 	}
 	cout << endl << "IdxI- ";
-	for (unsigned int  i = 0; i < indexClientesInteressantesVector.size(); i++)
+	for (unsigned int i = 0; i < indexClientesInteressantesVector.size(); i++)
 	{
 		cout << indexClientesInteressantesVector.at(i) << "; ";
 	}
