@@ -638,6 +638,10 @@ string VendeMaisMais::matrizRecomendacaoBottom10() {
 				validade = false;
 				break;
 			}
+			else
+			{
+				//acabar recomendacao
+			}
 			if (firstRun)
 			{
 				firstRun = false;
