@@ -595,7 +595,7 @@ string VendeMaisMais::matrizRecomendacaoBottom10() {
 			}
 			if (clienteIndexOnBottom10 == bottom10Vector.size()-1)
 			{
-				clientIndexOnMatrix == matriz.size() - 1;
+				clientIndexOnMatrix = matriz.size() - 1;
 			}
 			for (unsigned int indexOnMatrixOfInterestingClients = lastClientIndex; indexOnMatrixOfInterestingClients < clientIndexOnMatrix; indexOnMatrixOfInterestingClients++)
 			{
