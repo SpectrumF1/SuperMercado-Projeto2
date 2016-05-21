@@ -127,8 +127,7 @@ void opcoesGestaoClientes(VendeMaisMais & supermercado){
 		isValidData = false;
 		newDataAdesao.setData(newDataString);
 		cout << endl;
-		cout << "Montante inicial de compras: ";
-		newVolCompras = leFloat();
+		newVolCompras = 0;
 		newCliente.setId(nextId);
 		nextId++;
 		newCliente.setNome(newName);
@@ -137,16 +136,20 @@ void opcoesGestaoClientes(VendeMaisMais & supermercado){
 		supermercado.addCliente(newCliente);
 		supermercado.listarClientesOrdemAlfa();
 		supermercado.updateMatriz();
+		supermercado.updateBottom10();
+		cout << "Cliente Adicionado com sucesso";
 		system("pause");
 		break;
     case 4:
 		cout << "Introduza o Id ou o Nome do cliente a editar: ";
 		getline(cin, clienteNameOrId);
+		//É PRECISO VERIFICAR SE O CLIENTE EXISTE
 		editClient(clienteNameOrId, supermercado);
       break;
     case 5:
 		cout << "Introduza o Id ou o Nome do cliente a remover: ";
 		getline(cin, clienteNameOrId);
+		//É PRECISO VERIFICAR SE O CLIENTE EXISTE
 		supermercado.removeClient(clienteNameOrId);
 		system("pause");
       break;
@@ -205,7 +208,6 @@ void opcoesGestaoTransacoes(VendeMaisMais & supermercado){
 				  }
 			  }
 			  isValidData = false;
-			  getline(cin, dataString);
 			  supermercado.mostraProdutos();
 			  cout << "Que produto deseja?" << endl;
 			  produtoIndex = leUnsignedInt();
@@ -278,7 +280,6 @@ void opcoesGestaoTransacoes(VendeMaisMais & supermercado){
 			}
 		}
 		isValidData = false;
-		getline(cin, dataString);
 		date.setData(dataString);
 		indexDatas = supermercado.getIndexDataByData(date);
 		if (indexDatas.first != -1)
