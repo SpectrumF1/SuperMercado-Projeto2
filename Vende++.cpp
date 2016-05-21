@@ -615,6 +615,7 @@ string VendeMaisMais::matrizRecomendacaoBottom10() {
 	cout << endl;
 	/*END OF DEBUGGING ZONE*/
 
+	clock_t t = clock();
 	//inicializa considerando que todos são clientes interessantes
 	for (unsigned int i = 0; i < matriz.size(); i++)
 	{
@@ -727,6 +728,9 @@ string VendeMaisMais::matrizRecomendacaoBottom10() {
 		}
 		produtoRecomendacao = produtosVector.at(indexProdutoRecomendacao).getNome();
 	}
+
+	t = clock() - t;
+	cout << (float)t / CLOCKS_PER_SEC<<endl;
 
 	//debug
 	cout << setw(4) << "NPI- ";
