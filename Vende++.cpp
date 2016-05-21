@@ -579,7 +579,7 @@ string VendeMaisMais::matrizRecomendacaoBottom10() {
 	unsigned int clientIndexOnBottom10 = 0;
 	unsigned int indexClientesInteressante;
 	unsigned int indexProdutoRecomendacao;
-	int maxNProduto = 0xFFFFFFFF;
+	int maxNProduto = 0x80000000;
 
 	/*DEBUGGING ZONE*/
 	//Header (produtos iniciais)
@@ -668,14 +668,27 @@ string VendeMaisMais::matrizRecomendacaoBottom10() {
 							{
 								nProdutosCompradosInteressantesTemp.at(i) -= matriz.at(clientIndexOnMatrix).at(i);
 							}
-							indexClientesInteressantesVectorTemp.erase(indexClientesInteressantesVectorTemp.begin() + indexClientesInteressante);
+							if (indexClientesInteressantesVectorTemp.size() == 1)
+							{
+								indexClientesInteressantesVectorTemp.clear();
+							}
+							else
+							{
+								indexClientesInteressantesVectorTemp.erase(indexClientesInteressantesVectorTemp.begin() + indexClientesInteressante);
+							}
 						}
 					}
 				}
 				else //se tiver comprado o produto
 				{
-					nProdutosCompradosInteressantes.at(productIndexOnMatrix) += matriz.at(clientIndexOnMatrix).at(productIndexOnMatrix);
-					if (indexClientesInteressante < indexClientesInteressantesVectorTemp.size() - 1)
+					for (unsigned int i = 0; i < indexClientesInteressantesVectorTemp.size(); i++)
+					{
+						if (indexClientesInteressantesVectorTemp.at(i) == clientIndexOnMatrix)
+						{
+							nProdutosCompradosInteressantes.at(productIndexOnMatrix) += matriz.at(clientIndexOnMatrix).at(productIndexOnMatrix);
+						}
+					}
+					if (indexClientesInteressante + 1 < indexClientesInteressantesVectorTemp.size())
 					{
 						if (indexClientesInteressantesVectorTemp.at(indexClientesInteressante) == clientIndexOnMatrix)
 						{
@@ -707,21 +720,21 @@ string VendeMaisMais::matrizRecomendacaoBottom10() {
 	{
 		for (unsigned int indexMaxProduto = 0; indexMaxProduto < nProdutosCompradosInteressantes.size(); indexMaxProduto++)
 		{
-			if (produtosCompradosBottom10.at(indexMaxProduto) == 0 && maxNProduto < nProdutosCompradosInteressantes.at(indexMaxProduto))
+			if (produtosCompradosBottom10.at(indexMaxProduto) == 0 && maxNProduto < nProdutosCompradosInteressantes.at(indexMaxProduto) && !(nProdutosCompradosInteressantes.at(indexMaxProduto) == 0))
 			{
 				maxNProduto = nProdutosCompradosInteressantes.at(indexMaxProduto);
 				indexProdutoRecomendacao = indexMaxProduto;
 			}
 		}
-		if (maxNProduto == 0xFFFFFFFF)
+		if (maxNProduto == 0x80000000)
 		{
 			int diferencaNProdutosInteressantesBottom10;
 			for (unsigned int indexMaxProduto = 0; indexMaxProduto < nProdutosCompradosInteressantes.size(); indexMaxProduto++)
 			{
 				diferencaNProdutosInteressantesBottom10 = nProdutosCompradosInteressantes.at(indexMaxProduto) - produtosCompradosBottom10.at(indexMaxProduto);
-				if (maxNProduto < diferencaNProdutosInteressantesBottom10)
+				if (maxNProduto < diferencaNProdutosInteressantesBottom10 && !(nProdutosCompradosInteressantes.at(indexMaxProduto) == 0))
 				{
-					maxNProduto = nProdutosCompradosInteressantes.at(indexMaxProduto);
+					maxNProduto = diferencaNProdutosInteressantesBottom10;
 					indexProdutoRecomendacao = indexMaxProduto;
 				}
 			}
@@ -730,7 +743,7 @@ string VendeMaisMais::matrizRecomendacaoBottom10() {
 	}
 
 	t = clock() - t;
-	cout << (float)t / CLOCKS_PER_SEC<<endl;
+	cout << setprecision(9) << (float)t / CLOCKS_PER_SEC << endl;
 
 	//debug
 	cout << setw(4) << "NPI- ";
