@@ -1,0 +1,32 @@
+31
+1 ; 04/01/2016 ; amendoins,agua,carne
+2 ; 04/01/2016 ; carne,batata,agua
+3 ; 10/01/2016 ; agua,acucar,carne,agua
+1 ; 11/01/2016 ; batata frita,amendoins,agua
+2 ; 12/01/2016 ; agua,batata,amendoins
+2 ; 29/01/2016 ; acucar,batata,agua,cafe
+4 ; 24/02/2016 ; agua,carne,batata frita
+4 ; 27/02/2016 ; agua,bolachas,agua,carne
+5 ; 29/02/2016 ; batata,agua,bolachas
+5 ; 01/03/2016 ; agua,carne,acucar
+6 ; 01/03/2016 ; acucar,amendoins,agua
+6 ; 02/03/2016 ; agua,cafe,amendoins,carne
+7 ; 02/03/2016 ; amendoins,agua,cafe
+7 ; 03/03/2016 ; carne,batata,acucar,agua
+8 ; 03/03/2016 ; cafe,agua,carne
+8 ; 04/03/2016 ; carne,agua,acucar
+9 ; 05/03/2016 ; agua,batata frita,bolachas
+9 ; 06/03/2016 ; acucar,bolachas,agua,carne
+10 ; 06/03/2016 ; cafe,agua,batata
+10 ; 07/03/2016 ; agua,carne
+11 ; 08/03/2016 ; acucar,agua,cafe
+11 ; 08/03/2016 ; amendoins,batata,carne,agua
+12 ; 09/03/2016 ; agua,bolachas,amendoins,agua
+13 ; 09/03/2016 ; carne,batata,agua
+14 ; 11/03/2016 ; acucar,agua,amendoins
+15 ; 11/03/2016 ; agua
+16 ; 15/03/2016 ; agua,bolachas,batata frita,amendoins,agua
+17 ; 15/03/2016 ; batata frita,amendoins,agua
+18 ; 19/03/2016 ; agua,bolachas,cafe,amendoins
+19 ; 19/03/2016 ; agua,batata frita,carne,agua
+20 ; 30/03/2016 ; acucar,agua,cafe
