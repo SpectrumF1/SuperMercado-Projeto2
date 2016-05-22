@@ -11,13 +11,45 @@ Cliente::Cliente() {
 Cliente::Cliente(ifstream & in){
 	string line;
 	getline(in, line);
-	id = stoi(line, nullptr, 10);
+	if (line.find(";") != line.npos)
+	{
+		cout << "Ficheiro de clientes invalido, corrige manualmente." << endl;
+		exit(1);
+	}
+	else
+	{
+		id = stoi(line, nullptr, 10);
+	}
 	getline(in, line);
-	nome = line;
+	if (line.find(";") != line.npos)
+	{
+		cout << "Ficheiro de clientes invalido, corrige manualmente." << endl;
+		exit(1);
+	}
+	else
+	{
+		nome = line;
+	}
 	getline(in, line);
-	dataAdesao = line;
+	if (line.find(";") != line.npos)
+	{
+		cout << "Ficheiro de clientes invalido, corrige manualmente." << endl;
+		exit(1);
+	}
+	else
+	{
+		dataAdesao = line;
+	}
 	getline(in, line);
-	volCompras = stof(line);
+	if (line.find(";") != line.npos)
+	{
+		cout << "Ficheiro de clientes invalido, corrige manualmente." << endl;
+		exit(1);
+	}
+	else
+	{
+		volCompras = stof(line);
+	}
 
 }
 Cliente::Cliente(unsigned int newId, string newNome, Data newData, float newVolCompras){

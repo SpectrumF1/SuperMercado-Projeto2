@@ -149,6 +149,7 @@ void opcoesGestaoClientes(VendeMaisMais & supermercado){
 		supermercado.listarClientesOrdemAlfa();
 		supermercado.updateMatriz();
 		supermercado.updateBottom10();
+		supermercado.updateMapClienteNameToId();
 		cout << "Cliente Adicionado com sucesso" << endl;
 		system("pause");
 		break;

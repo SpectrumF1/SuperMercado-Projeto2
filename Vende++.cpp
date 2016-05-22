@@ -124,6 +124,8 @@ void VendeMaisMais::removeClient(string idOrNameOfCliente) {
 			clientesVector.erase(clientesVector.begin() + indexOfClient);
 			clienteNameToId.erase(clientName);
 			updateMatriz();
+			updateBottom10();
+			clientesAlterados = true;
 			cout << "Cliente " << clientName << " Removido com Sucesso" << endl;
 		}
 		else
@@ -139,6 +141,8 @@ void VendeMaisMais::removeClient(string idOrNameOfCliente) {
 			clientesVector.erase(clientesVector.begin() + indexOfClient);
 			clienteNameToId.erase(clientName);
 			updateMatriz();
+			updateBottom10();
+			clientesAlterados = true;
 			cout << "Cliente " << clientName << " Removido com Sucesso" << endl;
 		}
 		else
@@ -170,6 +174,7 @@ void editClientByIndex(unsigned int indexOfCliente, VendeMaisMais &supermercado)
 		supermercado.clientesVector.at(indexOfCliente).setNome(newName);
 		supermercado.clienteNameToId[newName] = indexOfCliente;
 		supermercado.listarClientesOrdemAlfa();
+		supermercado.updateBottom10();
 		supermercado.clientesAlterados = true;
 	}
 	cout << "Alterar Data de Adesao? (y/n): ";
@@ -196,6 +201,7 @@ void editClientByIndex(unsigned int indexOfCliente, VendeMaisMais &supermercado)
 		cout << "Insira o novo montante: ";
 		newAmount = leFloat();
 		supermercado.clientesVector.at(indexOfCliente).setVolCompras(newAmount);
+		supermercado.updateBottom10();
 		supermercado.clientesAlterados = true;
 	}
 	cout << "Cliente Editado com sucesso" << endl;
