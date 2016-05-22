@@ -736,13 +736,13 @@ string VendeMaisMais::matrizRecomendacaoBottom10() {
 	}
 // end ciclo dos produtos
 	
-	if (indexClientesInteressantesVector.size() == 0)
+	if (indexClientesInteressantesVector.size() == 0) // verifica se existe clientes interessantes, caso nao existao não e possivel fazer publicidade
 	{
 		produtoRecomendacao = "Impossivel efetuar publicidade";
 	}
-	else
+	else // no caso de exiterem clientes interessantes
 	{
-		for (unsigned int indexMaxProduto = 0; indexMaxProduto < nProdutosCompradosInteressantes.size(); indexMaxProduto++)
+		for (unsigned int indexMaxProduto = 0; indexMaxProduto < nProdutosCompradosInteressantes.size(); indexMaxProduto++) // procura um produto que não tenha sido comprado pelos bottom10 e tenha sido o mais comprado pelos interessantes
 		{
 			if (produtosCompradosBottom10.at(indexMaxProduto) == 0 && maxNProduto < nProdutosCompradosInteressantes.at(indexMaxProduto) && !(nProdutosCompradosInteressantes.at(indexMaxProduto) == 0))
 			{
@@ -750,7 +750,7 @@ string VendeMaisMais::matrizRecomendacaoBottom10() {
 				indexProdutoRecomendacao = indexMaxProduto;
 			}
 		}
-		if (maxNProduto == 0x80000000)
+		if (maxNProduto == 0x80000000) // caso não tenha sido encontrado nenhum produto nas condicoes anteriores, procura o produto com a maior diferenca entre a quantidade do produto comprado pelos clientes interessante e pelo bottom10
 		{
 			int diferencaNProdutosInteressantesBottom10;
 			for (unsigned int indexMaxProduto = 0; indexMaxProduto < nProdutosCompradosInteressantes.size(); indexMaxProduto++)
