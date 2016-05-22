@@ -611,8 +611,8 @@ string VendeMaisMais::matrizRecomendacaoBottom10() {
 	unsigned int indexClientesInteressante;
 	unsigned int indexProdutoRecomendacao;
 	int maxNProduto = 0x80000000;
-
-	/*DEBUGGING ZONE*/
+	
+	/*DEBUGGING ZONE
 	//Header (produtos iniciais)
 	cout << "ID";
 	for (unsigned int produtosIndex = 0; produtosIndex < produtosVector.size(); produtosIndex++)
@@ -644,7 +644,7 @@ string VendeMaisMais::matrizRecomendacaoBottom10() {
 		cout << bottom10Vector.at(i).getId() << "; ";
 	}
 	cout << endl;
-	/*END OF DEBUGGING ZONE*/
+	END OF DEBUGGING ZONE*/
 
 	clock_t t = clock();
 	//inicializa considerando que todos são clientes interessantes
@@ -777,6 +777,7 @@ string VendeMaisMais::matrizRecomendacaoBottom10() {
 	t = clock() - t;
 	cout << setprecision(9) << (float)t / CLOCKS_PER_SEC << endl;
 
+	/*
 	//debug
 	cout << setw(4) << "NPI- ";
 	for (unsigned i = 0; i < nProdutosCompradosInteressantes.size(); i++)
@@ -789,13 +790,13 @@ string VendeMaisMais::matrizRecomendacaoBottom10() {
 	{
 		cout << setw(6) << produtosCompradosBottom10.at(i);
 	}
-
-	
 	cout << endl << "IdxI- ";
 	for (unsigned int i = 0; i < indexClientesInteressantesVector.size(); i++)
 	{
 		cout << indexClientesInteressantesVector.at(i) << "; ";
 	}
+	cout << endl;
+	*/
 
 	return produtoRecomendacao;
 
