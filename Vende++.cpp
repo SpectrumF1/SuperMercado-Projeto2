@@ -275,6 +275,7 @@ void VendeMaisMais::updateBottom10() {
 				clientWithMaxVolCompras = vectorLoad;
 			}
 			bottom10Vector.push_back(clientesVector.at(i));
+			bottom10VectorById.push_back(clientesVector.at(i).getId());
 			vectorLoad++;
 		}
 		else
@@ -282,6 +283,7 @@ void VendeMaisMais::updateBottom10() {
 			if (clienteVolCompras < max10VolCompras)
 			{
 				bottom10Vector[clientWithMaxVolCompras] = clientesVector.at(i);
+				bottom10VectorById[clientWithMaxVolCompras] = clientesVector.at(i).getId();
 				max10VolCompras = 0;
 				for (unsigned int indexMax = 0; indexMax < bottom10Vector.size(); indexMax++)
 				{
@@ -296,6 +298,7 @@ void VendeMaisMais::updateBottom10() {
 		}
 	}
 	sort(bottom10Vector.begin(), bottom10Vector.end(), less<Cliente>());
+	sort(bottom10VectorById.begin(), bottom10VectorById.end());
 	produtosCompradosBottom10.resize(produtosVector.size(), 0);
 	pair <multimap<unsigned int, unsigned int>::iterator, multimap<unsigned int, unsigned int>::iterator> iterador;
 	string productName;
@@ -656,7 +659,7 @@ string VendeMaisMais::matrizRecomendacaoBottom10() {
 	//initializar o vetor vectorOfClientesInteressantes
 	//Um cliente é interessante se comprou todos os produtos comuns dos bottom 10 +1
 	for (unsigned int indexConM = 0; indexConM < newMatrix.size(); indexConM++) {
-		if (find(bottom10Vector.begin(), bottom10Vector.end(), clientesVector.at(indexConM).getId()) != bottom10Vector.end()) {
+		if (find(bottom10VectorById.cbegin(), bottom10VectorById.cend(), clientesVector.at(indexConM).getId()) != bottom10VectorById.end()) {
 			mapEnableToBeClienteInteressante[indexConM] = false;
 			continue; //se o cliente for bottom10 avançar para o proximo cliente (prox linha da matriz)
 		}
@@ -669,7 +672,7 @@ string VendeMaisMais::matrizRecomendacaoBottom10() {
 			}
 		}
 	}
-	/*verificar os maps para ter a certeza que os clientes interessantes compraram todos os produtos comuns aos bottom10 +1
+	//verificar os maps para ter a certeza que os clientes interessantes compraram todos os produtos comuns aos bottom10 +1
 	for (unsigned int clientIndex = 0; clientIndex < clientesVector.size(); clientIndex++) {
 		if (mapEnableToBeClienteInteressante[clientIndex] == true && mapOfNumberOfDifferentProductsBoughtByEachClient[clientIndex] <= numeroProdutosComunsAosBottom10) {
 			//significa que o cliente nao é interessante
@@ -731,7 +734,7 @@ string VendeMaisMais::matrizRecomendacaoBottom10() {
 			}
 		}
 		produtoRecomendado = produtosVector.at(indexOfMax).getNome();
-	}*/
+	}
 
 	return produtoRecomendado;
 

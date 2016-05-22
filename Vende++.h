@@ -34,6 +34,7 @@ class VendeMaisMais{
   map<unsigned int, unsigned int> matrizIdToIndex;//map de conversao de id para index na Matriz
   vector <int> matrizNProdutos; //vetor que regista quantas vezes cada produto foi comprado
   vector <Cliente> bottom10Vector;
+  vector <unsigned int> bottom10VectorById;
   vector <unsigned int> produtosCompradosBottom10;
 
  public:
