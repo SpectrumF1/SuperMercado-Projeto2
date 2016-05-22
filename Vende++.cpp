@@ -113,23 +113,38 @@ void VendeMaisMais::listarClientesOrdemAlfa(){
 
 
 void VendeMaisMais::removeClient(string idOrNameOfCliente) {
-	unsigned int indexOfClient;
+	int indexOfClient = -1;
 	string clientName;
-	if (isalpha(idOrNameOfCliente.at(0))) {
+	if (isalpha(idOrNameOfCliente.at(0)))
+	{
 		indexOfClient = getClientesIndexByName(idOrNameOfCliente);
-		clientName = clientesVector.at(indexOfClient).getNome();
-		clientesVector.erase(clientesVector.begin() + indexOfClient);
-		clienteNameToId.erase(clientName);
-		updateMatriz();
-		cout << "Cliente " << clientName << " Removido com Sucesso" << endl;
+		if (indexOfClient != -1)
+		{
+			clientName = clientesVector.at(indexOfClient).getNome();
+			clientesVector.erase(clientesVector.begin() + indexOfClient);
+			clienteNameToId.erase(clientName);
+			updateMatriz();
+			cout << "Cliente " << clientName << " Removido com Sucesso" << endl;
 		}
+		else
+		{
+			cout << "Cliente nao encontrado" << endl;
+		}
+	}
 	else if (isdigit(idOrNameOfCliente.at(0))) {
 		indexOfClient = getClientesIndexById(stoi(idOrNameOfCliente));
-		clientName = clientesVector.at(indexOfClient).getNome();
-		clientesVector.erase(clientesVector.begin() + indexOfClient);
-		clienteNameToId.erase(clientName);
-		updateMatriz();
-		cout << "Cliente " << clientName << " Removido com Sucesso" << endl;
+		if (indexOfClient != -1)
+		{
+			clientName = clientesVector.at(indexOfClient).getNome();
+			clientesVector.erase(clientesVector.begin() + indexOfClient);
+			clienteNameToId.erase(clientName);
+			updateMatriz();
+			cout << "Cliente " << clientName << " Removido com Sucesso" << endl;
+		}
+		else
+		{
+			cout << "Cliente nao encontrado" << endl;
+		}
 	}
 	return;
 }
@@ -183,7 +198,7 @@ void editClientByIndex(unsigned int indexOfCliente, VendeMaisMais &supermercado)
 		supermercado.clientesVector.at(indexOfCliente).setVolCompras(newAmount);
 		supermercado.clientesAlterados = true;
 	}
-	cout << "Cliente Editado com sucesso";
+	cout << "Cliente Editado com sucesso" << endl;
 }
 
 void editClient(string clientIdOrName, VendeMaisMais &supermercado) {
@@ -422,7 +437,7 @@ void VendeMaisMais::updateMatriz() {
 	{
 		matrizIndexToId[i] = clientesVector.at(i).getId(); // fazer corresponder index da Matriz a Id de Cliente;
 		matrizIdToIndex[clientesVector.at(i).getId()] = i; // fazer corresponder id De Cliente a index na Matriz
-		matriz.push_back(vector <bool>(produtosVector.size(), false)); //inicializar cada linha da matriz a false.
+		matriz.push_back(vector <int>(produtosVector.size(), 0)); //inicializar cada linha da matriz a false.
 	}
 
 	for (unsigned int i = 0; i < transacoesVector.size(); i++) //Para cada transacao
@@ -433,11 +448,11 @@ void VendeMaisMais::updateMatriz() {
 		{
 			matrizIndexToId[matriz.size()] = transacoesVector.at(i).getIdCliente(); //Atualizar os maps
 			matrizIdToIndex[transacoesVector.at(i).getIdCliente()] = matriz.size();
-			matriz.push_back(vector <bool>(produtosVector.size(), false)); //Acrescentar mais uma linha à matriz para o cliente que já não existe
+			matriz.push_back(vector <int>(produtosVector.size(), 0)); //Acrescentar mais uma linha à matriz para o cliente que já não existe
 		}
 	}
 
-	//alteracao da matriz para valores "true"
+	//alteracao da matriz para valores
 	for (unsigned int matrizClienteIndex = 0; matrizClienteIndex < matriz.size(); matrizClienteIndex++) //percorre os clientes na matriz
 	{
 		for (unsigned int transactionIndex = 0; transactionIndex < transacoesVector.size(); transactionIndex++) //percore o vetor de transacoes
@@ -450,7 +465,7 @@ void VendeMaisMais::updateMatriz() {
 					{ // percorre as colunas da matriz(produtos) 1 a 1
 						if (transacoesVector.at(transactionIndex).getProdutosVector().at(transacoesProdutoIndex) == produtosVector.at(matrizProdutoIndex).getNome())
 						{ // se o produto no vetor de transacoes = produto associado à coluna da matriz
-							matriz.at(matrizClienteIndex).at(matrizProdutoIndex) = true; //coloca esse produto a true para esse cliente
+							matriz.at(matrizClienteIndex).at(matrizProdutoIndex)++; //coloca esse produto a true para esse cliente
 							matrizNProdutos.at(matrizProdutoIndex)++; //incrementa o vetor que regista quantas vezes cada produto foi comprado
 							break; // seguir para proximo produto do vetor transacoes
 						}
@@ -502,6 +517,7 @@ string VendeMaisMais::matrizRecomendacao(unsigned int clienteId) {
 	/*END OF DEBUGGING ZONE*/
 
 	//encotra o index do cliente a publicitar
+	IndexId = -1;
 	for (unsigned int i = 0; i < matrizIndexToId.size(); i++)
 	{
 		if (clienteId == matrizIndexToId.at(i))
@@ -510,292 +526,271 @@ string VendeMaisMais::matrizRecomendacao(unsigned int clienteId) {
 		}
 	}
 
-	//analise da matriz
-	for (unsigned int iid = 0; iid < matriz.size(); iid++)
+	if (IndexId != -1)
 	{
-		analysis.push_back(MatrizHitVec());
-		for (unsigned int iproducts = 0; iproducts < produtosVector.size(); iproducts++)
+		//analise da matriz
+		for (unsigned int iid = 0; iid < matriz.size(); iid++)
 		{
-			if (matriz.at(IndexId).at(iproducts) && matriz.at(iid).at(iproducts))
+			analysis.push_back(MatrizHitVec());
+			for (unsigned int iproducts = 0; iproducts < produtosVector.size(); iproducts++)
 			{
-				analysis.at(iid).hit++;
-			}
-			else if (!(matriz.at(IndexId).at(iproducts)) && matriz.at(iid).at(iproducts))
-			{
-				analysis.at(iid).vec.push_back(iproducts);
-			}
-		}
-	}
-
-	//encontra cliente mais parecido
-	for (unsigned int i = 0; i < analysis.size(); i++)
-	{
-		if (max < analysis.at(i).hit && (!analysis.at(i).vec.empty()))
-		{
-			max = analysis.at(i).hit;
-			maxid = i;
-		}
-	}
-	for (unsigned int i = 0; i < analysis.size(); i++)
-	{
-		if (max == analysis.at(i).hit && (!analysis.at(i).vec.empty()))
-		{
-			maxidVEC.push_back(i);
-		}
-	}
-
-	//encontra produto com mais frequencia
-	int Nprod;
-	if (maxidVEC.size() >= 1)
-	{
-		for (unsigned int i = 0; i < maxidVEC.size(); i++)
-		{
-			for (unsigned int j = 0; j < analysis.at(maxidVEC.at(i)).vec.size(); j++)
-			{
-				unsigned int NproductsIndex = analysis.at(maxidVEC.at(i)).vec.at(j);
-				Nprod = matrizNProdutos.at(NproductsIndex);
-				if (maxprod < Nprod)
+				if ((matriz.at(IndexId).at(iproducts) > 0) && (matriz.at(iid).at(iproducts) > 0))
 				{
-					maxprod = Nprod;
-					maxprodid = j;
-					maxid = maxidVEC.at(i);
+					analysis.at(iid).hit++;
+				}
+				else if (!(matriz.at(IndexId).at(iproducts) > 0) && (matriz.at(iid).at(iproducts) > 0))
+				{
+					analysis.at(iid).vec.push_back(iproducts);
 				}
 			}
 		}
-		produtoRecomendacao = produtosVector.at(analysis.at(maxid).vec.at(maxprodid)).getNome();
+
+		//encontra cliente mais parecido
+		for (unsigned int i = 0; i < analysis.size(); i++)
+		{
+			if (max < analysis.at(i).hit && (!analysis.at(i).vec.empty()))
+			{
+				max = analysis.at(i).hit;
+				maxid = i;
+			}
+		}
+		for (unsigned int i = 0; i < analysis.size(); i++)
+		{
+			if (max == analysis.at(i).hit && (!analysis.at(i).vec.empty()))
+			{
+				maxidVEC.push_back(i);
+			}
+		}
+
+		//encontra produto com mais frequencia
+		int Nprod;
+		if (maxidVEC.size() >= 1)
+		{
+			for (unsigned int i = 0; i < maxidVEC.size(); i++)
+			{
+				for (unsigned int j = 0; j < analysis.at(maxidVEC.at(i)).vec.size(); j++)
+				{
+					unsigned int NproductsIndex = analysis.at(maxidVEC.at(i)).vec.at(j);
+					Nprod = matrizNProdutos.at(NproductsIndex);
+					if (maxprod < Nprod)
+					{
+						maxprod = Nprod;
+						maxprodid = j;
+						maxid = maxidVEC.at(i);
+					}
+				}
+			}
+			produtoRecomendacao = produtosVector.at(analysis.at(maxid).vec.at(maxprodid)).getNome();
+		}
+	}
+	else
+	{
+		produtoRecomendacao = "Cliente nao encontrado";
 	}
 
 	return produtoRecomendacao;
 }
 
 string VendeMaisMais::matrizRecomendacaoBottom10() {
-	vector <vector <unsigned int>> newMatrix(clientesVector.size(), vector<unsigned int> (produtosVector.size())); //matriz de clientes e produtos mas que regista quantas vezes o produto foi comprado
-	vector<unsigned int> vectorOfClientesInteressantes; //guarda os Id's deles
-	vector<unsigned int> vectorOfBottom10Clients; //guarda os Id's
-	map<unsigned int, unsigned int> mapOfProdutosCompradosPelosBottom10; //key -> indexProduto ; second -> frequencia
-	map<unsigned int, unsigned int> mapOfProdutosCompradosPelosClientesInteressantes; //key -> indexProduto ; second -> frequencia
-	map<unsigned int, bool> mapOfProdutosComunsAosBottom10; //key -> indexProduto ; second -> booleano que determina se o produto é ou não comum.
-	map<unsigned int, unsigned int> mapOfNumberOfDifferentProductsBoughtByEachClient;
-	map<unsigned int, unsigned int> mapFrequenciaProdClientesIntDiffentesProdComunsAosBottom10;
-	map<unsigned int, bool> mapEnableToBeClienteInteressante;
-	string produtoRecomendado = "";
-	bool enableToBeClienteInteressante = true;
-	bool recomendacaoFeita = false;
-	unsigned int numeroProdutosComunsAosBottom10 = 0;
+	string produtoRecomendacao;
+	bool productBuyByBottom10 = true;
+	bool validade = true;
+	vector <unsigned int> productsBuyByAllBottom10;
+	vector <unsigned int> indexClientesInteressantesVector;
+	vector <unsigned int> indexClientesInteressantesVectorTemp;
+	vector <int> nProdutosCompradosInteressantes(matriz.at(0).size(), 0);
+	vector <int> nProdutosCompradosInteressantesTemp(matriz.at(0).size(), 0);
+	unsigned int clientIndexOnBottom10 = 0;
+	unsigned int indexClientesInteressante;
+	unsigned int indexProdutoRecomendacao;
+	int maxNProduto = 0x80000000;
 
-	//um produto é comum aos bottom 10 se tiver frequencia = VectorOfBottom10Clients.size()
+	/*DEBUGGING ZONE*/
+	//Header (produtos iniciais)
+	cout << "ID";
+	for (unsigned int produtosIndex = 0; produtosIndex < produtosVector.size(); produtosIndex++)
+	{
+		cout << setw(5) << produtosVector.at(produtosIndex).getNome().at(0) << produtosVector.at(produtosIndex).getNome().at(1); // imprimir apenas as iniciais
+	}
 
-	//inicializacao da matriz
-	for (unsigned int indexC = 0; indexC < clientesVector.size(); indexC++) {
-		for (unsigned int indexP = 0; indexP < produtosVector.size(); indexP++) {
-			for (unsigned int indexT = 0; indexT < transacoesVector.size(); indexT++) {
-				for (unsigned int indexPonT = 0; indexPonT < transacoesVector.at(indexT).getProdutosVector().size(); indexPonT++) {
-					if (transacoesVector.at(indexT).getIdCliente() != clientesVector.at(indexC).getId()) {
-						break; //avancar para proxima transacao
+	for (unsigned int linha = 0; linha < matriz.size(); linha++)
+	{
+		cout << endl;
+		cout << matrizIndexToId.at(linha);
+		for (unsigned int coluna = 0; coluna < produtosVector.size(); coluna++)
+		{
+			if (matrizIndexToId.at(linha) >= 10 && coluna == 0)
+			{
+				cout << setw(5) << matriz.at(linha).at(coluna);
+			}
+			else
+			{
+				cout << setw(6) << matriz.at(linha).at(coluna);
+			}
+		}
+	}
+	cout << endl << endl;
+
+	cout << endl << "IdB-  ";
+	for (unsigned int i = 0; i < bottom10Vector.size(); i++)
+	{
+		cout << bottom10Vector.at(i).getId() << "; ";
+	}
+	cout << endl;
+	/*END OF DEBUGGING ZONE*/
+
+	clock_t t = clock();
+	//inicializa considerando que todos são clientes interessantes
+	for (unsigned int i = 0; i < matriz.size(); i++)
+	{
+		if (clientIndexOnBottom10 < bottom10Vector.size())
+		{
+			if (matrizIndexToId.at(i) != bottom10Vector.at(clientIndexOnBottom10).getId())
+			{
+				indexClientesInteressantesVector.push_back(i);
+			}
+			else
+			{
+				clientIndexOnBottom10++;
+			}
+		}
+		else
+		{
+			indexClientesInteressantesVector.push_back(i);
+		}
+	}
+	indexClientesInteressantesVectorTemp = indexClientesInteressantesVector;
+
+	for (unsigned int productIndexOnMatrix = 0; productIndexOnMatrix < matriz.at(0).size(); productIndexOnMatrix++)
+	{
+		productBuyByBottom10 = true;
+		clientIndexOnBottom10 = 0;
+		indexClientesInteressante = 0;
+		for (unsigned int clientIndexOnMatrix = 0; clientIndexOnMatrix < matriz.size(); clientIndexOnMatrix++)
+		{
+			if (clientIndexOnMatrix == matrizIdToIndex.at(bottom10Vector.at(clientIndexOnBottom10).getId())) //analisa a matrix quando bottom10
+			{
+				if (matriz.at(clientIndexOnMatrix).at(productIndexOnMatrix) == 0)
+				{
+					productBuyByBottom10 = false;
+				}
+				if (clientIndexOnBottom10 < bottom10Vector.size()-1)
+				{
+					clientIndexOnBottom10++;
+				}
+
+			}
+			else //analisa a matrix quando outros clientes
+			{
+				int n = matriz.at(clientIndexOnMatrix).at(productIndexOnMatrix);
+				if (n == 0) //se não tiver comprado o produto
+				{
+					if (indexClientesInteressante < indexClientesInteressantesVectorTemp.size())
+					{
+						if (indexClientesInteressantesVectorTemp.at(indexClientesInteressante) == clientIndexOnMatrix)
+						{
+							for (unsigned int i = 0; i < productIndexOnMatrix; i++)
+							{
+								nProdutosCompradosInteressantesTemp.at(i) -= matriz.at(clientIndexOnMatrix).at(i);
+							}
+							if (indexClientesInteressantesVectorTemp.size() == 1)
+							{
+								indexClientesInteressantesVectorTemp.clear();
+							}
+							else
+							{
+								indexClientesInteressantesVectorTemp.erase(indexClientesInteressantesVectorTemp.begin() + indexClientesInteressante);
+							}
+						}
 					}
-					if (transacoesVector.at(indexT).getProdutosVector().at(indexPonT) != produtosVector.at(indexP).getNome()) {
-						continue; //avancar para proximo produto
+				}
+				else //se tiver comprado o produto
+				{
+					for (unsigned int i = 0; i < indexClientesInteressantesVectorTemp.size(); i++)
+					{
+						if (indexClientesInteressantesVectorTemp.at(i) == clientIndexOnMatrix)
+						{
+							nProdutosCompradosInteressantes.at(productIndexOnMatrix) += matriz.at(clientIndexOnMatrix).at(productIndexOnMatrix);
+						}
 					}
-					else {
-						newMatrix.at(indexC).at(indexP)++;
+					if (indexClientesInteressante + 1 < indexClientesInteressantesVectorTemp.size())
+					{
+						if (indexClientesInteressantesVectorTemp.at(indexClientesInteressante) == clientIndexOnMatrix)
+						{
+							indexClientesInteressante++;
+						}
 					}
 				}
 			}
+		} // end ciclo dos clientes
+		if (productBuyByBottom10)
+		{
+			productsBuyByAllBottom10.push_back(productIndexOnMatrix);
+			indexClientesInteressantesVector = indexClientesInteressantesVectorTemp;
+			nProdutosCompradosInteressantes = nProdutosCompradosInteressantesTemp;
+		}
+		else
+		{
+			indexClientesInteressantesVectorTemp = indexClientesInteressantesVector;
+			nProdutosCompradosInteressantesTemp = nProdutosCompradosInteressantes;
 		}
 	}
-	//debugMatrix
-	cout << "Id";
-	for (unsigned int i = 0; i < produtosVector.size(); i++) {
-		cout << setw(6) << produtosVector.at(i).getNome().at(0) << produtosVector.at(i).getNome().at(1) << produtosVector.at(i).getNome().at(2);
+// end ciclo dos produtos
+	
+	if (indexClientesInteressantesVector.size() == 0)
+	{
+		produtoRecomendacao = "Impossivel efetuar publicidade";
 	}
-	for (unsigned int indexC = 0; indexC < newMatrix.size(); indexC++) {
-		cout << endl << clientesVector.at(indexC).getId();
-		for (unsigned int indexP = 0; indexP < produtosVector.size(); indexP++) {
-			if (indexP == 0 && clientesVector.at(indexC).getId() >= 10) {
-				cout << setw(7) << newMatrix.at(indexC).at(indexP);
-			}
-			else {
-				cout << setw(8) << newMatrix.at(indexC).at(indexP);
+	else
+	{
+		for (unsigned int indexMaxProduto = 0; indexMaxProduto < nProdutosCompradosInteressantes.size(); indexMaxProduto++)
+		{
+			if (produtosCompradosBottom10.at(indexMaxProduto) == 0 && maxNProduto < nProdutosCompradosInteressantes.at(indexMaxProduto) && !(nProdutosCompradosInteressantes.at(indexMaxProduto) == 0))
+			{
+				maxNProduto = nProdutosCompradosInteressantes.at(indexMaxProduto);
+				indexProdutoRecomendacao = indexMaxProduto;
 			}
 		}
-	}
-	cout << endl;
-
-
-
-	//preencher VectorOfBottom10Clients
-	for (unsigned int index= 0; index < bottom10Vector.size(); index++) {
-		vectorOfBottom10Clients.push_back(bottom10Vector.at(index).getId());
-	}
-
-	//preencher mapProdutosCompradosPelosBottom10 e mapProdutosComunsAosBottom10
-	for (unsigned int indexPonMap = 0; indexPonMap < produtosVector.size(); indexPonMap++) {
-		mapOfProdutosComunsAosBottom10[indexPonMap] = true;
-	}
-	for (unsigned int indexPonM = 0; indexPonM < produtosVector.size(); indexPonM++) {
-		for (unsigned int indexConM = 0; indexConM < clientesVector.size(); indexConM++) {
-			for (unsigned int indexConBottom10V = 0; indexConBottom10V < vectorOfBottom10Clients.size(); indexConBottom10V++) {
-				if (clientesVector.at(indexConM).getId() == vectorOfBottom10Clients.at(indexConBottom10V)) {
-					mapOfProdutosCompradosPelosBottom10[indexPonM] += newMatrix.at(indexConM).at(indexPonM);
-					if (newMatrix.at(indexConM).at(indexPonM) == 0) {
-						mapOfProdutosComunsAosBottom10[indexPonM] = false;
-					}
+		if (maxNProduto == 0x80000000)
+		{
+			int diferencaNProdutosInteressantesBottom10;
+			for (unsigned int indexMaxProduto = 0; indexMaxProduto < nProdutosCompradosInteressantes.size(); indexMaxProduto++)
+			{
+				diferencaNProdutosInteressantesBottom10 = nProdutosCompradosInteressantes.at(indexMaxProduto) - produtosCompradosBottom10.at(indexMaxProduto);
+				if (maxNProduto < diferencaNProdutosInteressantesBottom10 && !(nProdutosCompradosInteressantes.at(indexMaxProduto) == 0))
+				{
+					maxNProduto = diferencaNProdutosInteressantesBottom10;
+					indexProdutoRecomendacao = indexMaxProduto;
 				}
-
 			}
 		}
+		produtoRecomendacao = produtosVector.at(indexProdutoRecomendacao).getNome();
 	}
-	//debug zone
+
+	t = clock() - t;
+	cout << setprecision(9) << (float)t / CLOCKS_PER_SEC << endl;
+
+	//debug
+	cout << setw(4) << "NPI- ";
+	for (unsigned i = 0; i < nProdutosCompradosInteressantes.size(); i++)
+	{
+		cout << setw(6) << nProdutosCompradosInteressantes.at(i);
+	}
 	cout << endl;
-	cout << "Id's dos Bottom 10: ";
-	for (unsigned int i = 0; i < vectorOfBottom10Clients.size(); i++) {
-		cout << setw(5) << vectorOfBottom10Clients.at(i);
-	}
-	cout << endl;
-	cout << "Map de Produtos Comuns aos Bottom 10 (indexProduto - frequencia)" << endl;
-	for (auto it = mapOfProdutosComunsAosBottom10.begin(); it != mapOfProdutosComunsAosBottom10.end(); it++) {
-		cout << it->first << " - " << it->second << endl;
-	}//
-	cout << "Map de Produtos Comprados pelos Bottom 10 (indexProduto - frequencia)" << endl;
-	for (auto it = mapOfProdutosCompradosPelosBottom10.begin(); it != mapOfProdutosCompradosPelosBottom10.end(); it++) {
-		cout << it->first << " - " << it->second << endl;
-	}
-	//
-
-	//atualizar o numero de produtos comuns aos bottom10
-	for (unsigned int index = 0; index < produtosVector.size(); index++) {
-		if (mapOfProdutosCompradosPelosBottom10[index] == true) {
-			numeroProdutosComunsAosBottom10++;
-		}
-	}
-	//debug zone
-	cout << endl << "Numero de Produtos Comuns aos Bottom 10: " << numeroProdutosComunsAosBottom10 << endl;
-	//
-	//atualizar o mapOfNumberOfDifferentProductsBoughtByEachClient
-	for (unsigned int indexConM = 0; indexConM < newMatrix.size(); indexConM++) {
-		for (unsigned int indexPonM = 0; indexPonM < produtosVector.size(); indexPonM++) {
-			if (newMatrix.at(indexConM).at(indexPonM)> 0) {
-				mapOfNumberOfDifferentProductsBoughtByEachClient[indexConM]++;
-			}
-		}
-	}
-	//debug zone
-	cout << "Map com numero de produtos diferentes comprados por cada cliente(indexProduto - frequencia)" << endl;
-	for (auto it = mapOfNumberOfDifferentProductsBoughtByEachClient.begin(); it != mapOfNumberOfDifferentProductsBoughtByEachClient.end(); it++) {
-		cout << it->first << " - " << it->second << endl;
-	}
-	//
-
-	//inicializar o mapEnableToBeClienteInteressante a true;
-	for (unsigned int i = 0; i < clientesVector.size(); i++) {
-		mapEnableToBeClienteInteressante[i] = true;
-	}
-	//initializar o vetor vectorOfClientesInteressantes
-	//Um cliente é interessante se comprou todos os produtos comuns dos bottom 10 +1
-	for (unsigned int indexConM = 0; indexConM < newMatrix.size(); indexConM++) {
-		if (find(bottom10Vector.begin(), bottom10Vector.end(), clientesVector.at(indexConM)) != bottom10Vector.end()) {
-			mapEnableToBeClienteInteressante[indexConM] = false;
-			continue; //se o cliente for bottom10 avançar para o proximo cliente (prox linha da matriz)
-		}
-		for (unsigned int indexPonM = 0; indexPonM < produtosVector.size(); indexPonM++) {
-			if ((mapOfProdutosComunsAosBottom10[indexPonM] == true) && (newMatrix.at(indexConM).at(indexPonM) == 0)) {
-				//se produto for comprado por bottom10 mas nao pelo cliente a analisar
-				mapEnableToBeClienteInteressante[indexConM] = false;
-				break; //avancar para proximo cliente
-				
-			}
-		}
+	cout << setw(4) << "NPB- ";
+	for (unsigned i = 0; i < produtosCompradosBottom10.size(); i++)
+	{
+		cout << setw(6) << produtosCompradosBottom10.at(i);
 	}
 
 	
-
-
-	//verificar os maps para ter a certeza que os clientes interessantes compraram todos os produtos comuns aos bottom10 +1
-	for (unsigned int clientIndex = 0; clientIndex < clientesVector.size(); clientIndex++) {
-		if (mapEnableToBeClienteInteressante[clientIndex] == true && mapOfNumberOfDifferentProductsBoughtByEachClient[clientIndex] <= numeroProdutosComunsAosBottom10) {
-			//significa que o cliente nao é interessante
-			mapEnableToBeClienteInteressante[clientIndex] == false;
-		}
-	}
-	//debugzone
-	cout << endl << "Map that tells us if a client(indexClient - bool) is interesting" << endl;
-	for (auto it = mapEnableToBeClienteInteressante.begin(); it != mapEnableToBeClienteInteressante.end(); it++) {
-		cout << it->first << " - " << it->second << endl;
+	cout << endl << "IdxI- ";
+	for (unsigned int i = 0; i < indexClientesInteressantesVector.size(); i++)
+	{
+		cout << indexClientesInteressantesVector.at(i) << "; ";
 	}
 
-	//
-
-	//NESTE PONTO SABEMOS QUEM SAO OS CLIENTES INTERESSANTES
-
-	//initializar o map mapOfProdutosCompradosPelosClientesInteressantes
-	for (unsigned int produtoIndex = 0; produtoIndex < produtosVector.size(); produtoIndex++) {
-		for (unsigned int clientIndex = 0; clientIndex < clientesVector.size(); clientIndex++) {
-			if (mapEnableToBeClienteInteressante[clientIndex] == true) {
-				//indica quantas vezes cada produto foi comprado pelos clientes interessantes
-				mapOfProdutosCompradosPelosClientesInteressantes[produtoIndex] += newMatrix.at(clientIndex).at(produtoIndex);
-			}
-		}
-	}
-	//DebugZone
-	cout << endl << "Map de produtos comprados pelos clientes interessantes (indexProduto - frequencia)" << endl;
-	for (auto it = mapOfProdutosCompradosPelosClientesInteressantes.begin(); it != mapOfProdutosCompradosPelosClientesInteressantes.end(); it++) {
-		cout << it->first << " - " << it->second << endl;
-	}
-	//
-
-
-	//initializar o map mapFrequenciaProdClientesIntDiffentesProdComunsAosBottom10;
-	for (unsigned int produtoIndex = 0; produtoIndex < produtosVector.size(); produtoIndex++) {
-		if (mapOfProdutosComunsAosBottom10[produtoIndex] == true) { //Se produto for comum aos bottom10 avanca para o proximo produto
-			continue;
-		}
-		for (unsigned int clientIndex = 0; clientIndex < clientesVector.size(); clientIndex++) {
-			mapFrequenciaProdClientesIntDiffentesProdComunsAosBottom10[produtoIndex] += newMatrix.at(clientIndex).at(produtoIndex);
-		}
-	}
-
-	//Debug Zone
-	cout << endl << "Map que conta a frequencia de cada produto comprado pelos clientes interessantes e ignora os produtos comuns aos bottom 10 (indexProduto - frequencia)" << endl;
-	for (auto it = mapFrequenciaProdClientesIntDiffentesProdComunsAosBottom10.begin(); it != mapFrequenciaProdClientesIntDiffentesProdComunsAosBottom10.end(); it++) {
-		cout << it->first << " - " << it->second << endl;
-	}
-
-	unsigned int currentMax = 0;
-	unsigned int indexOfMax = 0;
-	//encontrar maximo dentro do map anterior e ir verificando se foi ou nao comprado pelos bottom10
-	for (auto it = mapFrequenciaProdClientesIntDiffentesProdComunsAosBottom10.begin(); it != mapFrequenciaProdClientesIntDiffentesProdComunsAosBottom10.end(); it++) {
-		if (it->second > currentMax) {
-			indexOfMax = it->first;
-			if (mapOfProdutosCompradosPelosBottom10[indexOfMax] == 0) {
-				//significa que nenhum bottom10 comprou o produto
-				currentMax = it->second;
-				recomendacaoFeita = true;
-			}
-		}
-	}
-	if (recomendacaoFeita == true) {
-		produtoRecomendado = produtosVector.at(indexOfMax).getNome();
-	}
-	else { //significa que temos de fazer a diferenca entre os maps
-		map<unsigned int, int> mapDifferenceBetweenProductsBoughtByClientesInteressantesAndBottom10;
-		for (unsigned int indexOnMaps = 0; indexOnMaps < produtosVector.size(); indexOnMaps++) {
-			int freqClientesInteressantes = mapOfProdutosCompradosPelosClientesInteressantes[indexOnMaps];
-		    int freqBottom10 = mapOfProdutosCompradosPelosBottom10[indexOnMaps];
-			mapDifferenceBetweenProductsBoughtByClientesInteressantesAndBottom10[indexOnMaps] = (freqClientesInteressantes - freqBottom10);
-		}
-		//pesquisar pela diferenca maxima
-		int currentMax = 0;
-		unsigned int indexOfMax = 0;
-		for (auto it = mapDifferenceBetweenProductsBoughtByClientesInteressantesAndBottom10.begin(); it != mapDifferenceBetweenProductsBoughtByClientesInteressantesAndBottom10.end(); it++) {
-			if (it->second > currentMax) {
-				indexOfMax = it->first;
-				currentMax = it->second;
-			}
-		}
-		produtoRecomendado = produtosVector.at(indexOfMax).getNome();
-	}
-
-	return produtoRecomendado;
+	return produtoRecomendacao;
 
 }
 

@@ -7,6 +7,10 @@ bool infoInicial(string &loja, string &fichClientes, string &fichProdutos, strin
 	ifstream fileTeste;
 	cout << "Indique o Nome da Loja." << endl;
 	getline(cin, loja);
+	while (loja.size() == 0)
+	{
+		getline(cin, loja);
+	}
 	cout << "Indique o Nome do Ficheiro com os Dados dos Clientes, Incluindo a Extencao." << endl;
 	cin >> fichClientes;
 	while (fichClientes.find(".txt") != fichClientes.length() - 4)
@@ -101,6 +105,10 @@ void opcoesGestaoClientes(VendeMaisMais & supermercado){
       break;
     case 2: cout << "Qual o nome do cliente: ";
       getline(cin, nome);
+	  while (nome.size() == 0)
+	  {
+		  getline(cin, nome);
+	  }
 	  clienteIndex = supermercado.getClientesIndexByName(nome);
 	  if (clienteIndex != -1)
 	  {
@@ -115,6 +123,10 @@ void opcoesGestaoClientes(VendeMaisMais & supermercado){
 	case 3:
 		cout << "Nome do novo cliente: ";
 		getline(cin, newName);
+		while (newName.size() == 0)
+		{
+			getline(cin, newName);
+		}
 		cout << endl;
 		cout << "Data Adesao: ";
 		while (isValidData == false) {
@@ -137,19 +149,27 @@ void opcoesGestaoClientes(VendeMaisMais & supermercado){
 		supermercado.listarClientesOrdemAlfa();
 		supermercado.updateMatriz();
 		supermercado.updateBottom10();
-		cout << "Cliente Adicionado com sucesso";
+		cout << "Cliente Adicionado com sucesso" << endl;
 		system("pause");
 		break;
     case 4:
 		cout << "Introduza o Id ou o Nome do cliente a editar: ";
 		getline(cin, clienteNameOrId);
-		//É PRECISO VERIFICAR SE O CLIENTE EXISTE
+		while (clienteNameOrId.size() == 0)
+		{
+			getline(cin, clienteNameOrId);
+		}
+
 		editClient(clienteNameOrId, supermercado);
+		system("pause");
       break;
     case 5:
 		cout << "Introduza o Id ou o Nome do cliente a remover: ";
 		getline(cin, clienteNameOrId);
-		//É PRECISO VERIFICAR SE O CLIENTE EXISTE
+		while (clienteNameOrId.size() == 0)
+		{
+			getline(cin, clienteNameOrId);
+		}
 		supermercado.removeClient(clienteNameOrId);
 		system("pause");
       break;
@@ -200,10 +220,12 @@ void opcoesGestaoTransacoes(VendeMaisMais & supermercado){
 		  if (clienteIndex != -1)
 		  {
 			  cout << "Introduza a data da transacao:";
-			  while (isValidData == false) {
+			  while (isValidData == false) 
+			  {
 				  getline(cin, dataString);
 				  isValidData = validData(dataString);
-				  if (!isValidData) {
+				  if (!isValidData)
+				  {
 					  cout << "Data invalida, insira a data outra vez: ";
 				  }
 			  }
@@ -211,10 +233,10 @@ void opcoesGestaoTransacoes(VendeMaisMais & supermercado){
 			  supermercado.mostraProdutos();
 			  cout << "Que produto deseja?" << endl;
 			  produtoIndex = leUnsignedInt();
-			  while (produtoIndex < 0 && produtoIndex >= supermercado.getProdutosVector().size())
+			  while (produtoIndex < 0 || produtoIndex >= supermercado.getProdutosVector().size())
 			  {
-				  cout << "Valor Mal Introduzido" << endl << endl;
-				  cout << endl << "Intruduz um Produto :";
+				  cout << "Valor Mal Introduzido" << endl;
+				  cout << "Intruduz um Produto : ";
 				  produtoIndex = leUnsignedInt();
 			  }
 			  prodVector.push_back(supermercado.getProdutosVector().at(produtoIndex).getNome());
@@ -236,12 +258,26 @@ void opcoesGestaoTransacoes(VendeMaisMais & supermercado){
 				  {
 					  supermercado.mostraProdutos();
 					  cout << "Que produto deseja?" << endl;
-					  produtoIndex = leUnsignedInt();
-					  while (produtoIndex < 0 && produtoIndex >= supermercado.getProdutosVector().size())
+					  cin >> produtoIndex;
+					  while (cin.fail())
 					  {
-						  cout << "Valor Mal Introduzido" << endl << endl;
-						  cout << endl << "Intruduz um Produto :";
-						  produtoIndex = leUnsignedInt();
+						  cin.clear();
+						  cin.ignore(1000, '\n');
+						  cout << "Valor mal introduzido" << endl;
+						  cin >> produtoIndex;
+					  }
+					  while (produtoIndex < 0 || produtoIndex >= supermercado.getProdutosVector().size())
+					  {
+						  cout << "Valor Mal Introduzido" << endl;
+						  cout << "Que produto deseja?";
+						  cin >> produtoIndex;
+						  while (cin.fail())
+						  {
+							  cin.clear();
+							  cin.ignore(1000, '\n');
+							  cout << "Valor mal introduzido" << endl;
+							  cin >> produtoIndex;
+						  }
 					  }
 					  prodVector.push_back(supermercado.getProdutosVector().at(produtoIndex).getNome());
 					  volCompra += supermercado.getProdutosVector().at(produtoIndex).getCusto();
@@ -387,6 +423,10 @@ void opcoesRecomendacao(VendeMaisMais & supermercado) {
 				{
 					cout << "O produto a comprar e: " << supermercado.matrizRecomendacao(clienteId) << endl;
 				}
+				else
+				{
+					cout << "Cliente nao existe..." << endl;
+				}
 			}
 			else if (isdigit(clientNameOrId.at(0)))
 			{
@@ -396,7 +436,14 @@ void opcoesRecomendacao(VendeMaisMais & supermercado) {
 			system("pause");
 			break;
 		case 2:
-			cout << "O produto para os bottom10 e: " << supermercado.matrizRecomendacaoBottom10() << endl;
+			if (supermercado.getClientesVector().size() > 10)
+			{
+				cout << "O produto a recomendar para os bottom10 e: " << supermercado.matrizRecomendacaoBottom10() << endl;
+			}
+			else
+			{
+				cout << "Impossivel efectuar publicidade" << endl;
+			}
 			system("pause");
 			break;
 		}
