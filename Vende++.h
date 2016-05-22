@@ -24,19 +24,17 @@ class VendeMaisMais{
   vector<Cliente> clientesVector; // vetor que guarda a informacao dos clientes existentes
   vector<Produto> produtosVector; // vetor que guarda a informacao dos produtos disponiveis
   vector<Transacao> transacoesVector; // vetor que guarda a informacao das transacoes efetuadas
-  map<string, int> clienteIdx;  // map para "traduzir" nome do cliente no indice dele no vetor de clientes
-  map<string, int> produtoIdx;  // map para "traduzir" nome do produto no indice dele no vetor de produtos
-  multimap<int, int> transacaoIdx; // multimap para "traduzir" o identificador do cliente nos indices das suas transacoes no vetor de transacoes
   map<string, unsigned int> clienteNameToId;  // map para "traduzir" nome do cliente no ID dele no vetor de clientes
   map<string, unsigned int> produtoNameToIndex;  // map para "traduzir" nome do produto no indice dele no vetor de produtos
   multimap<unsigned int, unsigned int> transacaoIdToIndex; // multimap para "traduzir" o identificador do cliente nos indices das suas transacoes no vetor de transacoes
 
   vector<unsigned int>indexOfCommonProductsOfBottom10;
-  vector<vector<bool>> matriz;
-  map<unsigned int, unsigned int> matrizIndexToId;
-  map<unsigned int, unsigned int> matrizIdToIndex;
-  vector <int> matrizNProdutos;
+  vector<vector<int>> matriz; //Matriz do sistema de recomendacao
+  map<unsigned int, unsigned int> matrizIndexToId; //map de conversao de index para id na Matriz
+  map<unsigned int, unsigned int> matrizIdToIndex;//map de conversao de id para index na Matriz
+  vector <int> matrizNProdutos; //vetor que regista quantas vezes cada produto foi comprado
   vector <Cliente> bottom10Vector;
+  vector <unsigned int> produtosCompradosBottom10;
 
  public:
   VendeMaisMais(string loja, string fichClients, string fichProdutos, string fichTransacoes);
@@ -55,7 +53,6 @@ class VendeMaisMais{
   void mostraInformacaoCliente(unsigned int clienteIndex);
   int getClientesIndexById(unsigned int idOfClient);
   int getClientesIndexByName(string nameOfClient);
-  void updateBottom10();
   void saveChanges() const;
   void removeClient(string idOrNameOfCliente);
 
@@ -83,4 +80,5 @@ class VendeMaisMais{
   void updateMatriz();
   string matrizRecomendacao(unsigned int clienteId);
   string matrizRecomendacaoBottom10();
+  void updateBottom10();
 };

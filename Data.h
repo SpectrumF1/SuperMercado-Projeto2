@@ -5,6 +5,7 @@
 #include <fstream>
 #include <sstream>
 #include <string>
+#include <cassert>
 
 using namespace std;
 
@@ -19,7 +20,7 @@ class Data {
   string year;
 
  public:
-  Data(){};
+  Data();
   Data(string data); // data na forma DD/MM/AAA
   int getDia() const;
   int getMes() const;
@@ -37,5 +38,6 @@ class Data {
   friend bool operator<(const Data &data1, const Data &data2);
   friend bool operator>(const Data &data1, const Data &data2);
 };
+bool validData(string dateString); // non member function
 
 

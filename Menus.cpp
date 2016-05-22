@@ -87,6 +87,7 @@ void opcoesGestaoClientes(VendeMaisMais & supermercado){
   string newDataString;
   float newVolCompras;
   Cliente newCliente;
+  bool isValidData = false;
   
   while((opcao = menuGestaoClientes()))
     switch (opcao){
@@ -100,6 +101,10 @@ void opcoesGestaoClientes(VendeMaisMais & supermercado){
       break;
     case 2: cout << "Qual o nome do cliente: ";
       getline(cin, nome);
+	  while (nome.size() == 0)
+	  {
+		  getline(cin, nome);
+	  }
 	  clienteIndex = supermercado.getClientesIndexByName(nome);
 	  if (clienteIndex != -1)
 	  {
@@ -114,28 +119,50 @@ void opcoesGestaoClientes(VendeMaisMais & supermercado){
 	case 3:
 		cout << "Nome do novo cliente: ";
 		getline(cin, newName);
+		while (newName.size() == 0)
+		{
+			getline(cin, newName);
+		}
 		cout << endl;
 		cout << "Data Adesao: ";
-		getline(cin,newDataString);
+		while (isValidData == false) {
+			getline(cin, newDataString);
+			isValidData = validData(newDataString);
+			if (!isValidData) {
+				cout << "Data invalida, insira a data outra vez: ";
+			}
+		}
+		isValidData = false;
 		newDataAdesao.setData(newDataString);
 		cout << endl;
 		cout << "Montante inicial de compras: ";
 		newVolCompras = leFloat();
-		system("pause");
 		newCliente.setId(nextId);
+		nextId++;
 		newCliente.setNome(newName);
 		newCliente.setDataAdesao(newDataAdesao);
 		newCliente.setVolCompras(newVolCompras);
 		supermercado.addCliente(newCliente);
+		supermercado.listarClientesOrdemAlfa();
+		supermercado.updateMatriz();
+		system("pause");
 		break;
     case 4:
 		cout << "Introduza o Id ou o Nome do cliente a editar: ";
 		getline(cin, clienteNameOrId);
+		while (clienteNameOrId.size() == 0)
+		{
+			getline(cin, clienteNameOrId);
+		}
 		editClient(clienteNameOrId, supermercado);
       break;
     case 5:
 		cout << "Introduza o Id ou o Nome do cliente a remover: ";
 		getline(cin, clienteNameOrId);
+		while (clienteNameOrId.size() == 0)
+		{
+			getline(cin, clienteNameOrId);
+		}
 		supermercado.removeClient(clienteNameOrId);
 		system("pause");
       break;
@@ -169,6 +196,7 @@ void opcoesGestaoTransacoes(VendeMaisMais & supermercado){
 	string dataString, nameString;
 	vector <string> prodVector;
 	bool continuaCompra = true;
+	bool isValidData = false;
 	char decision;
 	float volCompra;
 	Data date, date1, date2;
@@ -185,15 +213,23 @@ void opcoesGestaoTransacoes(VendeMaisMais & supermercado){
 		  if (clienteIndex != -1)
 		  {
 			  cout << "Introduza a data da transacao:";
-			  getline(cin, dataString);
-
+			  while (isValidData == false) 
+			  {
+				  getline(cin, dataString);
+				  isValidData = validData(dataString);
+				  if (!isValidData)
+				  {
+					  cout << "Data invalida, insira a data outra vez: ";
+				  }
+			  }
+			  isValidData = false;
 			  supermercado.mostraProdutos();
 			  cout << "Que produto deseja?" << endl;
 			  produtoIndex = leUnsignedInt();
-			  while (produtoIndex < 0 && produtoIndex >= supermercado.getProdutosVector().size())
+			  while (produtoIndex < 0 || produtoIndex >= supermercado.getProdutosVector().size())
 			  {
-				  cout << "Valor Mal Introduzido" << endl << endl;
-				  cout << endl << "Intruduz um Produto :";
+				  cout << "Valor Mal Introduzido" << endl;
+				  cout << "Intruduz um Produto : ";
 				  produtoIndex = leUnsignedInt();
 			  }
 			  prodVector.push_back(supermercado.getProdutosVector().at(produtoIndex).getNome());
@@ -215,12 +251,26 @@ void opcoesGestaoTransacoes(VendeMaisMais & supermercado){
 				  {
 					  supermercado.mostraProdutos();
 					  cout << "Que produto deseja?" << endl;
-					  produtoIndex = leUnsignedInt();
-					  while (produtoIndex < 0 && produtoIndex >= supermercado.getProdutosVector().size())
+					  cin >> produtoIndex;
+					  while (cin.fail())
 					  {
-						  cout << "Valor Mal Introduzido" << endl << endl;
-						  cout << endl << "Intruduz um Produto :";
-						  produtoIndex = leUnsignedInt();
+						  cin.clear();
+						  cin.ignore(1000, '\n');
+						  cout << "Valor mal introduzido" << endl;
+						  cin >> produtoIndex;
+					  }
+					  while (produtoIndex < 0 || produtoIndex >= supermercado.getProdutosVector().size())
+					  {
+						  cout << "Valor Mal Introduzido" << endl;
+						  cout << "Que produto deseja?";
+						  cin >> produtoIndex;
+						  while (cin.fail())
+						  {
+							  cin.clear();
+							  cin.ignore(1000, '\n');
+							  cout << "Valor mal introduzido" << endl;
+							  cin >> produtoIndex;
+						  }
 					  }
 					  prodVector.push_back(supermercado.getProdutosVector().at(produtoIndex).getNome());
 					  volCompra += supermercado.getProdutosVector().at(produtoIndex).getCusto();
@@ -241,7 +291,7 @@ void opcoesGestaoTransacoes(VendeMaisMais & supermercado){
     case 2:
 		cout << "Introduz o nome do cliente: ";
 		getline(cin, nameString);
-		//transacoesHeader();
+		transacoesHeader();
 		iterador = supermercado.TransacaoIdToIndex(supermercado.ClienteNameToId(nameString));
 		for (multimap<unsigned int, unsigned int>::iterator it = iterador.first; it != iterador.second; it++)
 		{
@@ -251,12 +301,19 @@ void opcoesGestaoTransacoes(VendeMaisMais & supermercado){
       break;
     case 3:
 		cout << "Introduz a data que pretende: ";
-		getline(cin, dataString);
+		while (isValidData == false) {
+			getline(cin, dataString);
+			isValidData = validData(dataString);
+			if (!isValidData) {
+				cout << "Data invalida, insira a data outra vez: ";
+			}
+		}
+		isValidData = false;
 		date.setData(dataString);
 		indexDatas = supermercado.getIndexDataByData(date);
 		if (indexDatas.first != -1)
 		{
-			//transacoesHeader();
+			transacoesHeader();
 			for (unsigned int i = indexDatas.first; i <= indexDatas.second; i++)
 			{
 				cout << supermercado.getTransacoesVector().at(i);
@@ -270,16 +327,29 @@ void opcoesGestaoTransacoes(VendeMaisMais & supermercado){
       break;
     case 4:
 		cout << "Introduz a primeira data que pretende:";
-		getline(cin, dataString);
+		while (isValidData == false) {
+			getline(cin, dataString);
+			isValidData = validData(dataString);
+			if (!isValidData) {
+				cout << "Data invalida, insira a data outra vez: ";
+			}
+		}
+		isValidData = false;
 		date1.setData(dataString);
 		cout << "Introduz a segunda data que pretende:";
-		getline(cin, dataString);
+		while (isValidData == false) {
+			getline(cin, dataString);
+			isValidData = validData(dataString);
+			if (!isValidData) {
+				cout << "Data invalida, insira a data outra vez: ";
+			}
+		}
+		isValidData = false;
 		date2.setData(dataString);
-
 		indexDatas = supermercado.getIndexDateByDateToDate(date1, date2);
 		if (indexDatas.first != -1 && indexDatas.second != -1)
 		{
-			//transacoesHeader();
+			transacoesHeader();
 			for (unsigned int i = indexDatas.first; i <= indexDatas.second; i++)
 			{
 				cout << supermercado.getTransacoesVector().at(i);
@@ -292,7 +362,7 @@ void opcoesGestaoTransacoes(VendeMaisMais & supermercado){
 		system("pause");
       break;
 	case 5:
-		//transacoesHeader();
+		transacoesHeader();
 		for (unsigned int i = 0; i < supermercado.getTransacoesVector().size(); i++)
 		{
 			cout << supermercado.getTransacoesVector().at(i);
@@ -334,12 +404,21 @@ void opcoesRecomendacao(VendeMaisMais & supermercado) {
 		case 1:
 			cout << "Introduz o id ou o nome do cliente: ";
 			getline(cin, clientNameOrId);
+			while (clientNameOrId.size() == 0)
+			{
+				cout << "Introduz o id ou o nome do cliente: ";
+				getline(cin, clientNameOrId);
+			}
 			if (isalpha(clientNameOrId.at(0)))
 			{
 				clienteId = supermercado.ClienteNameToId(clientNameOrId);
 				if (clienteId != -1)
 				{
 					cout << "O produto a comprar e: " << supermercado.matrizRecomendacao(clienteId) << endl;
+				}
+				else
+				{
+					cout << "Cliente nao existe..." << endl;
 				}
 			}
 			else if (isdigit(clientNameOrId.at(0)))
@@ -350,7 +429,14 @@ void opcoesRecomendacao(VendeMaisMais & supermercado) {
 			system("pause");
 			break;
 		case 2:
-			supermercado.matrizRecomendacaoBottom10();
+			if (supermercado.getClientesVector().size() > 10)
+			{
+				cout << "O produto para os bottom10 e: " << supermercado.matrizRecomendacaoBottom10() << endl;
+			}
+			else
+			{
+				cout << "Impossivel efectuar publicidade" << endl;
+			}
 			system("pause");
 			break;
 		}

@@ -15,7 +15,7 @@ int main(){
   string loja, fichClients, fichProdutos, fichTransacoes;
 
   //tratamento da janela
-  HWND hwnd = GetConsoleWindow();
+  /*HWND hwnd = GetConsoleWindow();
   RECT desktop;
   const HWND hDesktop = GetDesktopWindow();
   GetWindowRect(hDesktop, &desktop);
@@ -35,7 +35,7 @@ int main(){
 	  console_y = max_size.Y*desktop.bottom*0.9 / desktop.bottom - 1;
 	  MoveWindow(hwnd, desktop.right * 0.2, desktop.bottom * 0.1, desktop.right * 0.6, desktop.bottom * 0.8, TRUE);
   }
-
+  */
 
   // pede a informacoo sobre o nome da loja e os 3 ficheiros com
   // informacao de clientes, produtos e transacoes
