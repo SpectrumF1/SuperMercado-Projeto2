@@ -1,0 +1,21 @@
+20
+acucar ; 1.2
+agua ; 0.6
+amendoins ; 2.3
+batata ; 0.4
+batata frita ; 1.7
+bolachas ; 1.6
+cafe ; 1.3
+carne ; 9.1
+cerveja ; 1.5
+cha ; 0.6
+chokapitos ; 1.5
+estrelitas ; 2.5
+feijao ; 2.9
+fiambre ; 3.3
+pao ; 0.1
+peixe ; 7.8
+presunto ; 4.5
+sal ; 1.9
+sumo ; 2.6
+vinho ; 9.0

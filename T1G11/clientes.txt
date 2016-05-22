@@ -1,0 +1,81 @@
+20
+2
+Albina Martins
+2/7/2016
+31.1
+19
+Alistar The Minotaur
+20/1/2016
+22.4
+20
+Brand On Fire
+29/8/2016
+17.5
+13
+Bruno Melo
+16/4/2015
+25.7
+5
+Ines Alves
+15/12/2015
+12.2
+9
+Joana Almeida
+28/2/2016
+17
+7
+Joana Maria
+4/10/2014
+26.5
+12
+Joao Carvalho
+11/2/2016
+18.9
+15
+Joao Pocas
+13/11/2015
+17.4
+3
+Jose Antonio Marques
+9/7/2016
+12.1
+11
+Jusefina Conceicao
+13/2/2016
+25.1
+17
+Katarina Thunderstorm
+5/7/2015
+18.8
+18
+Leona Shield
+9/8/2016
+19.2
+16
+Lyubov Patheletik
+2/1/2015
+9.5
+10
+Manuel Alexandre
+12/7/2015
+11.8
+1
+Manuel Antonio Guedes
+1/7/2016
+15.1
+14
+Maria Albertina
+5/1/2016
+9.3
+4
+Maria Alice Almeida
+10/7/2016
+28
+8
+Mariana Ferreira
+2/7/2013
+20.1
+6
+Renato Campos
+5/12/2015
+20.8
