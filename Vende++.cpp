@@ -375,6 +375,7 @@ void VendeMaisMais::addTransacao(Transacao newTransaction, unsigned int clienteI
 	listarTransacoesData();
 	updateMapTransacaoIdToIndex();
 	updateMatriz();
+	updateBottom10();
 	transacoesAlteradas = true;
 }
 
