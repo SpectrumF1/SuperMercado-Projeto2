@@ -43,7 +43,6 @@ int main(){
   return(-1);
 
 
-  loja = "Spectrum";
   //fichClients = "clientes.txt";
   //fichProdutos = "produtos.txt";
   //fichTransacoes = "transacoes.txt";
