@@ -32,5 +32,7 @@ class Cliente {
   void setNome(string newName);
   void setDataAdesao(Data newDate);
   void setVolCompras(float newVolCompras);
+
+  friend bool operator==(const Cliente &cli1, const Cliente &cli2);
 };
 

@@ -139,8 +139,7 @@ void opcoesGestaoClientes(VendeMaisMais & supermercado){
 		isValidData = false;
 		newDataAdesao.setData(newDataString);
 		cout << endl;
-		cout << "Montante inicial de compras: ";
-		newVolCompras = leFloat();
+		newVolCompras = 0;
 		newCliente.setId(nextId);
 		nextId++;
 		newCliente.setNome(newName);
@@ -149,6 +148,8 @@ void opcoesGestaoClientes(VendeMaisMais & supermercado){
 		supermercado.addCliente(newCliente);
 		supermercado.listarClientesOrdemAlfa();
 		supermercado.updateMatriz();
+		supermercado.updateBottom10();
+		cout << "Cliente Adicionado com sucesso" << endl;
 		system("pause");
 		break;
     case 4:
@@ -158,7 +159,9 @@ void opcoesGestaoClientes(VendeMaisMais & supermercado){
 		{
 			getline(cin, clienteNameOrId);
 		}
+
 		editClient(clienteNameOrId, supermercado);
+		system("pause");
       break;
     case 5:
 		cout << "Introduza o Id ou o Nome do cliente a remover: ";

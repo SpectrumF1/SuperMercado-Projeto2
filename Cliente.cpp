@@ -63,6 +63,9 @@ ostream& operator<<(ostream& out, const Cliente & cli){
 bool operator<(const Cliente &cli1, const Cliente &cli2){
 	return cli1.nome < cli2.nome;
 }
+bool operator==(const Cliente &cli1, const Cliente &cli2) {
+	return (cli1.nome == cli2.nome);
+}
 void Cliente::setId(unsigned int newId){
 	id = newId;
 }

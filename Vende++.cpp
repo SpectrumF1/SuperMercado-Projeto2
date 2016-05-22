@@ -198,7 +198,7 @@ void editClientByIndex(unsigned int indexOfCliente, VendeMaisMais &supermercado)
 		supermercado.clientesVector.at(indexOfCliente).setVolCompras(newAmount);
 		supermercado.clientesAlterados = true;
 	}
-	cout << "Cliente Editado com sucesso";
+	cout << "Cliente Editado com sucesso" << endl;
 }
 
 void editClient(string clientIdOrName, VendeMaisMais &supermercado) {
@@ -277,6 +277,7 @@ int VendeMaisMais::getClientesIndexByName(string nameOfClient) {
 void VendeMaisMais::updateBottom10() {
 	float max10VolCompras = 0;
 	int vectorLoad = 0;
+	bottom10Vector.clear();
 	unsigned int clientWithMaxVolCompras;
 	float clienteVolCompras;
 	for (unsigned int i = 0; i < clientesVector.size(); i++)
@@ -677,6 +678,7 @@ string VendeMaisMais::matrizRecomendacaoBottom10() {
 				{
 					clientIndexOnBottom10++;
 				}
+
 			}
 			else //analisa a matrix quando outros clientes
 			{
@@ -780,20 +782,16 @@ string VendeMaisMais::matrizRecomendacaoBottom10() {
 	{
 		cout << setw(6) << produtosCompradosBottom10.at(i);
 	}
-	cout << endl;
-	cout << setw(4) << "NPA- ";
-	for (unsigned int i = 0; i < matrizNProdutos.size(); i++)
-	{
-		cout << setw(6) << matrizNProdutos.at(i);
-	}
+
+	
 	cout << endl << "IdxI- ";
 	for (unsigned int i = 0; i < indexClientesInteressantesVector.size(); i++)
 	{
 		cout << indexClientesInteressantesVector.at(i) << "; ";
 	}
-	cout << endl;
 
 	return produtoRecomendacao;
+
 }
 
 
