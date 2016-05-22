@@ -30,7 +30,7 @@ Transacao::Transacao(ifstream & in) { // le uma transacao na forma de  idcliente
 	else
 	{
 		cout << "Ficheiro de produtos invalido, corrige manualmente." << endl;
-		exit(1);
+		exit(EXIT_FAILURE);
 	}	
 }
 

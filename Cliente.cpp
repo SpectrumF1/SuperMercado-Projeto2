@@ -14,7 +14,7 @@ Cliente::Cliente(ifstream & in){
 	if (line.find(";") != line.npos)
 	{
 		cout << "Ficheiro de clientes invalido, corrige manualmente." << endl;
-		exit(1);
+		exit(EXIT_FAILURE);
 	}
 	else
 	{
@@ -24,7 +24,7 @@ Cliente::Cliente(ifstream & in){
 	if (line.find(";") != line.npos)
 	{
 		cout << "Ficheiro de clientes invalido, corrige manualmente." << endl;
-		exit(1);
+		exit(EXIT_FAILURE);
 	}
 	else
 	{
@@ -34,7 +34,7 @@ Cliente::Cliente(ifstream & in){
 	if (line.find(";") != line.npos)
 	{
 		cout << "Ficheiro de clientes invalido, corrige manualmente." << endl;
-		exit(1);
+		exit(EXIT_FAILURE);
 	}
 	else
 	{
@@ -44,7 +44,7 @@ Cliente::Cliente(ifstream & in){
 	if (line.find(";") != line.npos)
 	{
 		cout << "Ficheiro de clientes invalido, corrige manualmente." << endl;
-		exit(1);
+		exit(EXIT_FAILURE);
 	}
 	else
 	{

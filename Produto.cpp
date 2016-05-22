@@ -12,7 +12,7 @@ Produto::Produto(ifstream & in){ // nome ; custo
 	else
 	{
 		cout << "Ficheiro de produtos invalido, corrige manualmente." << endl;
-		exit(1);
+		exit(EXIT_FAILURE);
 	}
 }
 
