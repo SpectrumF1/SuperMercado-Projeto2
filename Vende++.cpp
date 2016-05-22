@@ -657,6 +657,7 @@ string VendeMaisMais::matrizRecomendacaoBottom10() {
 	}
 	indexClientesInteressantesVectorTemp = indexClientesInteressantesVector;
 
+	//analise da matriz
 	for (unsigned int productIndexOnMatrix = 0; productIndexOnMatrix < matriz.at(0).size(); productIndexOnMatrix++)
 	{
 		productBuyByBottom10 = true;
@@ -718,7 +719,9 @@ string VendeMaisMais::matrizRecomendacaoBottom10() {
 					}
 				}
 			}
-		} // end ciclo dos clientes
+		}
+		// end ciclo dos clientes
+		// verifica se as alteracao feitas devem ser mantidas ou discartadas
 		if (productBuyByBottom10)
 		{
 			productsBuyByAllBottom10.push_back(productIndexOnMatrix);
