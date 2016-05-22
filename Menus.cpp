@@ -7,6 +7,10 @@ bool infoInicial(string &loja, string &fichClientes, string &fichProdutos, strin
 	ifstream fileTeste;
 	cout << "Indique o Nome da Loja." << endl;
 	getline(cin, loja);
+	while (loja.size() == 0)
+	{
+		getline(cin, loja);
+	}
 	cout << "Indique o Nome do Ficheiro com os Dados dos Clientes, Incluindo a Extencao." << endl;
 	cin >> fichClientes;
 	while (fichClientes.find(".txt") != fichClientes.length() - 4)
@@ -431,7 +435,7 @@ void opcoesRecomendacao(VendeMaisMais & supermercado) {
 		case 2:
 			if (supermercado.getClientesVector().size() > 10)
 			{
-				cout << "O produto para os bottom10 e: " << supermercado.matrizRecomendacaoBottom10() << endl;
+				cout << "O produto a recomendar para os bottom10 e: " << supermercado.matrizRecomendacaoBottom10() << endl;
 			}
 			else
 			{
