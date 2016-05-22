@@ -439,6 +439,7 @@ void opcoesRecomendacao(VendeMaisMais & supermercado) {
 			if (supermercado.getClientesVector().size() > 10)
 			{
 				cout << "O produto a recomendar para os bottom10 e: " << supermercado.matrizRecomendacaoBottom10() << endl;
+				cout << "O produto a recomendar para os bottom10 e: " << supermercado.matrizRecomendacaoBottom102() << endl;
 			}
 			else
 			{

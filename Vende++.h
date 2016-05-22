@@ -80,5 +80,6 @@ class VendeMaisMais{
   void updateMatriz();
   string matrizRecomendacao(unsigned int clienteId);
   string matrizRecomendacaoBottom10();
+  string VendeMaisMais::matrizRecomendacaoBottom102();
   void updateBottom10();
 };
