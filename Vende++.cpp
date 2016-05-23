@@ -172,7 +172,7 @@ void editClientByIndex(unsigned int indexOfCliente, VendeMaisMais &supermercado)
 		getline(cin, newName);
 		supermercado.clienteNameToId.erase(supermercado.clientesVector.at(indexOfCliente).getNome());
 		supermercado.clientesVector.at(indexOfCliente).setNome(newName);
-		supermercado.clienteNameToId[newName] = indexOfCliente;
+		supermercado.clienteNameToId[newName] = supermercado.clientesVector.at(indexOfCliente).getId();
 		supermercado.listarClientesOrdemAlfa();
 		supermercado.updateBottom10();
 		supermercado.clientesAlterados = true;
@@ -364,7 +364,7 @@ void VendeMaisMais::listarTransacoesData() {
 }
 
 void VendeMaisMais::addTransacao(Transacao newTransaction, unsigned int clienteIndex, float volCompras) {
-	unsigned int newVolCompras;
+	float newVolCompras;
 	newVolCompras = clientesVector.at(clienteIndex).getVolCompras() + volCompras;
 	transacoesVector.push_back(newTransaction);
 	clientesVector.at(clienteIndex).setVolCompras(newVolCompras);
@@ -511,7 +511,7 @@ string VendeMaisMais::matrizRecomendacao(unsigned int clienteId) {
 
 
 	cout << endl << endl;
-	/*END OF DEBUGGING ZONE*/
+	END OF DEBUGGING ZONE*/
 
 	//encotra o index do cliente a publicitar
 	IndexId = -1;
