@@ -4,7 +4,7 @@
 João Filipe Lopes de Carcalho - 1º ano MIEIC - up201504875
 Renato Alexandre Sousa Campos - 1º ano MIEIC - up201504942
 
-##Trabalho Completo, ou seja implementado todo o que nos era pedido.
+####Trabalho Completo, ou seja implementado todo o que nos era pedido.
 
 ##Decisões Tomadas :
 * 1 - Sistema de Recomendações para cliente alvo:
